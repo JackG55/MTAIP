@@ -82,7 +82,7 @@
 }
 
 
-button {
+.navbar-button {
     margin-left: 10px;
     padding: 8px 12px;
     background-color: rgba(126, 58, 242,1);
@@ -92,7 +92,7 @@ button {
     transition: all 0.3s ease 0s;
 }
 
-button:hover{
+.navbar-button:hover{
     background-color: rgba(126, 58, 242,0.8);
 }
 

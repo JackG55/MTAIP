@@ -1,0 +1,177 @@
+/*========================HERO SECTION==============================================*/
+
+.hero-section{
+  
+
+}
+
+.content{
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    margin: 64px 80px 64px 80px;
+    gap: 50px;
+}
+
+
+.left-content{
+    max-width: 50%;
+    
+}
+
+.right-content{
+    max-width: 50%;
+}
+
+
+
+.hero-section-content{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px;
+    gap: 40px;
+}
+
+.hero-section-title{
+    font-style: normal;
+    font-weight: 900;
+    font-size: 60px;
+    line-height: 60px;
+}
+
+
+.hero-section-paragraph{
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 150%;
+
+    color: #6B7280;
+}
+
+
+.hero-section-list{
+    gap: 16px;
+}
+
+.hero-section-button{
+    margin-left: 10px;
+    padding: 8px 12px;
+    background-color: rgba(126, 58, 242,1);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+}
+
+.hero-section-button:hover{
+    background-color: rgba(126, 58, 242,0.5);
+}
+
+.discover-button{
+    padding: 12px 20px;
+    font-weight: 500;
+    font-size: 16px;
+    color: #FFFFFF;
+}
+
+.create-button{
+    padding: 12px 20px;
+    border: 1px solid #E5E7EB;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: #E5E7EB;
+}
+
+.hero-section-image img{
+    max-width: 100%;
+}
+
+/*===============================================WALLET SECTION==============================================*/
+.walletlogo{
+    background: #7E3AF2;
+    padding: 20px 0px 20px;
+
+    .logos{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        padding: 0px;
+        gap: 56px;
+        margin: 0px 80px 0px 80px;
+
+        img{
+            width: 285.73px;
+            height: 80.75px;
+        }
+    }   
+}
+
+
+/*=============================================FEATURE SECTION============================================*/
+.features{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 96px 0px;
+    gap: 80px;
+
+    .features-row{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin: 0px 80px 0px 80px;
+        gap: 64px;
+    }
+
+    .features-left-content{
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 32px;
+        h1{
+            font-weight: 800;
+            font-size: 36px;
+            line-height: 125%;
+            letter-spacing: -0.01em;
+        }
+
+        p{
+            max-width: 85%;
+            font-weight: 400;
+            font-size: 20px;
+            line-height: 150%;
+            color: #6B7280;
+        }
+
+        .features-list{
+            border-top-style: outset;
+            width: 100%;
+
+            ul{
+                padding: 25px;
+                list-style: none;
+                li{
+                    font-weight: 500;
+                    font-size: 16px;
+                    line-height: 150%;
+
+                    span {
+                        padding-left: 8px;
+                    }
+                }
+            }
+
+
+        }
+
+
+    }
+
+    img{
+        width: 608px;
+        height: 392.7px;
+    }
+}
+

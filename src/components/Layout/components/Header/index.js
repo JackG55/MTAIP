@@ -33,11 +33,11 @@ function Header() {
                       </ul>
                 </div>
 
-                <div className={cx('navbar-button')}>
-                        <button className={cx('signup-button')}>
+                <div>
+                        <button className={cx('signup-button', 'navbar-button')}>
                             Đăng ký
                         </button>
-                        <button className={cx('signin-button')}>
+                        <button className={cx('signin-button', 'navbar-button')}>
                             Đăng nhập
                         </button>
                 </div>
