@@ -17,8 +17,16 @@ function HeroSection() {
                             Xác lập quyền tác giả, khai thác, thực hiện quyền tác giả, bảo vệ chống lại các hành vi xâm phạm tác phẩm
                         </p>
                         <div className={cx('hero-section-list')}>
-                            <button className={cx('discover-button', 'hero-section-button')}>KHÁM PHÁ</button>
-                            <button className={cx('create-button', 'hero-section-button')}>Đăng ký hồ sơ mới</button>
+                            <button className={cx('discover-button', 'hero-section-button')}>
+                                <a href='/discovering'>
+                                KHÁM PHÁ
+                                </a>
+                            </button>
+                            <button className={cx('create-button', 'hero-section-button')}>
+                                <a href='/create'>
+                                Đăng ký hồ sơ mới
+                                </a>
+                            </button>
                         </div>
                     </div>
                 </div>

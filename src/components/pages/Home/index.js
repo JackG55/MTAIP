@@ -5,6 +5,7 @@
 import HeroSection from './HeroSection';
 import FeatureSection from './FeatureSection';
 import PricingSection from './PricingSection';
+import InstructionSection from './InstructionSection';
 
 //const cx = classNames.bind(styles);
 
@@ -14,6 +15,7 @@ function Home() {
             <HeroSection />
             <FeatureSection />
             <PricingSection />
+            <InstructionSection />
         </div>
     );
 }

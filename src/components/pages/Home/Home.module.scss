@@ -53,6 +53,10 @@
 
 .hero-section-list{
     gap: 16px;
+    a{
+        text-decoration: none;
+        color: #000000;
+    }
 }
 
 .hero-section-button{
@@ -272,4 +276,90 @@
         }
         
     }
+}
+
+
+
+
+/*=============================================INSTRUCTION SECTION============================================*/
+.instruction-section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    margin: 67px 100px 100px 96px;
+    gap: 80px;
+    
+    .instruction-heading{
+        h1{
+            font-weight: 700;
+            font-size: 48px;
+            line-height: 58px;
+            color: #1F1D2B;
+        }
+        
+    }
+
+
+    .instruction-items{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+        gap: 130px;
+        margin-left: 100px;
+        margin-right: 100px;
+
+        .instruction-item{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 13px;
+
+            h2{
+                font-weight: 700;
+                font-size: 18px;
+                line-height: 22px;
+            }
+
+            p{
+                font-weight: 400;
+                font-size: 16px;
+                line-height: 19px;
+                text-align: center;
+                width: 250px;
+            }
+
+            .instruction-item-icon{
+                width: 64px;
+                height: 64px;
+                color: #7e3af2;
+
+            }
+        }
+    }
+
+}
+
+.instruction-addition{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+
+    h1{
+        font-weight: 600;
+        font-size: 24px;
+        line-height: 162.5%;
+    }
+
+    p{
+        width: 50%;
+        text-align: center;
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 162.5%;
+    }
+
 }
