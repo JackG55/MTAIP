@@ -35,6 +35,9 @@
 
 .provider-wallet button {
     display: inline-flex;
+    background: rgb(126, 58, 242);
+    border: 0px;
+    cursor: pointer;
 }
 
 .provider-wallet ul li img {
@@ -55,7 +58,7 @@
 }
 
 .popular-wallet {
-    margin-right: 270px;
+    margin-right: 290px;
 }
 
 .popular {
