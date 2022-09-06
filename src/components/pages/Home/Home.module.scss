@@ -175,3 +175,101 @@
     }
 }
 
+
+/*=============================================PRICING SECTION============================================*/
+.pricing-section{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px 120px 70px;
+    gap: 40px;
+
+    h1{
+        font-weight: 700;
+        font-size: 40px;
+        line-height: 48px;
+    }
+
+    .pricing-section-filter{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        
+
+        .pricing-section-menu{
+            display: flex;
+            gap: 12px;
+
+            .pricing-section-menu-button{
+                padding: 8px 12px !important;
+                border: none !important;
+                border-radius: 15px !important;
+                cursor: pointer !important;
+                transition: all 0.3s ease 0s !important;
+                font-weight: 500 !important;
+                font-size: 14px !important;
+                line-height: 17px !important;
+                background-color: #DCDCDC33 !important;
+                color: #000000;
+
+            }
+
+            .pricing-section-menu-button:hover{
+                background-color: rgba(126, 58, 242,0.5);
+            }
+
+            .pricing-section-menu-button:active{
+                background-color: rgba(126, 58, 242,0.5);
+            }
+        }
+
+        .pricing-section-btn-filter{
+            .pricing-section-btn-filter-detail {
+                padding: 8px 12px !important;
+                border: none !important;
+                border-radius: 15px !important;
+                cursor: pointer !important;
+                transition: all 0.3s ease 0s !important;
+                font-weight: 500 !important;
+                font-size: 14px !important;
+                line-height: 17px !important;
+                background-color: #FFFFFF !important;
+                color: #000000;
+            }
+        }
+    }
+
+
+    .pricing-section-listing{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap : 40px;
+        flex-wrap: wrap;
+        justify-content: space-between;
+
+    }
+
+    .pricing-section-btn-seemore{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+
+        button{
+            padding: 20px 40px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 20px;
+            line-height: 24px;
+            color: #4F33A3;
+            border: 2px solid #3D00B7;
+            border-radius: 50px;
+        }
+
+        button:hover{
+            background-color: rgba(126, 58, 242,0.5);
+        }
+        
+    }
+}
