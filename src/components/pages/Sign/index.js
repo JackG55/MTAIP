@@ -1,7 +1,7 @@
-import BasicTextFields from '../../UIcomponents/TextField';
+import SignnUp from './SignnUp';
 
 function SignUpForm() {
-    return <BasicTextFields />;
+    return <SignnUp />;
 }
 
 export default SignUpForm;
