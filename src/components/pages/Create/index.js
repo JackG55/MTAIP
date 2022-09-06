@@ -1,7 +1,11 @@
+import ConnectWallet from './ConnectWallet';
+
 function Create() {
-    return ( 
-        <h2>Create Page</h2>
-     );
+    return (
+        <div>
+            <ConnectWallet />
+        </div>
+    );
 }
 
 export default Create;
