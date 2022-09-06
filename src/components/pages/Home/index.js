@@ -6,6 +6,7 @@ import HeroSection from './HeroSection';
 import FeatureSection from './FeatureSection';
 import PricingSection from './PricingSection';
 import InstructionSection from './InstructionSection';
+import MyTeamSection from './MyTeamSection';
 
 //const cx = classNames.bind(styles);
 
@@ -16,6 +17,7 @@ function Home() {
             <FeatureSection />
             <PricingSection />
             <InstructionSection />
+            <MyTeamSection />
         </div>
     );
 }
