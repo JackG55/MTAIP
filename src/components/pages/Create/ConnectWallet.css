@@ -21,21 +21,21 @@
 
 .provider-wallet ul li {
     display: flex;
-    background-color: rgb(126, 58, 242);
     padding: 15px 20px;
-    margin: 10px 0;
+    margin: 2px 0;
     transition: 0.2s;
     cursor: pointer;
+    border: 1px solid gray;
 }
 
 .provider-wallet ul li:hover {
     transform: scale(1.03);
-    background: rgb(126, 58, 242);
+    background: #fff;
 }
 
 .provider-wallet button {
     display: inline-flex;
-    background: rgb(126, 58, 242);
+    background: #fff;
     border: 0px;
     cursor: pointer;
 }
@@ -46,7 +46,6 @@
 }
 
 .provider-wallet ul li span {
-    color: #fff;
     margin-left: 10px;
     font-size: 18px;
     font-weight: 600;
@@ -62,8 +61,8 @@
 }
 
 .popular {
-    background-color: #fff;
-    color: black;
+    background-color: rgb(126, 58, 242);
+    color: #fff;
     border-radius: 10px;
     padding: 4px 8px;
 }

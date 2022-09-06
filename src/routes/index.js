@@ -12,7 +12,7 @@ const publicRoutes = [
     { path: '/', component: Home },
     { path: '/discovering', component: Discovering },
     { path: '/create', component: Create, layout: CreateLayout },
-    { path: '/signup', component: Sign, layout: CreateLayout }
+    { path: '/signup', component: Sign, layout: CreateLayout },
 ];
 
 //dành cho những trang phải đăng nhập mới vào được, nếu chưa đăng nhập sẽ lái sang trang login

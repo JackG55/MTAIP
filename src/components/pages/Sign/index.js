@@ -1,12 +1,7 @@
-import SignUp from './SignUp';
-import './SignUp.css';
+import BasicTextFields from '../../UIcomponents/TextField';
 
-function Sign() {
-    return (
-        <div>
-            <SignUp />
-        </div>
-    );
+function SignUpForm() {
+    return <BasicTextFields />;
 }
 
-export default Sign;
+export default SignUpForm;
