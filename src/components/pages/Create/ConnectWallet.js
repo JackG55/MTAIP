@@ -1,9 +1,9 @@
 import './ConnectWallet.css';
-import img1 from '../../../assets/images/metamask.png';
-import img2 from '../../../assets/images/coinbase.webp';
-import img3 from '../../../assets/images/walletconnect.webp';
-import img4 from '../../../assets/images/phantom.png';
-import img5 from '../../../assets/images/glow.jpg';
+import img1 from '../../../assets/images/wallet/metamask.png';
+import img2 from '../../../assets/images/wallet/coinbase.webp';
+import img3 from '../../../assets/images/wallet/walletconnect.webp';
+import img4 from '../../../assets/images/wallet/phantom.png';
+import img5 from '../../../assets/images/wallet/glow.jpg';
 
 function ConnectWallet() {
     return (
