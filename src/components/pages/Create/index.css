@@ -1,0 +1,66 @@
+.connect-wallet {
+    margin: 20px;
+    padding: 0;
+}
+
+.connect-wallet h1 {
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.connect-wallet p {
+    text-align: center;
+}
+
+.provider-wallet ul {
+    position: relative;
+    width: 540px;
+    margin: 20px auto;
+    box-sizing: border-box;
+}
+
+.provider-wallet ul li {
+    display: flex;
+    background-color: rgb(126, 58, 242);
+    padding: 15px 20px;
+    margin: 10px 0;
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+.provider-wallet ul li:hover {
+    transform: scale(1.03);
+    background: rgb(126, 58, 242);
+}
+
+.provider-wallet button {
+    display: inline-flex;
+}
+
+.provider-wallet ul li img {
+    width: 24px;
+    height: 24px;
+}
+
+.provider-wallet ul li span {
+    color: #fff;
+    margin-left: 10px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.more-btn button {
+    width: 540px;
+    justify-content: center;
+}
+
+.popular-wallet {
+    margin-right: 270px;
+}
+
+.popular {
+    background-color: #fff;
+    color: black;
+    border-radius: 10px;
+    padding: 4px 8px;
+}
