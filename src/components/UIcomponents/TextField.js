@@ -2,6 +2,11 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 
+import styles from './UI.module.scss';
+import classNames from 'classnames/bind';
+
+const cx = classNames.bind(styles);
+
 export default function BasicTextFields(props) {
     const { label, onChange, id, ...inputProps } = props;
 
@@ -15,7 +20,14 @@ export default function BasicTextFields(props) {
                 noValidate
                 autoComplete="off"
             >
-                <TextField {...inputProps} id="outlined-basic" label={label} variant="outlined" onChange={onChange} />
+                <TextField
+                    className={cx('text-field')}
+                    {...inputProps}
+                    id="outlined-basic"
+                    label={label}
+                    variant="outlined"
+                    onChange={onChange}
+                />
             </Box>
         </div>
     );

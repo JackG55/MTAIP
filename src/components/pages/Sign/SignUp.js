@@ -1,7 +1,12 @@
 import BasicTextFields from '../../UIcomponents/TextField';
 import { useState } from 'react';
 
-function SignnUp() {
+import styles from './SignUp.module.scss';
+import classNames from 'classnames/bind';
+
+const cx = classNames.bind(styles);
+
+function SignUp() {
     const [values, setValues] = useState({
         tentacpham: '',
         loaihinh: '',
@@ -61,16 +66,18 @@ function SignnUp() {
     };
 
     return (
-        <div className="sign-app">
+        <div className={cx('sign-app')}>
             <form onSubmit={handleSubmit}>
-                <h2>Đăng ký bản quyền</h2>
+                <h2> Đăng ký bản quyền </h2>{' '}
                 {inputs.map((input) => (
                     <BasicTextFields key={input.id} {...input} onChange={onChange} />
-                ))}
-                <button>Đăng ký</button>
-            </form>
+                ))}{' '}
+                <div className={cx('signUp-btn')}>
+                    <button> Đăng ký </button>{' '}
+                </div>{' '}
+            </form>{' '}
         </div>
     );
 }
 
-export default SignnUp;
+export default SignUp;

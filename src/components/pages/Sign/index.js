@@ -1,7 +1,7 @@
-import SignnUp from './SignnUp';
+import SignUp from './SignUp';
 
 function SignUpForm() {
-    return <SignnUp />;
+    return <SignUp />;
 }
 
 export default SignUpForm;
