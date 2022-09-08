@@ -5,7 +5,49 @@ import img3 from '../../../assets/images/wallet/walletconnect.webp';
 import img4 from '../../../assets/images/wallet/phantom.png';
 import img5 from '../../../assets/images/wallet/glow.jpg';
 
+import { useNavigate } from 'react-router-dom'
+
+import Web3 from 'web3/dist/web3.min.js';
+import detectEthereumProvider from '@metamask/detect-provider/dist/detect-provider.min.js';
+
+const web3 = new Web3('HTTP://127.0.0.1:7545');
+console.log(web3);
+
+
+
+
+
 function ConnectWallet() {
+    let navigate = useNavigate();
+    function HandleClick(){
+        navigate('/signup');
+    }
+
+    async function requestAccount() {
+        console.log('Requesting accounts.......');
+    
+        //check if MetaMask Extension exists
+        if (window.ethereum) {
+            console.log('detected');
+    
+            try {
+                const accounts = await window.ethereum.request({
+                    method: 'eth_requestAccounts',
+                });
+                
+                HandleClick();
+                console.log(accounts);
+            } catch (error) {
+                alert('Không thể kết nối');
+            }
+            
+    
+        } else {
+            console.log('MetaMask is not detected');
+        }
+    }
+    
+
     return (
         <div className="connect-wallet">
             <h1>Kết nối Ví của bạn</h1>
@@ -16,7 +58,7 @@ function ConnectWallet() {
                 <div className="provider-wallet">
                     <ul>
                         <li>
-                            <button>
+                            <button onClick={requestAccount}>
                                 <div>
                                     <img src={img1} alt="metamask" />
                                 </div>
