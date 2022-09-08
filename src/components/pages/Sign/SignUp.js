@@ -57,25 +57,19 @@ function SignUp() {
         },
     ];
 
-    const handleSubmit = (e) => {
-        e.prevenDefault();
-    };
-
     const onChange = (e) => {
         setValues({ ...values, [e.target.name]: e.target.value });
     };
 
     return (
         <div className={cx('sign-app')}>
-            <form onSubmit={handleSubmit}>
-                <h2> Đăng ký bản quyền </h2>{' '}
-                {inputs.map((input) => (
-                    <BasicTextFields key={input.id} {...input} onChange={onChange} />
-                ))}{' '}
-                <div className={cx('signUp-btn')}>
-                    <button> Đăng ký </button>{' '}
-                </div>{' '}
-            </form>{' '}
+            <h1> Đăng ký bản quyền </h1>
+            {inputs.map((input) => (
+                <BasicTextFields key={input.id} {...input} onChange={onChange} />
+            ))}
+            <div className={cx('signUp-btn')}>
+                <button> Đăng ký </button>
+            </div>
         </div>
     );
 }
