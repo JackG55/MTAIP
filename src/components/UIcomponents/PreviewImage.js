@@ -45,17 +45,13 @@ export default function FormDialog() {
             <div className={cx('image-link')}>
                 <div className={cx('image-inside')} onClick={handleClickOpen}>
                     <ImageIcon sx={{ position: 'absolute', height: '100px', width: '100px' }} />
-                    {imgUrl ? (
-                        <div className={cx('image-iconClose')}>
-                            <CloseIcon onClick={deleteImage} sx={{ fontSize: 40, color: 'white' }} />
-                        </div>
-                    ) : null}
-                    {imgUrl ? (
-                        <div>
-                            <img src={imgUrl} alt="" />
-                        </div>
-                    ) : null}
+                    {imgUrl ? <img className={cx('image-content')} src={imgUrl} alt="" /> : null}
                 </div>
+                {imgUrl ? (
+                    <div className={cx('image-iconClose')}>
+                        <CloseIcon onClick={deleteImage} sx={{ fontSize: 40, color: 'rgb(217 217 217)' }} />
+                    </div>
+                ) : null}
             </div>
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>Đường dẫn tới tác phẩm</DialogTitle>

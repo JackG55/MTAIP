@@ -23,30 +23,32 @@
     height: 257px;
     width: 350px;
     padding: 4px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     border: 3px dashed rgb(204, 204, 204);
     border-radius: 10px;
     cursor: pointer;
+    .image-iconClose {
+        margin-left: 295px;
+        position: relative;
+        bottom: 244px;
+        left: 5px;
+    }
     .image-inside {
         position: relative;
-        height: 240px;
-        width: 330px;
+        height: 242px;
+        width: 336px;
         display: flex;
         justify-content: center;
         align-items: center;
         border-radius: 10px;
-        .image-iconClose {
-            position: relative;
-            left: 135px;
-            bottom: 90px;
+        .image-content {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            border-radius: 10px;
         }
-    }
-    img {
-        position: absolute;
-        height: 200px;
-        width: 200px;
+        .image-content:hover {
+            opacity: 0.8;
+        }
     }
     .image-inside:hover {
         background-color: rgb(217 217 217);
