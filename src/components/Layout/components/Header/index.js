@@ -35,10 +35,10 @@ function Header() {
 
                 <div>
                         <button className={cx('signup-button', 'navbar-button')}>
-                            Đăng ký
+                            <a className={cx('navbar-item-link')} href="/account">Đăng ký</a>
                         </button>
                         <button className={cx('signin-button', 'navbar-button')}>
-                            Đăng nhập
+                            <a className={cx('navbar-item-link')} href="/create">Đăng nhập</a>
                         </button>
                 </div>
 
