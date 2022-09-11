@@ -27,8 +27,8 @@ export default function BasicTextFields(props) {
                     label={label}
                     variant="outlined"
                     onChange={onChange}
-                    InputProps={{ style: { fontSize: 20 } }}
-                    InputLabelProps={{ style: { fontSize: 20 } }}
+                    InputProps={{ style: { fontSize: 15 } }}
+                    InputLabelProps={{ style: { fontSize: 15 } }}
                     style={{ width: 550, margin: '15px' }}
                 />
             </Box>

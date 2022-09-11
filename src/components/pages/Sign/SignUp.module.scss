@@ -2,27 +2,44 @@
     margin-top: 20px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    margin-left: 35%;
     h1 {
-        text-align: center;
+        margin-bottom: 20px;
+        margin-left: 110px;
     }
-    .signUp-btn {
+    .image-author-content {
+        margin-left: 10px;
         display: flex;
-        width: 100%;
-        justify-content: center;
+        flex-direction: row;
+        height: 257px;
+        .image-content {
+            margin-left: 5px;
+        }
+        .author-content {
+            margin-left: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
     }
-    button {
-        width: 150px;
-        height: 50px;
-        padding: 10px;
-        border: none;
-        background-color: rgba(126, 58, 242, 1);
-        color: white;
-        cursor: pointer;
-        border-radius: 5px;
-        font-weight: bold;
-        font-size: 24px;
-        margin-top: 10px;
+    .artwork-content {
+        .signUp-btn {
+            display: flex;
+            margin-left: 15px;
+        }
+        .btn-sign {
+            width: 150px;
+            height: 50px;
+            padding: 10px;
+            border: none;
+            background-color: rgba(126, 58, 242, 1);
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 24px;
+            margin-top: 10px;
+        }
     }
 }

@@ -15,3 +15,40 @@
 /*====================================================TextField==================================================*/
 
 .text-field {}
+
+
+/*====================================================PreviewImage==================================================*/
+
+.image-link {
+    height: 257px;
+    width: 350px;
+    padding: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 3px dashed rgb(204, 204, 204);
+    border-radius: 10px;
+    cursor: pointer;
+    .image-inside {
+        position: relative;
+        height: 240px;
+        width: 330px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
+        .image-iconClose {
+            position: relative;
+            left: 135px;
+            bottom: 90px;
+        }
+    }
+    img {
+        position: absolute;
+        height: 200px;
+        width: 200px;
+    }
+    .image-inside:hover {
+        background-color: rgb(217 217 217);
+    }
+}
