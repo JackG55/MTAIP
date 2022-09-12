@@ -93,10 +93,30 @@ function Detail() {
             <div className={cx('another-artwork')}>
                 <AccordionUI id="4" title="Những tác phẩm khác" type="timeline">
                     <div className={cx('artwork-info')}>
-                        <CardUI />
-                        <CardUI />
-                        <CardUI />
-                        <CardUI />
+                        <div className={cx('artwork')}>
+                            <CardUI />
+                        </div>
+                        <div className={cx('artwork')}>
+                            <CardUI />
+                        </div>
+                        <div className={cx('artwork')}>
+                            <CardUI />
+                        </div>
+                        <div className={cx('artwork')}>
+                            <CardUI />
+                        </div>
+                        <div className={cx('artwork')}>
+                            <CardUI />
+                        </div>
+                        <div className={cx('artwork')}>
+                            <CardUI />
+                        </div>
+                        <div className={cx('artwork')}>
+                            <CardUI />
+                        </div>
+                        <div className={cx('artwork')}>
+                            <CardUI />
+                        </div>
                     </div>
                 </AccordionUI>
             </div>
