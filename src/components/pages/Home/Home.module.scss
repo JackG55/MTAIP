@@ -1,11 +1,8 @@
 /*========================HERO SECTION==============================================*/
 
-.hero-section{
-  
+.hero-section {}
 
-}
-
-.content{
+.content {
     display: flex;
     flex-direction: row;
     align-items: stretch;
@@ -13,19 +10,15 @@
     gap: 50px;
 }
 
-
-.left-content{
-    max-width: 50%;
-    
-}
-
-.right-content{
+.left-content {
     max-width: 50%;
 }
 
+.right-content {
+    max-width: 50%;
+}
 
-
-.hero-section-content{
+.hero-section-content {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -33,147 +26,134 @@
     gap: 40px;
 }
 
-.hero-section-title{
+.hero-section-title {
     font-style: normal;
     font-weight: 900;
     font-size: 60px;
     line-height: 60px;
 }
 
-
-.hero-section-paragraph{
+.hero-section-paragraph {
     font-style: normal;
     font-weight: 400;
     font-size: 20px;
     line-height: 150%;
-
-    color: #6B7280;
+    color: #6b7280;
 }
 
-
-.hero-section-list{
+.hero-section-list {
     gap: 16px;
-    a{
+    a {
         text-decoration: none;
         color: #000000;
     }
 }
 
-.hero-section-button{
+.hero-section-button {
     margin-left: 10px;
     padding: 8px 12px;
-    background-color: rgba(126, 58, 242,1);
+    background-color: rgba(126, 58, 242, 1);
     border: none;
     border-radius: 8px;
     cursor: pointer;
     transition: all 0.3s ease 0s;
 }
 
-.hero-section-button:hover{
-    background-color: rgba(126, 58, 242,0.5);
+.hero-section-button:hover {
+    background-color: rgba(126, 58, 242, 0.5);
 }
 
-.discover-button{
+.discover-button {
     padding: 12px 20px;
     font-weight: 500;
     font-size: 16px;
-    color: #FFFFFF;
+    color: #ffffff;
 }
 
-.create-button{
+.create-button {
     padding: 12px 20px;
-    border: 1px solid #E5E7EB;
+    border: 1px solid #e5e7eb;
     border-radius: 8px;
     font-size: 16px;
-    background-color: #E5E7EB;
+    background-color: #e5e7eb;
 }
 
-.hero-section-image img{
+.hero-section-image img {
     max-width: 100%;
 }
 
-/*===============================================WALLET SECTION==============================================*/
-.walletlogo{
-    background: #7E3AF2;
-    padding: 20px 0px 20px;
 
-    .logos{
+/*===============================================WALLET SECTION==============================================*/
+
+.walletlogo {
+    background: #7e3af2;
+    padding: 20px 0px 20px;
+    .logos {
         display: flex;
         flex-direction: row;
         justify-content: space-around;
         padding: 0px;
         gap: 56px;
         margin: 0px 80px 0px 80px;
-
-        img{
+        img {
             width: 285.73px;
             height: 80.75px;
         }
-    }   
+    }
 }
 
 
 /*=============================================FEATURE SECTION============================================*/
-.features{
+
+.features {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 96px 0px;
     gap: 80px;
-
-    .features-row{
+    .features-row {
         display: flex;
         flex-direction: row;
         align-items: center;
         margin: 0px 80px 0px 80px;
         gap: 64px;
     }
-
-    .features-left-content{
+    .features-left-content {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
         gap: 32px;
-        h1{
+        h1 {
             font-weight: 800;
             font-size: 36px;
             line-height: 125%;
             letter-spacing: -0.01em;
         }
-
-        p{
+        p {
             max-width: 85%;
             font-weight: 400;
             font-size: 20px;
             line-height: 150%;
-            color: #6B7280;
+            color: #6b7280;
         }
-
-        .features-list{
+        .features-list {
             border-top-style: outset;
             width: 100%;
-
-            ul{
+            ul {
                 padding: 25px;
                 list-style: none;
-                li{
+                li {
                     font-weight: 500;
                     font-size: 16px;
                     line-height: 150%;
-
                     span {
                         padding-left: 8px;
                     }
                 }
             }
-
-
         }
-
-
     }
-
-    img{
+    img {
         width: 608px;
         height: 392.7px;
     }
@@ -181,30 +161,26 @@
 
 
 /*=============================================PRICING SECTION============================================*/
-.pricing-section{
+
+.pricing-section {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     padding: 0px 120px 70px;
     gap: 40px;
-
-    h1{
+    h1 {
         font-weight: 700;
         font-size: 40px;
         line-height: 48px;
     }
-
-    .pricing-section-filter{
+    .pricing-section-filter {
         width: 100%;
         display: flex;
         justify-content: space-between;
-        
-
-        .pricing-section-menu{
+        .pricing-section-menu {
             display: flex;
             gap: 12px;
-
-            .pricing-section-menu-button{
+            .pricing-section-menu-button {
                 padding: 8px 12px !important;
                 border: none !important;
                 border-radius: 15px !important;
@@ -213,21 +189,17 @@
                 font-weight: 500 !important;
                 font-size: 14px !important;
                 line-height: 17px !important;
-                background-color: #DCDCDC33 !important;
+                background-color: #dcdcdc33 !important;
                 color: #000000;
-
             }
-
-            .pricing-section-menu-button:hover{
-                background-color: rgba(126, 58, 242,0.5);
+            .pricing-section-menu-button:hover {
+                background-color: rgba(126, 58, 242, 0.5);
             }
-
-            .pricing-section-menu-button:active{
-                background-color: rgba(126, 58, 242,0.5);
+            .pricing-section-menu-button:active {
+                background-color: rgba(126, 58, 242, 0.5);
             }
         }
-
-        .pricing-section-btn-filter{
+        .pricing-section-btn-filter {
             .pricing-section-btn-filter-detail {
                 padding: 8px 12px !important;
                 border: none !important;
@@ -237,71 +209,58 @@
                 font-weight: 500 !important;
                 font-size: 14px !important;
                 line-height: 17px !important;
-                background-color: #FFFFFF !important;
+                background-color: #ffffff !important;
                 color: #000000;
             }
         }
     }
-
-
-    .pricing-section-listing{
+    .pricing-section-listing {
         display: flex;
         flex-direction: row;
         align-items: center;
-        gap : 40px;
+        gap: 40px;
         flex-wrap: wrap;
         justify-content: space-between;
-
     }
-
-    .pricing-section-btn-seemore{
+    .pricing-section-btn-seemore {
         display: flex;
         justify-content: center;
         align-items: center;
         width: 100%;
-
-        button{
+        button {
             padding: 20px 40px;
             cursor: pointer;
             font-weight: 500;
             font-size: 20px;
             line-height: 24px;
-            color: #4F33A3;
-            border: 2px solid #3D00B7;
+            color: #4f33a3;
+            border: 2px solid #3d00b7;
             border-radius: 50px;
         }
-
-        button:hover{
-            background-color: rgba(126, 58, 242,0.5);
+        button:hover {
+            background-color: rgba(126, 58, 242, 0.5);
         }
-        
     }
 }
 
 
-
-
 /*=============================================INSTRUCTION SECTION============================================*/
-.instruction-section{
+
+.instruction-section {
     display: flex;
     flex-direction: column;
     align-items: center;
-
     margin: 67px 100px 100px 96px;
     gap: 80px;
-    
-    .instruction-heading{
-        h1{
+    .instruction-heading {
+        h1 {
             font-weight: 700;
             font-size: 48px;
             line-height: 58px;
-            color: #1F1D2B;
+            color: #1f1d2b;
         }
-        
     }
-
-
-    .instruction-items{
+    .instruction-items {
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -309,112 +268,94 @@
         gap: 130px;
         margin-left: 100px;
         margin-right: 100px;
-
-        .instruction-item{
+        .instruction-item {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: flex-start;
             gap: 13px;
-
-            h2{
+            h2 {
                 font-weight: 700;
                 font-size: 18px;
                 line-height: 22px;
             }
-
-            p{
+            p {
                 font-weight: 400;
                 font-size: 16px;
                 line-height: 19px;
                 text-align: center;
                 width: 250px;
             }
-
-            .instruction-item-icon{
+            .instruction-item-icon {
                 width: 64px;
                 height: 64px;
                 color: #7e3af2;
-
             }
         }
     }
-
 }
 
-.instruction-addition{
+.instruction-addition {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 24px;
-
-    h1{
+    h1 {
         font-weight: 600;
         font-size: 24px;
         line-height: 162.5%;
     }
-
-    p{
+    p {
         width: 50%;
         text-align: center;
         font-weight: 700;
         font-size: 14px;
         line-height: 162.5%;
     }
-
 }
 
 
 /*=============================================MYTEAM SECTION============================================*/
-.myteam-section{
+
+.myteam-section {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 50px;
     margin: 95px 100px 95px 100px;
-
-
-    .myteam-section-items{
+    .myteam-section-items {
         display: flex;
         flex-direction: row;
         align-items: flex-start;
         gap: 50px;
         justify-content: space-around;
-        
-
-
-        .myteam-section-item{
+        .myteam-section-item {
             width: 350px;
             display: flex;
             flex-direction: column;
             align-items: center;
             align-content: flex-start;
-
-
-            .myteam-section-avatar{
+            .myteam-section-avatar {
                 width: 120px;
                 height: 120px;
             }
-
-            h2{
+            h2 {
                 padding-top: 27px;
                 font-weight: 400;
                 font-size: 20px;
                 line-height: 23px;
                 text-align: center;
             }
-            
-            h3{
+            h3 {
                 padding-top: 11px;
                 font-weight: 700;
                 font-size: 14px;
                 line-height: 16px;
                 text-align: center;
                 letter-spacing: 0.0357em;
-                color: #A0AEC0;
+                color: #a0aec0;
             }
-            
-            p{
+            p {
                 font-weight: 300;
                 padding-top: 30px;
                 text-align: center;

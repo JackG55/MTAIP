@@ -9,7 +9,7 @@ import DescriptionIcon from '@mui/icons-material/Description';
 import TimelineIcon from '@mui/icons-material/Timeline';
 import HistoryIcon from '@mui/icons-material/History';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
-import MessageIcon from '@mui/icons-material/Message';
+import ArticleIcon from '@mui/icons-material/Article';
 
 import styles from './UI.module.scss';
 import classNames from 'classnames/bind';
@@ -27,7 +27,7 @@ function ChooseIcon(type) {
         case 'offer':
             return <LocalOfferIcon sx={{ width: '32px', height: '32px' }} />;
         case 'detail':
-            return <MessageIcon sx={{ width: '32px', height: '32px' }} />;
+            return <ArticleIcon sx={{ width: '32px', height: '32px' }} />;
         default: {
             return <DescriptionIcon sx={{ width: '32px', height: '32px' }} />;
         }
