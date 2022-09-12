@@ -22,10 +22,10 @@ export default function CardUI() {
                     <Avatar alt="H" src={logo} />
                     <div className={cx('card-content-text')}>
                         <Typography variant="h6" color="rgb(4, 17, 29)">
-                          spaceface
+                            spaceface
                         </Typography>
                         <Typography variant="h6" color="rgb(32, 129, 226)">
-                          Adamtoksoz
+                            Adamtoksoz
                         </Typography>
                     </div>
                 </div>

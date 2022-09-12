@@ -1,0 +1,101 @@
+.detail-artwork {
+    margin: 40px 10px 40px 50px;
+    .common-information {
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 20px;
+        .image-info {
+            width: 45%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            img {
+                height: 650px;
+                width: 550px;
+            }
+        }
+        .common-info {
+            margin-left: 20px;
+            width: 55%;
+            h1 {
+                margin-bottom: 10px;
+            }
+            .own-info {
+                display: flex;
+                flex-direction: row;
+                margin-bottom: 10px;
+                color: #4b5563;
+                span {
+                    margin-left: 30px;
+                }
+            }
+            .detail-content {
+                display: flex;
+                flex-direction: row;
+                .detail-title {
+                    margin-left: 40px;
+                    margin-right: 120px;
+                }
+                .detail-info {
+                    margin-left: 120px;
+                    text-align: right;
+                }
+            }
+        }
+        .price-info {
+            background-color: rgb(245, 245, 245);
+            height: 200px;
+            border-radius: 10px;
+            h3 {
+                padding-left: 30px;
+                padding-top: 20px;
+                padding-bottom: 20px;
+            }
+            .ethereum-price {
+                display: flex;
+                flex-direction: row;
+                padding-left: 30px;
+                .ethereum-info {
+                    margin-top: 4px;
+                }
+            }
+            .buy-offer-btn {
+                margin-top: 20px;
+                button {
+                    height: 58px;
+                    width: 116px;
+                    font-size: 20px;
+                    border: 2px solid #0000005e;
+                    border-radius: 10px;
+                    background-color: white;
+                    cursor: pointer;
+                    color: #3c4550;
+                }
+                .buy-btn {
+                    margin-left: 20px;
+                }
+                .offer-btn {
+                    margin-left: 20px;
+                }
+                button:hover {
+                    background-color: #7e3af2;
+                    color: white;
+                    border: 2px solid white;
+                }
+            }
+        }
+    }
+    .history-transaction {
+        margin-bottom: 20px;
+    }
+    .another-artwork {
+        .artwork-info {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            overflow: auto;
+        }
+    }
+}
