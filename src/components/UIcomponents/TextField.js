@@ -8,7 +8,7 @@ import classNames from 'classnames/bind';
 const cx = classNames.bind(styles);
 
 export default function BasicTextFields(props) {
-    const { label, onChange, id, ...inputProps } = props;
+    const { label, onChange, id, value, ...inputProps } = props;
 
     return (
         <div>
@@ -30,6 +30,7 @@ export default function BasicTextFields(props) {
                     InputProps={{ style: { fontSize: 15 } }}
                     InputLabelProps={{ style: { fontSize: 15 } }}
                     style={{ width: 550, margin: '15px' }}
+                    value={value}
                 />
             </Box>
         </div>

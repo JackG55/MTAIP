@@ -15,7 +15,7 @@ import classNames from 'classnames/bind';
 
 const cx = classNames.bind(styles);
 
-export default function FormDialog() {
+export default function PreviewImage({childToParent}) {
     const [open, setOpen] = React.useState(false);
     const [link, setLink] = React.useState('');
     const [imgUrl, setImgUrl] = React.useState('');
@@ -34,6 +34,7 @@ export default function FormDialog() {
     const onClick = () => {
         setImgUrl(link);
         setOpen(false);
+        childToParent(link)
     };
     const deleteImage = (e) => {
         e.preventDefault();

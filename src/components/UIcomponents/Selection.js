@@ -5,34 +5,37 @@ import MenuItem from '@mui/material/MenuItem';
 
 const loaiHinh = [
     {
-        value: 'văn học',
+        value: 'Hình ảnh'
     },
     {
-        value: 'bài giảng, bài phát biểu',
+        value: 'Âm nhạc',
     },
     {
-        value: 'báo chí',
+        value: 'Bài giảng, bài phát biểu',
     },
     {
-        value: 'âm nhạc',
+        value: 'Báo chí',
     },
     {
-        value: 'sân khấu',
+        value: 'Văn học',
     },
     {
-        value: 'điện ảnh',
+        value: 'Sân khấu',
     },
     {
-        value: 'kiến trúc',
+        value: 'Điện ảnh',
     },
     {
-        value: 'nghệ thuật dân gian',
+        value: 'Kiến trúc',
     },
     {
-        value: 'chương trình máy tính, sưu tập dữ liệu',
+        value: 'Nghệ thuật dân gian',
     },
     {
-        value: 'tác phẩm phái sinh',
+        value: 'Chương trình máy tính, sưu tập dữ liệu',
+    },
+    {
+        value: 'Tác phẩm phái sinh',
     },
 ];
 

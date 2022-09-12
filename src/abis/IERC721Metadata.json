@@ -28,7 +28,7 @@
       "type": "function"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.8.0+commit.c7dfd78e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"name\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"_name\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"symbol\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"_symbol\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/src/contracts/interfaces/IERC721Metadata.sol\":\"IERC721Metadata\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/src/contracts/interfaces/IERC721Metadata.sol\":{\"keccak256\":\"0x2a241886519a6bc77bc377a4210e286eecca488898960ec096c4ef9bbc6e871d\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://a07afc46eef7e7399b1810bf5f9542186b3a5f75b4372e70449b510ba32b2f74\",\"dweb:/ipfs/QmZFicUrAAV4abmzK3MGTr12DagA4q4neaiVsBXvtPKcNf\"]}},\"version\":1}",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.11+commit.d7f03943\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"name\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"_name\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"symbol\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"_symbol\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/src/contracts/interfaces/IERC721Metadata.sol\":\"IERC721Metadata\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/src/contracts/interfaces/IERC721Metadata.sol\":{\"keccak256\":\"0x2a241886519a6bc77bc377a4210e286eecca488898960ec096c4ef9bbc6e871d\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://a07afc46eef7e7399b1810bf5f9542186b3a5f75b4372e70449b510ba32b2f74\",\"dweb:/ipfs/QmZFicUrAAV4abmzK3MGTr12DagA4q4neaiVsBXvtPKcNf\"]}},\"version\":1}",
   "bytecode": "0x",
   "deployedBytecode": "0x",
   "immutableReferences": {},
@@ -63,6 +63,7 @@
       {
         "abstract": false,
         "baseContracts": [],
+        "canonicalName": "IERC721Metadata",
         "contractDependencies": [],
         "contractKind": "interface",
         "fullyImplemented": false,
@@ -71,6 +72,7 @@
           777
         ],
         "name": "IERC721Metadata",
+        "nameLocation": "74:15:11",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
@@ -80,6 +82,7 @@
             "kind": "function",
             "modifiers": [],
             "name": "name",
+            "nameLocation": "109:4:11",
             "nodeType": "FunctionDefinition",
             "parameters": {
               "id": 767,
@@ -96,6 +99,7 @@
                   "id": 769,
                   "mutability": "mutable",
                   "name": "_name",
+                  "nameLocation": "153:5:11",
                   "nodeType": "VariableDeclaration",
                   "scope": 771,
                   "src": "139:19:11",
@@ -133,6 +137,7 @@
             "kind": "function",
             "modifiers": [],
             "name": "symbol",
+            "nameLocation": "177:6:11",
             "nodeType": "FunctionDefinition",
             "parameters": {
               "id": 772,
@@ -149,6 +154,7 @@
                   "id": 774,
                   "mutability": "mutable",
                   "name": "_symbol",
+                  "nameLocation": "223:7:11",
                   "nodeType": "VariableDeclaration",
                   "scope": 776,
                   "src": "209:21:11",
@@ -181,18 +187,19 @@
           }
         ],
         "scope": 778,
-        "src": "64:255:11"
+        "src": "64:255:11",
+        "usedErrors": []
       }
     ],
     "src": "33:286:11"
   },
   "compiler": {
     "name": "solc",
-    "version": "0.8.0+commit.c7dfd78e.Emscripten.clang"
+    "version": "0.8.11+commit.d7f03943.Emscripten.clang"
   },
   "networks": {},
   "schemaVersion": "3.4.7",
-  "updatedAt": "2022-09-08T03:12:44.631Z",
+  "updatedAt": "2022-09-12T14:29:17.620Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},

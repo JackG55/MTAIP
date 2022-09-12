@@ -58,7 +58,7 @@
       "type": "function"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.8.0+commit.c7dfd78e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_index\",\"type\":\"uint256\"}],\"name\":\"tokenByIndex\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_owner\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_index\",\"type\":\"uint256\"}],\"name\":\"tokenOfOwnerByIndex\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"totalSupply\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/src/contracts/interfaces/IERC721Enumerable.sol\":\"IERC721Enumerable\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/src/contracts/interfaces/IERC721Enumerable.sol\":{\"keccak256\":\"0x75c41a1c134eda79fed15638c7aa944b525a28b0460ce7a36bbae5f401d29c3c\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://65c0d5f462236eefa865aa6e846050f8ffe2cc7e2c170b028977ce8c868f276c\",\"dweb:/ipfs/QmSVUipHTgwSXMPG4gsfJmuMRLtRvmYSeKJk3WPuENdHxQ\"]}},\"version\":1}",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.11+commit.d7f03943\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_index\",\"type\":\"uint256\"}],\"name\":\"tokenByIndex\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_owner\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_index\",\"type\":\"uint256\"}],\"name\":\"tokenOfOwnerByIndex\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"totalSupply\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/src/contracts/interfaces/IERC721Enumerable.sol\":\"IERC721Enumerable\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/src/contracts/interfaces/IERC721Enumerable.sol\":{\"keccak256\":\"0x75c41a1c134eda79fed15638c7aa944b525a28b0460ce7a36bbae5f401d29c3c\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://65c0d5f462236eefa865aa6e846050f8ffe2cc7e2c170b028977ce8c868f276c\",\"dweb:/ipfs/QmSVUipHTgwSXMPG4gsfJmuMRLtRvmYSeKJk3WPuENdHxQ\"]}},\"version\":1}",
   "bytecode": "0x",
   "deployedBytecode": "0x",
   "immutableReferences": {},
@@ -93,6 +93,7 @@
       {
         "abstract": false,
         "baseContracts": [],
+        "canonicalName": "IERC721Enumerable",
         "contractDependencies": [],
         "contractKind": "interface",
         "fullyImplemented": false,
@@ -101,6 +102,7 @@
           751
         ],
         "name": "IERC721Enumerable",
+        "nameLocation": "72:17:9",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
@@ -110,6 +112,7 @@
             "kind": "function",
             "modifiers": [],
             "name": "totalSupply",
+            "nameLocation": "112:11:9",
             "nodeType": "FunctionDefinition",
             "parameters": {
               "id": 730,
@@ -126,6 +129,7 @@
                   "id": 732,
                   "mutability": "mutable",
                   "name": "",
+                  "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
                   "scope": 734,
                   "src": "149:7:9",
@@ -163,6 +167,7 @@
             "kind": "function",
             "modifiers": [],
             "name": "tokenByIndex",
+            "nameLocation": "180:12:9",
             "nodeType": "FunctionDefinition",
             "parameters": {
               "id": 737,
@@ -173,6 +178,7 @@
                   "id": 736,
                   "mutability": "mutable",
                   "name": "_index",
+                  "nameLocation": "201:6:9",
                   "nodeType": "VariableDeclaration",
                   "scope": 741,
                   "src": "193:14:9",
@@ -206,6 +212,7 @@
                   "id": 739,
                   "mutability": "mutable",
                   "name": "",
+                  "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
                   "scope": 741,
                   "src": "232:7:9",
@@ -243,6 +250,7 @@
             "kind": "function",
             "modifiers": [],
             "name": "tokenOfOwnerByIndex",
+            "nameLocation": "264:19:9",
             "nodeType": "FunctionDefinition",
             "parameters": {
               "id": 746,
@@ -253,6 +261,7 @@
                   "id": 743,
                   "mutability": "mutable",
                   "name": "_owner",
+                  "nameLocation": "292:6:9",
                   "nodeType": "VariableDeclaration",
                   "scope": 750,
                   "src": "284:14:9",
@@ -280,6 +289,7 @@
                   "id": 745,
                   "mutability": "mutable",
                   "name": "_index",
+                  "nameLocation": "308:6:9",
                   "nodeType": "VariableDeclaration",
                   "scope": 750,
                   "src": "300:14:9",
@@ -313,6 +323,7 @@
                   "id": 748,
                   "mutability": "mutable",
                   "name": "",
+                  "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
                   "scope": 750,
                   "src": "339:7:9",
@@ -345,18 +356,19 @@
           }
         ],
         "scope": 752,
-        "src": "62:289:9"
+        "src": "62:289:9",
+        "usedErrors": []
       }
     ],
     "src": "33:318:9"
   },
   "compiler": {
     "name": "solc",
-    "version": "0.8.0+commit.c7dfd78e.Emscripten.clang"
+    "version": "0.8.11+commit.d7f03943.Emscripten.clang"
   },
   "networks": {},
   "schemaVersion": "3.4.7",
-  "updatedAt": "2022-09-08T03:12:44.629Z",
+  "updatedAt": "2022-09-12T14:29:17.618Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},

@@ -11,7 +11,6 @@ import Web3 from 'web3/dist/web3.min.js';
 import detectEthereumProvider from '@metamask/detect-provider/dist/detect-provider.min.js';
 
 const web3 = new Web3('HTTP://127.0.0.1:7545');
-console.log(web3);
 
 
 
