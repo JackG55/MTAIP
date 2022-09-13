@@ -2,19 +2,20 @@ import BasicTextFields from '../../UIcomponents/TextField';
 import SelectTextFields from '../../UIcomponents/Selection';
 import PreviewImage from '../../UIcomponents/PreviewImage';
 
-import { useState, useEffect } from 'react';
+import ImageIcon from '@mui/icons-material/Image';
+import IconButton from '@mui/material/IconButton';
+
+import { useState, useEffect, useRef } from 'react';
 
 import styles from './SignUp.module.scss';
 import classNames from 'classnames/bind';
 import Web3 from 'web3/dist/web3.min.js';
-import detectEthereumProvider from "@metamask/detect-provider";
-
+import detectEthereumProvider from '@metamask/detect-provider';
 
 import MarketplaceAddress from '../../../../src/abis/Marketplace-address.json';
 import MarketplaceAbi from '../../../../src/abis/Marketplace.json';
 import MTAIPAddress from '../../../../src/abis/MTAIP-address.json';
 import MTAIPAbi from '../../../../src/abis/MTAIP.json';
-
 
 const cx = classNames.bind(styles);
 
@@ -57,13 +58,10 @@ function SignUp() {
     ];
 
     //============================================Xử lý upload ảnh===========================//
-    
-
-
 
     //============================================Xử lý BLockchain==========================//
     const [loading, setLoading] = useState(true);
-    const [account, setAccount] = useState(null);
+    const [account, setAccount] = useState('');
     const [nft, setNFT] = useState({});
     const [marketplace, setMarketplace] = useState({});
     // MetaMask Login/Connect
@@ -103,38 +101,76 @@ function SignUp() {
         setLoading(false);
     };
 
-
     //=====================================================================================//
 
-
     const childToParent = (imglink) => {
-        setValues({...values, link: imglink});
-      }
+        setValues({ ...values, link: imglink });
+    };
 
     const onChange = (e) => {
         setValues({ ...values, [e.target.name]: e.target.value });
     };
 
     const handleClick = async () => {
-        if(!values.link||!values.noidung||!values.tentacpham){
-            window.alert("Bạn phải điền đầy đủ các trường")
+        if (!values.link || !values.noidung || !values.tentacpham) {
+            window.alert('Bạn phải điền đầy đủ các trường');
         }
+    };
+
+    const fileInput = useRef(null)
+
+    const [image, setImage] = useState();
+    const [preview, setPreview] = useState();
+
+    const handleFileInput = (e) => {
+        // handle validations
+       const file = e.target.files[0];
+       if(file){
+        console.log(file)
+        setImage(file)
+       }else{
+        setImage(null)
+       }
     }
+
+    useEffect(() =>{
+        if(image){
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setPreview(reader.result)
+            }
+            reader.readAsDataURL(image);
+        }
+        else{
+            setPreview(null)
+        }
+    }, [image])
 
     return (
         <div className={cx('sign-app')}>
             <h1> Đăng ký bản quyền </h1>
             <div className={cx('image-author-content')}>
                 <div className={cx('image-content')}>
-                    <PreviewImage childToParent={childToParent}/>
+                    <div className={cx('image-link')}>
+                        <div className={cx('image-inside')}>
+                            <IconButton onClick={e => fileInput.current && fileInput.current.click()}>
+                                <ImageIcon sx={{ position: 'absolute', height: '100px', width: '100px' }} />
+                                {preview ? (<img className={cx('image-display')} src={preview} style={{ objectFit : 'cover' }}/>) : null}
+                            </IconButton>
+                            <input type="file" 
+                                    style={{ display: 'none' }} 
+                                    ref={fileInput} 
+                                    onChange={handleFileInput}
+                                    accept="image/* , png, jpeg, jpg"
+                            >
+                                    
+                            </input>
+                        </div>
+                    </div>
                 </div>
                 <div className={cx('author-content')}>
                     <BasicTextFields disabled label="Tác giả" defaultValue="Nguyễn Văn A" />
-                    <BasicTextFields
-                        disabled
-                        label="Địa chỉ tài khoản"
-                        value={account}
-                    />
+                    <BasicTextFields disabled label="Địa chỉ tài khoản" value={account} />
                 </div>
             </div>
             <div className={cx('artwork-content')}>
@@ -143,7 +179,10 @@ function SignUp() {
                     <BasicTextFields key={input.id} {...input} onChange={onChange} />
                 ))}
                 <div className={cx('signUp-btn')}>
-                    <button className={cx('btn-sign')}  onClick={handleClick}> Đăng ký </button>
+                    <button className={cx('btn-sign')} onClick={handleClick}>
+                        {' '}
+                        Đăng ký{' '}
+                    </button>
                 </div>
             </div>
         </div>
