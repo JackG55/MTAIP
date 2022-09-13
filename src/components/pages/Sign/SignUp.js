@@ -9,7 +9,12 @@ import classNames from 'classnames/bind';
 import Web3 from 'web3/dist/web3.min.js';
 import detectEthereumProvider from "@metamask/detect-provider";
 
-import KryptoBirdz from '../../../abis/KryptoBirdz.json'
+
+import MarketplaceAddress from '../../../../src/abis/Marketplace-address.json';
+import MarketplaceAbi from '../../../../src/abis/Marketplace.json';
+import MTAIPAddress from '../../../../src/abis/MTAIP-address.json';
+import MTAIPAbi from '../../../../src/abis/MTAIP.json';
+
 
 const cx = classNames.bind(styles);
 
@@ -51,92 +56,53 @@ function SignUp() {
         },
     ];
 
+    //============================================Xử lý upload ảnh===========================//
+    
+
 
 
     //============================================Xử lý BLockchain==========================//
-    const [state, setState] = useState({
-        account: "",
-        contract: null,
-        totalSupply: 0,
-        kryptoBirdz: [],
-    })
-
-    const [account, setAccount] = useState("")
-    const [contract, setContract] = useState(null)
-    const [totalSupply, setTotalSupply] = useState(0)
-    const [kryptoBirdz, setKryptoBirdz] = useState([])
-
-    useEffect( ()=>{
-        async function init(){
-            await loadWeb3();
-            await loadBlockchainData();
-        }
-        init()
-    },[])
-
-    async function loadWeb3() {
+    const [loading, setLoading] = useState(true);
+    const [account, setAccount] = useState(null);
+    const [nft, setNFT] = useState({});
+    const [marketplace, setMarketplace] = useState({});
+    // MetaMask Login/Connect
+    const web3Handler = async () => {
+        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        setAccount(accounts[0]);
+        // Get provider from Metamask
         const provider = await detectEthereumProvider();
-    
-        // modern browsers
-        // if there is a provider then lets
-        // lets log that it's working and access the window from the doc
-        // to set Web3 to the provider
-    
         if (provider) {
-          console.log("ethereum wallet is connected");
-          window.web3 = new Web3(provider);
+            console.log('ethereum wallet is connected');
+            window.web3 = new Web3(provider);
         } else {
-          // no ethereum provider
-          console.log("no ethereum wallet detected");
+            // no ethereum provider
+            console.log('no ethereum wallet detected');
         }
-      }
-    
 
+        window.ethereum.on('chainChanged', (chainId) => {
+            window.location.reload();
+        });
 
-     async function loadBlockchainData() {
+        window.ethereum.on('accountsChanged', async function (accounts) {
+            setAccount(accounts[0]);
+            await web3Handler();
+        });
+        loadContracts();
+    };
+
+    const loadContracts = async () => {
         const web3 = window.web3;
-        const accounts = await web3.eth.getAccounts();
-        setAccount(accounts[0])
-    
-        // create a constant js variable networkId which is set to blockchain network id
-        const networkId = await web3.eth.net.getId();
-        const networkData = KryptoBirdz.networks[networkId];
-        if (networkData) {
-          // 1. create a var abi set to the Kryptobird abi
-          // 2. create a var address set to networkData address
-          // 3. create a var contract which grabs a new instance of web3 eth Contract
-          // 4. login in the console the var contract successfully
-          const abi = KryptoBirdz.abi;
-          const address = networkData.address;
-          const contract = new web3.eth.Contract(abi, address);
-          setContract(contract)
-    
-          // call the total supply of our Krypto Birdz
-          // grab the total supply on the front end and log the results
-          // go to web3 doc and read up on methods and call
-          const totalSupply = await contract.methods.totalSupply().call();
-          setTotalSupply(totalSupply)
-          // set up an array to keep track of tokens
-          // load KryptoBirdz
-          for (let i = 1; i <= totalSupply; i++) {
-            const KryptoBird = await contract.methods.kryptoBirdz(i - 1).call();
-            // how should we handle the state on the front end?
-            setKryptoBirdz(...kryptoBirdz, KryptoBird)
-          }
-        } else {
-          window.alert("Smart contract not deployed");
-        }
-      }
+        // Get deployed copies of contracts
+        const marketplace = new web3.eth.Contract(MarketplaceAddress.address, MarketplaceAbi.abi);
+        setMarketplace(marketplace);
 
+        const nft = new web3.eth.Contract(MTAIPAddress.address, MTAIPAbi.abi);
+        setNFT(nft);
 
-      const mint = (kryptoBird) => {
-        contract.methods
-          .mint(kryptoBird)
-          .send({ from: account })
-          .once("receipt", (receipt) => {
-            setKryptoBirdz(...kryptoBirdz, KryptoBirdz )
-          });
-      };
+        setLoading(false);
+    };
+
 
     //=====================================================================================//
 
@@ -149,9 +115,10 @@ function SignUp() {
         setValues({ ...values, [e.target.name]: e.target.value });
     };
 
-    const handleClick = () => {
-    console.log(values)
-       mint(values.link)
+    const handleClick = async () => {
+        if(!values.link||!values.noidung||!values.tentacpham){
+            window.alert("Bạn phải điền đầy đủ các trường")
+        }
     }
 
     return (

@@ -1,9 +1,9 @@
-const MTAIP = artifacts.require('MTAIP')
+const KryptoBirdz = artifacts.require("KryptoBirdz");
+const MTAIP = artifacts.require("MTAIP.sol");
+const Marketplace = artifacts.require("Marketplace.sol");
 
-module.exports = async function (deployer) {
-
-const BASEURI = `https://bafybeidfpvjszubegtoomoknmc7zcqnay7noteadbwxktw46guhdeqohrm.ipfs.infura-ipfs.io/`
-
-await deployer.deploy(MTAIP, 'MTAIP', 'MTA', BASEURI)
-
-}
+module.exports = function (deployer) {
+  deployer.deploy(KryptoBirdz);
+  deployer.deploy(MTAIP);
+  deployer.deploy(Marketplace, 1);
+};
