@@ -12,6 +12,9 @@ import classNames from 'classnames/bind';
 import Web3 from 'web3/dist/web3.min.js';
 import detectEthereumProvider from '@metamask/detect-provider';
 
+import { Web3Storage, File } from 'web3.storage';
+import { ethers } from "ethers";
+
 import MarketplaceAddress from '../../../../src/abis/Marketplace-address.json';
 import MarketplaceAbi from '../../../../src/abis/Marketplace.json';
 import MTAIPAddress from '../../../../src/abis/MTAIP-address.json';
@@ -65,41 +68,48 @@ function SignUp() {
     const [nft, setNFT] = useState({});
     const [marketplace, setMarketplace] = useState({});
     // MetaMask Login/Connect
-    const web3Handler = async () => {
-        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-        setAccount(accounts[0]);
-        // Get provider from Metamask
-        const provider = await detectEthereumProvider();
-        if (provider) {
-            console.log('ethereum wallet is connected');
-            window.web3 = new Web3(provider);
-        } else {
-            // no ethereum provider
-            console.log('no ethereum wallet detected');
-        }
+  const web3Handler = async () => {
+    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+    setAccount(accounts[0])
+    // Get provider from Metamask
+    const provider = new ethers.providers.Web3Provider(window.ethereum)
+    // Set signer
+    const signer = provider.getSigner()
 
-        window.ethereum.on('chainChanged', (chainId) => {
-            window.location.reload();
-        });
+    window.ethereum.on('chainChanged', (chainId) => {
+      window.location.reload();
+    })
 
-        window.ethereum.on('accountsChanged', async function (accounts) {
-            setAccount(accounts[0]);
-            await web3Handler();
-        });
-        loadContracts();
-    };
+    window.ethereum.on('accountsChanged', async function (accounts) {
+      setAccount(accounts[0])
+      await web3Handler()
+    })
+    loadContracts(signer)
+  }
+  const loadContracts = async (signer) => {
+    // Get deployed copies of contracts
+    const marketplace = new ethers.Contract(MarketplaceAddress.address, MarketplaceAbi.abi, signer)
+    setMarketplace(marketplace)
+    const nft = new ethers.Contract(MTAIPAddress.address, MTAIPAbi.abi, signer)
+    setNFT(nft)
+  }
 
-    const loadContracts = async () => {
-        const web3 = window.web3;
-        // Get deployed copies of contracts
-        const marketplace = new web3.eth.Contract(MarketplaceAddress.address, MarketplaceAbi.abi);
-        setMarketplace(marketplace);
+    window.ethereum.on('accountsChanged', function (accounts) {
+        setAccount(accounts[0])
+      })
 
-        const nft = new web3.eth.Contract(MTAIPAddress.address, MTAIPAbi.abi);
-        setNFT(nft);
 
-        setLoading(false);
-    };
+    useEffect(() => {
+        web3Handler()
+    }, [account])
+
+    const mint = async(uri) =>{
+        await(await nft.mint(uri)).wait()
+        const id = await nft.tokenCount()
+        console.log(id)
+    }
+
+
 
     //=====================================================================================//
 
@@ -112,39 +122,64 @@ function SignUp() {
     };
 
     const handleClick = async () => {
-        if (!values.link || !values.noidung || !values.tentacpham) {
-            window.alert('Bạn phải điền đầy đủ các trường');
-        }
+        //đầu tiên là upload lên IPFS và mint NFT
+       UploadtoIPFS()
+
+       
     };
 
-    const fileInput = useRef(null)
+    const fileInput = useRef(null);
 
     const [image, setImage] = useState();
     const [preview, setPreview] = useState();
 
     const handleFileInput = (e) => {
         // handle validations
-       const file = e.target.files[0];
-       if(file){
-        console.log(file)
-        setImage(file)
-       }else{
-        setImage(null)
-       }
+        const file = e.target.files[0];
+        if (file) {
+            setImage(file);
+            console.log(file.name)
+        } else {
+            setImage(null);
+        }
+    };
+
+    function makeStorageClient () {
+        return new Web3Storage({ token: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDM0NzMyNjA2ZDU1MmI1MUIxOUJGQjM4QmM5RmZGNjZmMjcwYjQ3MkIiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2NjMwODYyMTM3ODMsIm5hbWUiOiJNVEFJUCJ9.we6MoKCTAgAkgBsirN_fLFMPzpJFFdOPnqdDDl8PneY` })
+      }
+
+    const UploadtoIPFS = async() => {
+        if (image) {
+            console.log(image)
+            try{
+                const client = makeStorageClient();
+                const cid = await client.put([image], {name: image.name});
+                const imageURI = `ipfs://${cid}/${image.name}`
+
+                mint(imageURI)
+                
+            }
+            catch (error) {
+            console.log("Error sending File to IPFS: ")
+            console.log(error)
+        }
+        }
     }
 
-    useEffect(() =>{
-        if(image){
+
+    
+
+    useEffect(() => {
+        if (image) {
             const reader = new FileReader();
             reader.onloadend = () => {
-                setPreview(reader.result)
-            }
+                setPreview(reader.result);
+            };
             reader.readAsDataURL(image);
+        } else {
+            setPreview(null);
         }
-        else{
-            setPreview(null)
-        }
-    }, [image])
+    }, [image]);
 
     return (
         <div className={cx('sign-app')}>
@@ -153,18 +188,18 @@ function SignUp() {
                 <div className={cx('image-content')}>
                     <div className={cx('image-link')}>
                         <div className={cx('image-inside')}>
-                            <IconButton onClick={e => fileInput.current && fileInput.current.click()}>
-                                <ImageIcon sx={{ position: 'absolute', height: '100px', width: '100px' }} />
-                                {preview ? (<img className={cx('image-display')} src={preview} style={{ objectFit : 'cover' }}/>) : null}
+                            <IconButton onClick={(e) => fileInput.current && fileInput.current.click()}>
+                                {preview ? (
+                                    <img className={cx('image-display')} src={preview} style={{ objectFit: 'cover' }} />
+                                ) : <ImageIcon sx={{ position: 'absolute', height: '100px', width: '100px' }} />}
                             </IconButton>
-                            <input type="file" 
-                                    style={{ display: 'none' }} 
-                                    ref={fileInput} 
-                                    onChange={handleFileInput}
-                                    accept="image/* , png, jpeg, jpg"
-                            >
-                                    
-                            </input>
+                            <input
+                                type="file"
+                                style={{ display: 'none' }}
+                                ref={fileInput}
+                                onChange={handleFileInput}
+                                accept="image/* , png, jpeg, jpg"
+                            ></input>
                         </div>
                     </div>
                 </div>
