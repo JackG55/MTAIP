@@ -41,9 +41,9 @@ contract Marketplace is ReentrancyGuard {
         address indexed buyer
     );
 
-    constructor(uint _feePercent) {
+    constructor() {
         feeAccount = payable(msg.sender);
-        feePercent = _feePercent;
+        feePercent = 1;
     }
 
     // Make item to offer on the marketplace

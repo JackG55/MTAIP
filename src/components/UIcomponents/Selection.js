@@ -39,11 +39,12 @@ const loaiHinh = [
     },
 ];
 
-export default function SelectTextFields() {
+export default function SelectTextFields({childToParent}) {
     const [category, setCategory] = React.useState('');
 
     const handleChange = (event) => {
         setCategory(event.target.value);
+        childToParent(event.target.value);
     };
 
     return (

@@ -9,11 +9,12 @@ import { useState, useEffect, useRef } from 'react';
 
 import styles from './SignUp.module.scss';
 import classNames from 'classnames/bind';
-import Web3 from 'web3/dist/web3.min.js';
-import detectEthereumProvider from '@metamask/detect-provider';
 
 import { Web3Storage, File } from 'web3.storage';
 import { ethers } from 'ethers';
+
+import makeStorageClient from '../../getWeb3Token';
+import { jsonFile, makeGatewayURL } from '../../web3Storage_helper';
 
 import MarketplaceAddress from '../../../../src/abis/Marketplace-address.json';
 import MarketplaceAbi from '../../../../src/abis/Marketplace.json';
@@ -24,11 +25,12 @@ const cx = classNames.bind(styles);
 
 function SignUp() {
     const [values, setValues] = useState({
+        loaihinh: '',
         tentacpham: '',
-        dateHT: '',
-        dateCB: '',
+        dateHT: new Date().toLocaleDateString(),
+        dateCB: new Date().toLocaleDateString(),
         noidung: '',
-        link: '',
+        price: 0,
     });
 
     const inputs = [
@@ -40,30 +42,35 @@ function SignUp() {
         },
         {
             id: 2,
+            name: 'noidung',
+            type: 'text',
+            label: 'Nhập nội dung',
+        },
+        {
+            id: 3,
             name: 'dateHT',
             type: 'date',
             label: 'Ngày hoàn thành',
             defaultValue: '2022-05-09',
         },
         {
-            id: 3,
+            id: 4,
             name: 'dateCB',
             type: 'date',
             label: 'Ngày công bố',
             defaultValue: '2022-05-09',
         },
         {
-            id: 4,
-            name: 'noidung',
-            type: 'text',
-            label: 'Nhập nội dung',
+            id: 5,
+            name: 'price',
+            type: 'number',
+            label: 'Giá bán',
         },
     ];
 
-    //============================================Xử lý upload ảnh===========================//
-
     //============================================Xử lý BLockchain==========================//
-    const [loading, setLoading] = useState(true);
+    // #region Blockchain
+
     const [account, setAccount] = useState('');
     const [nft, setNFT] = useState({});
     const [marketplace, setMarketplace] = useState({});
@@ -105,22 +112,88 @@ function SignUp() {
     const mint = async (uri) => {
         await (await nft.mint(uri)).wait();
         const id = await nft.tokenCount();
-        console.log(id);
     };
 
+    const mintThenList = async (uri) => {
+        await (await nft.mint(uri)).wait();
+        // get tokenId of new nft
+        const id = await nft.tokenCount();
+        // approve marketplace to spend nft
+        await (await nft.setApprovalForAll(marketplace.address, true)).wait();
+        // add nft to marketplace
+        const listingPrice = ethers.utils.parseEther(values.price.toString());
+        await (await marketplace.makeItem(nft.address, id, listingPrice)).wait();
+    };
+
+    // #endregion Blockchain
     //=====================================================================================//
 
-    const childToParent = (imglink) => {
-        setValues({ ...values, link: imglink });
+    //============================================Xử lý upload ảnh===========================//
+    // #region UploadImage
+
+    const checkInput = () => {
+        if (!values.tentacpham || !values.loaihinh || !values.dateCB || !values.dateHT || !values.noidung) {
+            window.alert('Bạn phải điền đầy đủ các trường');
+            return false;
+        } else {
+            return true;
+        }
     };
+
+    const UploadtoIPFS = async () => {
+        if (image) {
+            try {
+                const metadataFile = jsonFile('metadata.json', {
+                    path: image.name,
+                    tentacpham: values.tentacpham,
+                    loaihinh: values.loaihinh,
+                    ngaycongbo: values.dateCB,
+                    ngayhoanthanh: values.dateHT,
+                    noidung: values.noidung,
+                    giachuyennhuong: values.price,
+                });
+
+                const client = makeStorageClient();
+                const cid = await client.put([image, metadataFile], { name: image.name });
+
+                const imageURI = `ipfs://${cid}/${image.name}`;
+                const metadataURI = `ipfs://${cid}/metadata.json`;
+                const metadataGatewayURL = makeGatewayURL(cid, 'metadata.json');
+                const imageGatewayURL = makeGatewayURL(cid, image.name);
+
+                //sau khi đã upload xong thì mint
+                //kiểm tra xem có set giá ko ??
+
+                if (!values.price || values.price === 0) {
+                    mint(imageURI);
+                } else {
+                    mintThenList(imageURI);
+                }
+            } catch (error) {
+                console.log('Error sending File to IPFS: ');
+                console.log(error);
+            }
+        }
+    };
+    // #endregion storeImage
+    //==========================================================================================================//
 
     const onChange = (e) => {
         setValues({ ...values, [e.target.name]: e.target.value });
     };
 
+    const childToParent = (childdata) => {
+        setValues({ ...values, loaihinh: childdata });
+    };
+
+    //#Nút Đăng Ký
     const handleClick = async () => {
         //đầu tiên là upload lên IPFS và mint NFT
-        UploadtoIPFS();
+        //UploadtoIPFS();
+        if (checkInput) {
+            const uploadinfo = UploadtoIPFS();
+            console.log(uploadinfo.imageURI);
+        }
     };
 
     const fileInput = useRef(null);
@@ -133,31 +206,8 @@ function SignUp() {
         const file = e.target.files[0];
         if (file) {
             setImage(file);
-            console.log(file.name);
         } else {
             setImage(null);
-        }
-    };
-
-    function makeStorageClient() {
-        return new Web3Storage({
-            token: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDM0NzMyNjA2ZDU1MmI1MUIxOUJGQjM4QmM5RmZGNjZmMjcwYjQ3MkIiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2NjMwODYyMTM3ODMsIm5hbWUiOiJNVEFJUCJ9.we6MoKCTAgAkgBsirN_fLFMPzpJFFdOPnqdDDl8PneY`,
-        });
-    }
-
-    const UploadtoIPFS = async () => {
-        if (image) {
-            console.log(image);
-            try {
-                const client = makeStorageClient();
-                const cid = await client.put([image], { name: image.name });
-                const imageURI = `ipfs://${cid}/${image.name}`;
-
-                mint(imageURI);
-            } catch (error) {
-                console.log('Error sending File to IPFS: ');
-                console.log(error);
-            }
         }
     };
 
@@ -203,7 +253,7 @@ function SignUp() {
                 </div>
             </div>
             <div className={cx('artwork-content')}>
-                <SelectTextFields />
+                <SelectTextFields childToParent={childToParent} />
                 {inputs.map((input) => (
                     <BasicTextFields key={input.id} {...input} onChange={onChange} />
                 ))}
