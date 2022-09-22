@@ -5887,13 +5887,13 @@
         2293
       ],
       "IERC165": [
-        2763
+        2761
       ],
       "IERC721": [
-        2805
+        2803
       ],
       "IERC721Enumerable": [
-        2829
+        2827
       ]
     },
     "id": 2294,
@@ -5930,7 +5930,7 @@
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
         "scope": 2294,
-        "sourceUnit": 2830,
+        "sourceUnit": 2828,
         "src": "82:44:14",
         "symbolAliases": [],
         "unitAlias": ""
@@ -5955,7 +5955,7 @@
               "id": 2127,
               "name": "IERC721Enumerable",
               "nodeType": "IdentifierPath",
-              "referencedDeclaration": 2829,
+              "referencedDeclaration": 2827,
               "src": "213:17:14"
             },
             "id": 2128,
@@ -5970,11 +5970,11 @@
         "id": 2293,
         "linearizedBaseContracts": [
           2293,
-          2829,
+          2827,
           2099,
-          2805,
+          2803,
           1826,
-          2763
+          2761
         ],
         "name": "ERC721Enumerable",
         "nameLocation": "185:16:14",
@@ -7285,7 +7285,7 @@
           },
           {
             "baseFunctions": [
-              2819
+              2817
             ],
             "body": {
               "id": 2254,
@@ -7551,7 +7551,7 @@
           },
           {
             "baseFunctions": [
-              2828
+              2826
             ],
             "body": {
               "id": 2280,
@@ -7888,7 +7888,7 @@
           },
           {
             "baseFunctions": [
-              2812
+              2810
             ],
             "body": {
               "id": 2291,
@@ -8009,7 +8009,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.7",
-  "updatedAt": "2022-09-13T14:57:37.457Z",
+  "updatedAt": "2022-09-21T02:56:15.813Z",
   "devdoc": {
     "kind": "dev",
     "methods": {

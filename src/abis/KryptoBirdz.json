@@ -73,8 +73,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -111,8 +110,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -131,8 +129,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [],
@@ -145,8 +142,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -165,8 +161,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -185,8 +180,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [],
@@ -199,8 +193,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -219,8 +212,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -244,8 +236,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [],
@@ -258,8 +249,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -10188,16 +10178,16 @@
         2353
       ],
       "IERC165": [
-        2763
+        2761
       ],
       "IERC721": [
-        2805
+        2803
       ],
       "IERC721Enumerable": [
-        2829
+        2827
       ],
       "IERC721Metadata": [
-        2842
+        2840
       ],
       "KryptoBirdz": [
         2413
@@ -10255,13 +10245,13 @@
           2413,
           2120,
           2293,
-          2829,
+          2827,
           2099,
-          2805,
+          2803,
           2353,
           1826,
-          2763,
-          2842
+          2761,
+          2840
         ],
         "name": "KryptoBirdz",
         "nameLocation": "104:11:16",
@@ -10951,7 +10941,7 @@
     }
   },
   "schemaVersion": "3.4.7",
-  "updatedAt": "2022-09-13T14:57:48.574Z",
+  "updatedAt": "2022-09-21T02:56:24.927Z",
   "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",
