@@ -1,7 +1,5 @@
 import BasicTextFields from '../../UIcomponents/TextField';
 import SelectTextFields from '../../UIcomponents/Selection';
-import PreviewImage from '../../UIcomponents/PreviewImage';
-
 import ImageIcon from '@mui/icons-material/Image';
 import IconButton from '@mui/material/IconButton';
 
@@ -10,7 +8,6 @@ import { useState, useEffect, useRef } from 'react';
 import styles from './SignUp.module.scss';
 import classNames from 'classnames/bind';
 
-import { Web3Storage, File } from 'web3.storage';
 import { ethers } from 'ethers';
 
 import makeStorageClient from '../../getWeb3Token';
@@ -109,6 +106,11 @@ function SignUp() {
         web3Handler();
     }, [account]);
 
+    // #endregion Blockchain
+    //=====================================================================================//
+
+    //============================================Xử lý contract===========================//
+    //#region Contract
     const mint = async (uri) => {
         await (await nft.mint(uri)).wait();
         const id = await nft.tokenCount();
@@ -124,8 +126,7 @@ function SignUp() {
         const listingPrice = ethers.utils.parseEther(values.price.toString());
         await (await marketplace.makeItem(nft.address, id, listingPrice)).wait();
     };
-
-    // #endregion Blockchain
+    // #endregion Contract
     //=====================================================================================//
 
     //============================================Xử lý upload ảnh===========================//

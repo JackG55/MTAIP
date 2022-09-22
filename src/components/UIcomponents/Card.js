@@ -10,23 +10,31 @@ import logo from '../../assets/images/MTA.png';
 
 import styles from './UI.module.scss';
 import classNames from 'classnames/bind';
+import { CardActionArea } from '@mui/material';
 
 const cx = classNames.bind(styles);
 
-export default function CardUI() {
+export default function CardUI({backgroundImg, Imgname}) {
+
+    const handleClick = () =>{
+        window.alert("bạn vừa click")
+    }
+
     return (
-        <Card sx={{ maxWidth: 280 }}>
-            <CardMedia component="img" height="194" image={background} alt="Paella dish" />
+        <Card sx={{ width: 280 }}>
+           <CardActionArea onClick={handleClick}> <CardMedia component="img" height="194" image={backgroundImg} alt="Paella dish" /></CardActionArea>
             <CardContent>
                 <div className={cx('card-content')}>
                     <Avatar alt="H" src={logo} />
                     <div className={cx('card-content-text')}>
                         <Typography variant="h6" color="rgb(4, 17, 29)">
-                            spaceface
+                             {Imgname}
                         </Typography>
-                        <Typography variant="h6" color="rgb(32, 129, 226)">
-                            Adamtoksoz
-                        </Typography>
+                        <CardActionArea>
+                            <Typography variant="h6" color="rgb(32, 129, 226)">
+                                Adamtoksoz
+                            </Typography>
+                        </CardActionArea>
                     </div>
                 </div>
             </CardContent>
