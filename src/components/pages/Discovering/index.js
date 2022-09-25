@@ -5,48 +5,21 @@ import styles from './Discovering.module.scss';
 import classNames from 'classnames/bind';
 import { ethers } from 'ethers';
 
-import MarketplaceAddress from '../../../abis/Marketplace-address.json';
-import MarketplaceAbi from '../../../abis/Marketplace.json';
-import MTAIPAddress from '../../../abis/MTAIP-address.json';
-import MTAIPAbi from '../../../abis/MTAIP.json';
-
 
 const cx = classNames.bind(styles);
 
-function Discovering() {
+function Discovering({nft, marketplace}) {
 
 
     //============================================Xử lý BLockchain==========================//
     // #region Blockchain
 
+   
     const [account, setAccount] = useState('');
-    const [nft, setNFT] = useState({});
-    const [marketplace, setMarketplace] = useState({});
     // MetaMask Login/Connect
     const web3Handler = async () => {
         const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
         setAccount(accounts[0]);
-        // Get provider from Metamask
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
-        // Set signer
-        const signer = provider.getSigner();
-
-        window.ethereum.on('chainChanged', (chainId) => {
-            window.location.reload();
-        });
-
-        window.ethereum.on('accountsChanged', async function (accounts) {
-            setAccount(accounts[0]);
-            await web3Handler();
-        });
-        loadContracts(signer);
-    };
-    const loadContracts = async (signer) => {
-        // Get deployed copies of contracts
-        const marketplace = new ethers.Contract(MarketplaceAddress.address, MarketplaceAbi.abi, signer);
-        setMarketplace(marketplace);
-        const nft = new ethers.Contract(MTAIPAddress.address, MTAIPAbi.abi, signer);
-        setNFT(nft);
     };
 
     window.ethereum.on('accountsChanged', function (accounts) {
@@ -72,7 +45,6 @@ function Discovering() {
         if (!item.sold) {
           // get uri url from nft contract
           const uri = await nft.tokenURI(item.tokenId)
-          const cid = 
          console.log(uri)
           // use uri to fetch the nft metadata stored on ipfs 
           //const response = await fetch(uri)
