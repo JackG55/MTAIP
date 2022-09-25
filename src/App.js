@@ -7,7 +7,7 @@ import { DefaultLayout } from './components/Layout';
 import PrivateRoute from './routes/PrivateRoute';
 
 import Home from '../src/components/pages/Home';
-import Discovering from '../src/components/pages/Discovering';
+import Discovering from './components/pages/Discovering/Discovering';
 import Create from '../src/components/pages/Create';
 import Sign from '../src/components/pages/Sign';
 import Detail from '../src/components/pages/Detail';
@@ -27,6 +27,7 @@ function App() {
     const [account, setAccount] = useState('');
     const [nft, setNFT] = useState({});
     const [marketplace, setMarketplace] = useState({});
+    const [loading, setLoading] = useState(false);
     // MetaMask Login/Connect
     const web3Handler = async () => {
         // Get provider from Metamask
@@ -43,6 +44,7 @@ function App() {
             await web3Handler();
         });
         loadContracts(signer);
+        setLoading(true);
     };
     const loadContracts = async (signer) => {
         // Get deployed copies of contracts
@@ -79,60 +81,62 @@ function App() {
 
     return (
         <Router>
-            <div className="App">
-                <Routes>
-                    <Route
-                        path="/"
-                        element={
-                            <DefaultLayout>
-                                <Home />
-                            </DefaultLayout>
-                        }
-                    />
-                    <Route
-                        path="/create"
-                        element={
-                            <DefaultLayout>
-                                <Create />
-                            </DefaultLayout>
-                        }
-                    />
-                    <Route
-                        path="/discovering"
-                        element={
-                           <PrivateRoute>
+            {
+                loading && 
+                <div className="App">
+                    <Routes>
+                        <Route
+                            path="/"
+                            element={
                                 <DefaultLayout>
-                                    <Discovering nft={nft} marketplace={marketplace}/>
+                                    <Home />
                                 </DefaultLayout>
-                           </PrivateRoute>
-                        }
-                    />
-                    <Route
-                        path="/detail"
-                        element={
-                            <DefaultLayout>
-                                <Detail />
-                            </DefaultLayout>
-                        }
-                    />
-                    <Route
-                        path="/signup"
-                        element={
+                            }
+                        />
+                        <Route
+                            path="/create"
+                            element={
                                 <DefaultLayout>
-                                    <SignUp nft={nft} marketplace={marketplace} />
+                                    <Create />
                                 </DefaultLayout>
-                        }
-                    />
-                    <Route
-                        path="/evaluate"
-                        element={
-                            <DefaultLayout>
-                                <Evaluate />
-                            </DefaultLayout>
-                        }
-                    />
-                </Routes>
-            </div>
+                            }
+                        />
+                        <Route
+                            path="/discovering"
+                            element={
+                                    <DefaultLayout>
+                                        <Discovering nft={nft} marketplace={marketplace}/>
+                                    </DefaultLayout>
+                            }
+                        />
+                        <Route
+                            path="/detail"
+                            element={
+                                <DefaultLayout>
+                                    <Detail />
+                                </DefaultLayout>
+                            }
+                        />
+                        <Route
+                            path="/signup"
+                            element={
+                                    <DefaultLayout>
+                                        <SignUp nft={nft} marketplace={marketplace} />
+                                    </DefaultLayout>
+                            }
+                        />
+                        <Route
+                            path="/evaluate"
+                            element={
+                                <DefaultLayout>
+                                    <Evaluate />
+                                </DefaultLayout>
+                            }
+                        />
+                    </Routes>
+                </div>
+            }
+            
         </Router>
     );
 }

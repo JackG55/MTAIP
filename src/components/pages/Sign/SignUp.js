@@ -93,6 +93,7 @@ function SignUp( {nft, marketplace} ) {
         await (await nft.mint(uri)).wait();
         // get tokenId of new nft
         const id = await nft.tokenCount();
+        console.log(id);
         // approve marketplace to spend nft
         await (await nft.setApprovalForAll(marketplace.address, true)).wait();
         // add nft to marketplace

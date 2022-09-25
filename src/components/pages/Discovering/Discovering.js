@@ -4,7 +4,9 @@ import { useState, useEffect } from 'react';
 import styles from './Discovering.module.scss';
 import classNames from 'classnames/bind';
 import { ethers } from 'ethers';
+import { jsonFile, makeGatewayURL } from '../../web3Storage_helper';
 
+import makeStorageClient from '../../getWeb3Token';
 
 const cx = classNames.bind(styles);
 
@@ -39,32 +41,41 @@ function Discovering({nft, marketplace}) {
     const [items, setItems] = useState([])
     const loadMarketplaceItems = async () => {
       // Load all unsold items
-      const itemCount = await marketplace.itemCount()
+      const itemCount = await marketplace.itemCount();
+      let items = []
+
       for (let i = 1; i <= itemCount; i++) {
         const item = await marketplace.items(i)
         if (!item.sold) {
           // get uri url from nft contract
           const uri = await nft.tokenURI(item.tokenId)
-         console.log(uri)
-          // use uri to fetch the nft metadata stored on ipfs 
-          //const response = await fetch(uri)
-          //const metadata = await response.json()
-        
-          // Add item to items array
-        //   items.push({
-        //     itemId: item.itemId,
-        //     seller: item.seller,
-        //     name: metadata.name,
-        //     image: metadata.image
-        //   })
+           const cid = await uri.split("ipfs://").join("").split("/")[0]
+           const imageName = await uri.split("/")[3]
+          
+           const imageGatewayURL = makeGatewayURL(cid, imageName);
+           const metadataURL = makeGatewayURL(cid, 'metadata.json')
+          
+           console.log(metadataURL)
+           const response = await fetch(metadataURL)
+           const responseJson = await response.json();
+           console.log(responseJson)
+          
+          //Add item to items array
+          items.push({
+            itemId: item.itemId,
+            seller: item.seller,
+            name: responseJson.tentacpham,
+            image: imageGatewayURL
+          })
         }
       }
       setLoading(false)
       setItems(items)
     }
 
+
     useEffect(() => {
-        loadMarketplaceItems()
+      loadMarketplaceItems()
       }, [])
     //#endregion Contract
     //===================================================================================//
@@ -78,13 +89,10 @@ function Discovering({nft, marketplace}) {
                 KHÁM PHÁ CÁC SẢN PHẨM SỞ HỮU TRÍ TUỆ
             </h1>
             <div className={cx('discover-content')}>
-                 <CardUI />
-                 <CardUI />
-                 <CardUI />
-                 <CardUI />
-                 <CardUI />
-                 <CardUI />
-                 <CardUI />
+            {items.map((item) => (
+              <CardUI key={item.itemId} backgroundImg={item.image} Imgname={item.name}/>
+            ))}
+                 
             </div>
             
         </div>
