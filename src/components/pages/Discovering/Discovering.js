@@ -38,6 +38,7 @@ function Discovering({nft, marketplace}) {
           
           //Add item to items array
           items.push({
+            tokenId: item.tokenId,
             itemId: item.itemId,
             seller: item.seller,
             name: responseJson.tentacpham,
@@ -66,7 +67,7 @@ function Discovering({nft, marketplace}) {
             </h1>
             <div className={cx('discover-content')}>
             {items.map((item) => (
-              <CardUI key={item.itemId} backgroundImg={item.image} Imgname={item.name}/>
+              <CardUI key={item.itemId} backgroundImg={item.image} Imgname={item.name} tokenId={item.tokenId}/>
             ))}
                  
             </div>

@@ -11,18 +11,23 @@ import logo from '../../assets/images/MTA.png';
 import styles from './UI.module.scss';
 import classNames from 'classnames/bind';
 import { CardActionArea } from '@mui/material';
+import { Link, useNavigate } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
-export default function CardUI({backgroundImg, Imgname}) {
+export default function CardUI({backgroundImg, Imgname, tokenId}) {
+
+    let navigate = useNavigate()
 
     const handleClick = () =>{
-        window.alert("bạn vừa click")
+       navigate(`/detail/${tokenId}`)
     }
 
     return (
         <Card sx={{ width: 280 }}>
-           <CardActionArea onClick={handleClick}> <CardMedia component="img" height="194" image={backgroundImg} alt="Paella dish" /></CardActionArea>
+           <CardActionArea onClick={handleClick}> 
+           <CardMedia component="img" height="194" image={backgroundImg} alt="Paella dish" />
+           </CardActionArea>
             <CardContent>
                 <div className={cx('card-content')}>
                     <Avatar alt="H" src={logo} />

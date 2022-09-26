@@ -119,16 +119,18 @@ function Detail( {nft, marketplace} ) {
                     <AccordionUI id="2" title="Chi tiết" type="detail">
                         <div className={cx('detail-content')}>
                             <div className={cx('detail-title')}>
-                                <p>Contract Address</p>
+                                <p>Địa chỉ hợp đồng</p>
                                 <p>Token ID</p>
-                                <p>Token Standard</p>
+                                <p>Chuẩn Token</p>
                                 <p>Blockchain</p>
+                                <p>MetaData</p>
                             </div>
                             <div className={cx('detail-info')}>
                                 <p style={{ color: '#7E3AF2' }}>{MTAIPAddress.address}</p>
                                 <p style={{ color: '#7E3AF2' }}>{id}</p>
                                 <p>ERC 721</p>
                                 <p>Ethereum</p>
+                                <p>Web3.Storage</p>
                             </div>
                         </div>
                     </AccordionUI>
@@ -138,7 +140,7 @@ function Detail( {nft, marketplace} ) {
                             <img src={EthereumIcon} alt="" style={{ height: '30px', width: '30px' }} />
                             <div className={cx('ethereum-info')}>
                                 <span className={cx('etherum-price-detail')}>{item.giachuyennhuong} ETH </span> 
-                                <span className={cx('dollar-price-detail')}>${(item.giachuyennhuong*1.320,75)}</span>
+                                <span className={cx('dollar-price-detail')}>${(item.giachuyennhuong*1.320)}</span>
                             </div>
                         </div>
                         <div className={cx('buy-offer-btn')}>

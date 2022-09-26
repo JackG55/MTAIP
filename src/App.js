@@ -39,10 +39,7 @@ function App() {
             window.location.reload();
         });
 
-        window.ethereum.on('accountsChanged', async function (accounts) {
-            setAccount(accounts[0]);
-            await web3Handler();
-        });
+       
         loadContracts(signer);
         setLoading(true);
     };
@@ -54,9 +51,9 @@ function App() {
         setNFT(nft);
     };
 
-    window.ethereum.on('accountsChanged', function (accounts) {
-        setAccount(accounts[0]);
-    });
+    // window.ethereum.on('accountsChanged', function (accounts) {
+    //     setAccount(accounts[0]);
+    // });
 
     useEffect(() => {
         web3Handler();

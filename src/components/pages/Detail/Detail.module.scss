@@ -32,9 +32,10 @@
             .detail-content {
                 display: flex;
                 flex-direction: row;
+                gap: 30px;
                 .detail-title {
                     margin-left: 40px;
-                    margin-right: 120px;
+                    margin-right: 50px;
                 }
                 .detail-info {
                     margin-left: 120px;
