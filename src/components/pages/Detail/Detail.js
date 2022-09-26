@@ -7,6 +7,13 @@ import CardUI from '../../UIcomponents/Card';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
+import { useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react'
+
+import { makeGatewayURL } from '../../web3Storage_helper';
+
+import MTAIPAddress from '../../../abis/MTAIP-address.json'
+
 import styles from './Detail.module.scss';
 import classNames from 'classnames/bind';
 
@@ -27,15 +34,72 @@ const rows = [
     createData('List', 99, 'NFT_Rabbithole', ' ', '18:06:14'),
 ];
 
-function Detail() {
+function Detail( {nft, marketplace} ) {
+    //lấy ra id đã nà
+    const {id} = useParams()
+    console.log(id)
+    
+        //===========================================Xử lý Contract==========================//
+    //#region Contract
+    const [loading, setLoading] = useState(true)
+    const [item, setItem] = useState({
+        path: "",
+        image: null,
+        tentacpham: "",
+        loaihinh: "",
+        ngaycongbo: "",
+        ngayhoanthanh: "",
+        noidung: "",
+        giachuyennhuong: ""
+    })
+
+    const loadMarketplaceItems = async () => {
+          // get uri url from nft contract
+          const uri = await nft.tokenURI(id)
+           const cid = await uri.split("ipfs://").join("").split("/")[0]
+           const imageName = await uri.split("/")[3]
+          
+           const imageGatewayURL = makeGatewayURL(cid, imageName);
+           const metadataURL = makeGatewayURL(cid, 'metadata.json')
+          
+          // console.log(metadataURL)
+           const response = await fetch(metadataURL)
+           const responseJson = await response.json();
+           //console.log(responseJson)
+
+           setItem({
+            ...item, 
+            image: imageGatewayURL, 
+            tentacpham: responseJson.tentacpham, 
+            loaihinh: responseJson.loaihinh,
+            ngaycongbo: responseJson.ngaycongbo,
+            ngayhoanthanh: responseJson.ngayhoanthanh,
+            noidung: responseJson.noidung,
+            giachuyennhuong: responseJson.giachuyennhuong
+           })
+        
+           //console.log(item)
+          
+          //Add item to items array
+          setLoading(false)
+          }
+
+    useEffect(() => {
+      loadMarketplaceItems()
+      }, [])
+    //#endregion Contract
+    //===================================================================================//
+
+
     return (
+
         <div className={cx('detail-artwork')}>
             <div className={cx('common-information')}>
                 <div className={cx('image-info')}>
-                    <img src={ImgExample} alt="" />
+                    <img src={item.image} alt="" />
                 </div>
                 <div className={cx('common-info')}>
-                    <h1>IMMORTAL BABBLE</h1>
+                    <h1>{item.tentacpham}</h1>
                     <div className={cx('own-info')}>
                         <p>Sở hữu bởi NguyenA</p>
                         <span>
@@ -49,9 +113,7 @@ function Detail() {
                     </div>
                     <AccordionUI id="1" title="Mô tả" type="description">
                         <p>
-                            Đây là tác phẩm nghệ thuật với cấu trúc kỹ thuật số độc đáo, được tạo trong 1 trình duyệt
-                            web. Quá trình được thực hiện bởi JavaScript và có yếu tố mang tính biểu tượng của tác phẩm
-                            nghệ thuật của ông Nguyễn A
+                            {item.noidung}
                         </p>
                     </AccordionUI>
                     <AccordionUI id="2" title="Chi tiết" type="detail">
@@ -63,8 +125,8 @@ function Detail() {
                                 <p>Blockchain</p>
                             </div>
                             <div className={cx('detail-info')}>
-                                <p style={{ color: '#7E3AF2' }}>0x903b2...7d33</p>
-                                <p style={{ color: '#7E3AF2' }}>340</p>
+                                <p style={{ color: '#7E3AF2' }}>{MTAIPAddress.address}</p>
+                                <p style={{ color: '#7E3AF2' }}>{id}</p>
                                 <p>ERC 721</p>
                                 <p>Ethereum</p>
                             </div>
@@ -75,7 +137,8 @@ function Detail() {
                         <div className={cx('ethereum-price')}>
                             <img src={EthereumIcon} alt="" style={{ height: '30px', width: '30px' }} />
                             <div className={cx('ethereum-info')}>
-                                <span>0.75 ($1,219.66)</span>
+                                <span className={cx('etherum-price-detail')}>{item.giachuyennhuong} ETH </span> 
+                                <span className={cx('dollar-price-detail')}>${(item.giachuyennhuong*1.320,75)}</span>
                             </div>
                         </div>
                         <div className={cx('buy-offer-btn')}>

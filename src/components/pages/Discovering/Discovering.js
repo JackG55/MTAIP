@@ -3,37 +3,13 @@ import CardUI from "../../UIcomponents/Card";
 import { useState, useEffect } from 'react';
 import styles from './Discovering.module.scss';
 import classNames from 'classnames/bind';
-import { ethers } from 'ethers';
-import { jsonFile, makeGatewayURL } from '../../web3Storage_helper';
+import { makeGatewayURL } from '../../web3Storage_helper';
 
-import makeStorageClient from '../../getWeb3Token';
 
 const cx = classNames.bind(styles);
 
 function Discovering({nft, marketplace}) {
 
-
-    //============================================Xử lý BLockchain==========================//
-    // #region Blockchain
-
-   
-    const [account, setAccount] = useState('');
-    // MetaMask Login/Connect
-    const web3Handler = async () => {
-        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-        setAccount(accounts[0]);
-    };
-
-    window.ethereum.on('accountsChanged', function (accounts) {
-        setAccount(accounts[0]);
-    });
-
-    useEffect(() => {
-        web3Handler();
-    }, [account]);
-
-    // #endregion Blockchain
-    //=====================================================================================//
 
     //===========================================Xử lý Contract==========================//
     //#region Contract
@@ -55,10 +31,10 @@ function Discovering({nft, marketplace}) {
            const imageGatewayURL = makeGatewayURL(cid, imageName);
            const metadataURL = makeGatewayURL(cid, 'metadata.json')
           
-           console.log(metadataURL)
+           //console.log(metadataURL)
            const response = await fetch(metadataURL)
            const responseJson = await response.json();
-           console.log(responseJson)
+           //console.log(responseJson)
           
           //Add item to items array
           items.push({

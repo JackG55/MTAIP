@@ -10,7 +10,7 @@ import Home from '../src/components/pages/Home';
 import Discovering from './components/pages/Discovering/Discovering';
 import Create from '../src/components/pages/Create';
 import Sign from '../src/components/pages/Sign';
-import Detail from '../src/components/pages/Detail';
+import Detail from './components/pages/Detail/Detail';
 import Evaluate from '../src/components/pages/Evaluate';
 
 import { ethers } from 'ethers';
@@ -110,10 +110,10 @@ function App() {
                             }
                         />
                         <Route
-                            path="/detail"
+                            path="/detail/:id"
                             element={
                                 <DefaultLayout>
-                                    <Detail />
+                                    <Detail Discovering nft={nft} marketplace={marketplace}/>
                                 </DefaultLayout>
                             }
                         />
