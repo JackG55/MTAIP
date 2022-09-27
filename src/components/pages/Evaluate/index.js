@@ -1,3 +1,4 @@
+import * as React from 'react';
 import ImgExample300 from '../../../assets/images/details/image-details-300.png';
 import ImgExample from '../../../assets/images/details/image-details.png';
 
@@ -10,6 +11,13 @@ import classNames from 'classnames/bind';
 const cx = classNames.bind(styles);
 
 function Evaluate() {
+    const [formData, setFormData] = React.useState();
+
+    const handleClick = (e) => {
+        e.preventDefault();
+        console.log(formData);
+    };
+
     return (
         <div className={cx('evaluate-artwork')}>
             <h1>Đánh giá tác phẩm</h1>
@@ -36,14 +44,17 @@ function Evaluate() {
                         <p>Sở hữu bởi NguyenA</p>
                     </div>
                     <div className={cx('evaluate-checkbox')}>
-                        <RadioButtonGroup></RadioButtonGroup>
+                        <RadioButtonGroup
+                            formData={formData}
+                            setFormData={setFormData}
+                        ></RadioButtonGroup>
                     </div>
                 </div>
             </div>
             <div className={cx('evaluate-btn')}>
-                <button className={cx('btn-evaluate')}>Gửi</button>
+                <button className={cx('btn-evaluate')} onClick={handleClick}>Gửi</button>
             </div>
-        </div>
+        </div >
     );
 }
 

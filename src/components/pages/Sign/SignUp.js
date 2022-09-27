@@ -2,6 +2,7 @@ import BasicTextFields from '../../UIcomponents/TextField';
 import SelectTextFields from '../../UIcomponents/Selection';
 import ImageIcon from '@mui/icons-material/Image';
 import IconButton from '@mui/material/IconButton';
+import ClearIcon from '@mui/icons-material/Clear';
 
 import { useState, useEffect, useRef } from 'react';
 
@@ -16,7 +17,7 @@ import { jsonFile, makeGatewayURL } from '../../web3Storage_helper';
 
 const cx = classNames.bind(styles);
 
-function SignUp( {nft, marketplace} ) {
+function SignUp({ nft, marketplace }) {
     const [values, setValues] = useState({
         loaihinh: '',
         tentacpham: '',
@@ -198,6 +199,11 @@ function SignUp( {nft, marketplace} ) {
         }
     }, [image]);
 
+    const deleteImage = (e) => {
+        e.preventDefault();
+        setPreview(null);
+    };
+
     return (
         <div className={cx('sign-app')}>
             <h1> Đăng ký bản quyền </h1>
@@ -207,7 +213,7 @@ function SignUp( {nft, marketplace} ) {
                         <div className={cx('image-inside')}>
                             <IconButton onClick={(e) => fileInput.current && fileInput.current.click()}>
                                 {preview ? (
-                                    <img className={cx('image-display')} src={preview} style={{ objectFit: 'cover' }} />
+                                    <img className={cx('image-display')} src={preview} style={{ objectFit: 'cover' }} alt='' />
                                 ) : (
                                     <ImageIcon sx={{ position: 'absolute', height: '100px', width: '100px' }} />
                                 )}
@@ -219,6 +225,14 @@ function SignUp( {nft, marketplace} ) {
                                 onChange={handleFileInput}
                                 accept="image/* , png, jpeg, jpg"
                             ></input>
+                            {preview ? (
+                                <div className={cx('delete-icon')}>
+                                    <ClearIcon
+                                        onClick={deleteImage}
+                                        sx={{ height: '30px', width: '30px' }}
+                                    ></ClearIcon>
+                                </div>
+                            ) : null}
                         </div>
                     </div>
                 </div>
