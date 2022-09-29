@@ -1,0 +1,202 @@
+import { useState, useEffect, useRef } from 'react';
+
+import ImageIcon from '@mui/icons-material/Image';
+import IconButton from '@mui/material/IconButton';
+import BasicTextFields from '../../UIcomponents/TextField';
+import ClearIcon from '@mui/icons-material/Clear';
+
+import styles from './Author.module.scss';
+import classNames from 'classnames/bind';
+
+const cx = classNames.bind(styles);
+
+function Author() {
+    const [account, setAccount] = useState('');
+    // MetaMask Login/Connect
+    const web3Handler = async () => {
+        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        setAccount(accounts[0]);
+    };
+
+    window.ethereum.on('accountsChanged', function (accounts) {
+        setAccount(accounts[0]);
+    });
+
+    useEffect(() => {
+        web3Handler();
+    }, [account]);
+
+    const [email, setEmail] = useState('');
+    const [name, setName] = useState('');
+    const [phone, setPhone] = useState('');
+    const [dateOfBirth, setDateOfBirth] = useState('');
+    const [identifyCard, setIdentifyCard] = useState('');
+
+    const fileInput1 = useRef(null);
+    const fileInput2 = useRef(null);
+    const [image1, setImage1] = useState();
+    const [preview1, setPreview1] = useState();
+
+    const [image2, setImage2] = useState();
+    const [preview2, setPreview2] = useState();
+
+    const handleClick = (e) => {
+        e.preventDefault();
+        const newAuthor = {
+            email: email,
+            name: name,
+            dateOfBirth: dateOfBirth,
+            phone: phone,
+            identifyCard: identifyCard,
+        };
+        console.log(newAuthor);
+    };
+    const handleFileInput1 = (e) => {
+        // handle validations
+        const file = e.target.files[0];
+        if (file) {
+            setImage1(file);
+        } else {
+            setImage1(null);
+        }
+    };
+
+    useEffect(() => {
+        if (image1) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setPreview1(reader.result);
+            };
+            reader.readAsDataURL(image1);
+        } else {
+            setPreview1(null);
+        }
+    }, [image1]);
+
+    const deleteImage1 = (e) => {
+        e.preventDefault();
+        setPreview1(null);
+    };
+
+    const handleFileInput2 = (e) => {
+        // handle validations
+        const file = e.target.files[0];
+        if (file) {
+            setImage2(file);
+        } else {
+            setImage2(null);
+        }
+    };
+
+    useEffect(() => {
+        if (image2) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setPreview2(reader.result);
+            };
+            reader.readAsDataURL(image2);
+        } else {
+            setPreview2(null);
+        }
+    }, [image2]);
+
+    const deleteImage2 = (e) => {
+        e.preventDefault();
+        setPreview2(null);
+    };
+
+    return (
+        <div className={cx('author-signup')}>
+            <h1>Thêm thông tin cá nhân</h1>
+            <BasicTextFields disabled label="Địa chỉ tài khoản" value={account} />
+            <div className={cx('author-content')}>
+                <div className={cx('author-CCCD')}>
+                    <h3>Tải lên Thẻ Căn cước/Chứng minh thư</h3>
+                    <div className={cx('author-CCCD-content')}>
+                        <div className={cx('author-CCCD-content-front')}>
+                            <h4>Mặt trước</h4>
+                            <div className={cx('author-CCCD-link')}>
+                                <div className={cx('author-CCCD-inside')}>
+                                    <IconButton onClick={(e) => fileInput1.current && fileInput1.current.click()}>
+                                        {preview1 ? (
+                                            <img src={preview1} style={{ objectFit: 'cover' }} alt='' />
+                                        ) : (
+                                            <ImageIcon sx={{ position: 'absolute', height: '100px', width: '100px' }} />
+                                        )}
+                                    </IconButton>
+                                    <input
+                                        type="file"
+                                        style={{ display: 'none' }}
+                                        ref={fileInput1}
+                                        onChange={handleFileInput1}
+                                        accept="image/* , png, jpeg, jpg"
+                                    ></input>
+                                    {preview1 ? (
+                                        <div className={cx('delete-icon')}>
+                                            <ClearIcon
+                                                onClick={deleteImage1}
+                                                sx={{ height: '30px', width: '30px' }}
+                                            ></ClearIcon>
+                                        </div>
+                                    ) : null}
+                                </div>
+                            </div>
+                        </div>
+                        <div className={cx('author-CCCD-content-back')}>
+                            <h4>Mặt sau</h4>
+                            <div className={cx('author-CCCD-link')}>
+                                <div className={cx('author-CCCD-inside')}>
+                                    <IconButton onClick={(e) => fileInput2.current && fileInput2.current.click()}>
+                                        {preview2 ? (
+                                            <img src={preview2} style={{ objectFit: 'cover' }} alt='' />
+                                        ) : (
+                                            <ImageIcon sx={{ position: 'absolute', height: '100px', width: '100px' }} />
+                                        )}
+                                    </IconButton>
+                                    <input
+                                        type="file"
+                                        style={{ display: 'none' }}
+                                        ref={fileInput2}
+                                        onChange={handleFileInput2}
+                                        accept="image/* , png, jpeg, jpg"
+                                    ></input>
+                                    {preview2 ? (
+                                        <div className={cx('delete-icon')}>
+                                            <ClearIcon
+                                                onClick={deleteImage2}
+                                                sx={{ height: '30px', width: '30px' }}
+                                            ></ClearIcon>
+                                        </div>
+                                    ) : null}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <BasicTextFields label="Họ và tên" name="name" onChange={(e) => setName(e.target.value)} />
+                <BasicTextFields label="Địa chỉ Email" name="email" onChange={(e) => setEmail(e.target.value)} />
+                <BasicTextFields
+                    label="Ngày sinh"
+                    name="dateOfBirth"
+                    type="date"
+                    defaultValue="1999-01-01"
+                    onChange={(e) => setDateOfBirth(e.target.value)}
+                />
+                <BasicTextFields
+                    label="Số CMND/CCCD"
+                    name="identifyCard"
+                    onChange={(e) => setIdentifyCard(e.target.value)}
+                />
+                <BasicTextFields label="Số điện thoại" name="phone" onChange={(e) => setPhone(e.target.value)} />
+
+                <div className={cx('author-btn')}>
+                    <button className={cx('author-signbtn')} onClick={handleClick}>
+                        Đăng ký
+                    </button>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+export default Author;

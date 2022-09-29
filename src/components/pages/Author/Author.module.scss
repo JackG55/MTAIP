@@ -1,0 +1,118 @@
+.author-signup {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    margin-left: 35%;
+    h1 {
+        margin-bottom: 20px;
+        margin-left: 110px;
+    }
+    .author-content {
+        .author-CCCD {
+            margin-left: 10px;
+            display: flex;
+            flex-direction: column;
+            height: 280px;
+            position: relative;
+            margin-bottom: 20px;
+            h3 {
+                margin-left: 10px;
+                margin-bottom: 10px;
+            }
+            .author-CCCD-content {
+                display: flex;
+                position: absolute;
+                top: 40px;
+                right: 30%;
+                h4 {
+                    margin-left: 10px;
+                }
+                .author-CCCD-content-front {
+                    .author-CCCD-link {
+                        height: 212px;
+                        width: 345px;
+                        padding: 4px;
+                        border: 3px dashed rgb(204, 204, 204);
+                        border-radius: 10px;
+                        cursor: pointer;
+                        .author-CCCD-inside {
+                            position: relative;
+                            height: 197px;
+                            width: 330px;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            border-radius: 10px;
+                            img {
+                                max-width: 325px;
+                                max-height: 195px;
+                                border-radius: 10px;
+                            }
+                        }
+                        .author-CCCD-inside:hover {
+                            opacity: 0.8;
+                        }
+                        .delete-icon {
+                            position: absolute;
+                            color: rgb(192, 191, 191);
+                            right: 0;
+                            top: 0;
+                        }
+                    }
+                }
+                .author-CCCD-content-back {
+                    margin-left: 5px;
+                    .author-CCCD-link {
+                        height: 212px;
+                        width: 345px;
+                        padding: 4px;
+                        border: 3px dashed rgb(204, 204, 204);
+                        border-radius: 10px;
+                        cursor: pointer;
+                        .author-CCCD-inside {
+                            position: relative;
+                            height: 197px;
+                            width: 330px;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            border-radius: 10px;
+                            img {
+                                max-width: 325px;
+                                max-height: 195px;
+                                border-radius: 10px;
+                            }
+                        }
+                        .author-CCCD-inside:hover {
+                            opacity: 0.8;
+                        }
+                        .delete-icon {
+                            position: absolute;
+                            color: rgb(192, 191, 191);
+                            right: 0;
+                            top: 0;
+                        }
+                    }
+                }
+            }
+        }
+        .author-btn {
+            margin-top: 30px;
+            margin-left: 15px;
+            margin-bottom: 30px;
+            .author-signbtn {
+                width: 150px;
+                height: 50px;
+                padding: 10px;
+                border: none;
+                background-color: rgba(126, 58, 242, 1);
+                color: white;
+                cursor: pointer;
+                border-radius: 5px;
+                font-weight: bold;
+                font-size: 24px;
+                margin-top: 10px;
+            }
+        }
+    }
+}

@@ -5,6 +5,7 @@ import Create from '../components/pages/Create';
 import Sign from '../components/pages/Sign';
 import Detail from '../components/pages/Detail';
 import Evaluate from '../components/pages/Evaluate';
+import Author from '../components/pages/Author';
 
 //<==============================LAYOUT=================>
 import { CreateLayout } from '../components/Layout'
@@ -17,6 +18,8 @@ const publicRoutes = [
     { path: '/signup', component: Sign, layout: CreateLayout },
     { path: '/detail', component: Detail, layout: CreateLayout },
     { path: '/evaluate', component: Evaluate, layout: CreateLayout },
+    { path: '/author', component: Author, layout: CreateLayout },
+
 ];
 
 //dành cho những trang phải đăng nhập mới vào được, nếu chưa đăng nhập sẽ lái sang trang login

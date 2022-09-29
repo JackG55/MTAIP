@@ -20,7 +20,7 @@
         .image-content {
             margin-left: 5px;
 
-            .image-link{
+            .image-link {
                 height: 257px;
                 width: 350px;
                 padding: 4px;
@@ -28,8 +28,7 @@
                 border-radius: 10px;
                 cursor: pointer;
 
-
-                .image-inside{
+                .image-inside {
                     position: relative;
                     height: 242px;
                     width: 336px;
@@ -37,19 +36,24 @@
                     justify-content: center;
                     align-items: center;
                     border-radius: 10px;
-                    
-                    .image-display.img{
+
+                    img {
                         position: absolute;
-                        height: 100%;
-                        width: 100%;
+                        max-width: 330px;
+                        max-height: 242px;
                         border-radius: 10px;
                     }
                     .image-display:hover {
                         opacity: 0.8;
                     }
+                    .delete-icon {
+                        position: absolute;
+                        color: rgb(192, 191, 191);
+                        right: 0;
+                        top: 0;
+                    }
                 }
             }
-
         }
         .author-content {
             margin-left: 10px;

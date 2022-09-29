@@ -9,16 +9,17 @@ import PrivateRoute from './routes/PrivateRoute';
 import Home from '../src/components/pages/Home';
 import Discovering from './components/pages/Discovering/Discovering';
 import Create from '../src/components/pages/Create';
-import Sign from '../src/components/pages/Sign';
+import SignUp from './components/pages/Sign/SignUp';
 import Detail from './components/pages/Detail/Detail';
 import Evaluate from '../src/components/pages/Evaluate';
+import Author from '../src/components/pages/Author';
 
 import { ethers } from 'ethers';
 import MarketplaceAddress from '../src/abis/Marketplace-address.json';
 import MarketplaceAbi from '../src/abis/Marketplace.json';
 import MTAIPAddress from '../src/abis/MTAIP-address.json';
 import MTAIPAbi from '../src/abis/MTAIP.json';
-import SignUp from './components/pages/Sign/SignUp';
+
 
 function App() {
     //============================================Xử lý BLockchain==========================//
@@ -63,23 +64,22 @@ function App() {
     //=====================================================================================//
 
 
-    window.onbeforeunload = function() {
+    window.onbeforeunload = function () {
         sessionStorage.removeItem('account');
         console.log('unload')
-      };
+    };
 
-    window.onload = function(){
-        if(sessionStorage.getItem('account') === null)
-        {
-            sessionStorage.setItem('account', ''); 
-            console.log('load')   
+    window.onload = function () {
+        if (sessionStorage.getItem('account') === null) {
+            sessionStorage.setItem('account', '');
+            console.log('load')
         }
     }
 
     return (
         <Router>
             {
-                loading && 
+                loading &&
                 <div className="App">
                     <Routes>
                         <Route
@@ -101,25 +101,25 @@ function App() {
                         <Route
                             path="/discovering"
                             element={
-                                    <DefaultLayout>
-                                        <Discovering nft={nft} marketplace={marketplace}/>
-                                    </DefaultLayout>
+                                <DefaultLayout>
+                                    <Discovering nft={nft} marketplace={marketplace} />
+                                </DefaultLayout>
                             }
                         />
                         <Route
                             path="/detail/:id"
                             element={
                                 <DefaultLayout>
-                                    <Detail Discovering nft={nft} marketplace={marketplace}/>
+                                    <Detail Discovering nft={nft} marketplace={marketplace} />
                                 </DefaultLayout>
                             }
                         />
                         <Route
                             path="/signup"
                             element={
-                                    <DefaultLayout>
-                                        <SignUp nft={nft} marketplace={marketplace} />
-                                    </DefaultLayout>
+                                <DefaultLayout>
+                                    <SignUp nft={nft} marketplace={marketplace} />
+                                </DefaultLayout>
                             }
                         />
                         <Route
@@ -130,10 +130,18 @@ function App() {
                                 </DefaultLayout>
                             }
                         />
+                        <Route
+                            path="/author"
+                            element={
+                                <DefaultLayout>
+                                    <Author />
+                                </DefaultLayout>
+                            }
+                        />
                     </Routes>
                 </div>
             }
-            
+
         </Router>
     );
 }
