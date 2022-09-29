@@ -12,6 +12,7 @@ import { ethers } from 'ethers';
 
 import makeStorageClient from '../../getWeb3Token';
 import { jsonFile, makeGatewayURL } from '../../web3Storage_helper';
+import { useNavigate } from 'react-router-dom';
 
 
 const cx = classNames.bind(styles);
@@ -84,16 +85,19 @@ function SignUp( {nft, marketplace} ) {
 
     //============================================Xử lý contract===========================//
     //#region Contract
+    const [tokenId, setTokenId] = useState()
     const mint = async (uri) => {
         await (await nft.mint(uri)).wait();
         const id = await nft.tokenCount();
+       setTokenId(id)
     };
 
     const mintThenList = async (uri) => {
         await (await nft.mint(uri)).wait();
         // get tokenId of new nft
         const id = await nft.tokenCount();
-        console.log(id);
+        setTokenId(id);
+        //console.log(id);
         // approve marketplace to spend nft
         await (await nft.setApprovalForAll(marketplace.address, true)).wait();
         // add nft to marketplace
@@ -115,6 +119,8 @@ function SignUp( {nft, marketplace} ) {
         }
     };
 
+    let navigate = useNavigate() 
+    
     const UploadtoIPFS = async () => {
         if (image) {
             try {
@@ -144,6 +150,8 @@ function SignUp( {nft, marketplace} ) {
                 } else {
                     mintThenList(imageURI);
                 }
+                //khi nào mint xong thì chuyển qua trang detai của sản phẩm đó
+                navigate(`/detail/${tokenId}`)
             } catch (error) {
                 console.log('Error sending File to IPFS: ');
                 console.log(error);
