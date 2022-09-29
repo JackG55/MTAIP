@@ -28,18 +28,18 @@ export default function RadioButtonsGroup(props) {
                 aria-labelledby="demo-radio-buttons-group-label"
                 name="radio-buttons-group"
             >
-                <FormControlLabel value="true" control={<Radio />} label="Chấp thuận" onChange={handleChange} />
+                <FormControlLabel value="accept" control={<Radio />} label="Chấp thuận" onChange={handleChange} />
                 <FormControlLabel
-                    value="false"
+                    value="notAccept"
                     control={<Radio />}
                     label="Không chấp thuận"
                     onChange={handleChange}
                 />
-                {formData === 'false' ? (
+                {formData === 'notAccept' && (
                     <div>
                         <BasicTextFields label="Lý do" />
                     </div>
-                ) : null}
+                )}
             </RadioGroup>
         </FormControl>
     );
