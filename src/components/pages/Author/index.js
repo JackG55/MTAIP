@@ -8,9 +8,15 @@ import ClearIcon from '@mui/icons-material/Clear';
 import styles from './Author.module.scss';
 import classNames from 'classnames/bind';
 
+import { jsonFile, makeGatewayURL } from '../../web3Storage_helper';
+import makeStorageClient from '../../getWeb3Token';
+
 const cx = classNames.bind(styles);
 
 function Author() {
+    //============================================Xử lý BLockchain==========================//
+    // #region Blockchain
+
     const [account, setAccount] = useState('');
     // MetaMask Login/Connect
     const web3Handler = async () => {
@@ -18,13 +24,64 @@ function Author() {
         setAccount(accounts[0]);
     };
 
-    window.ethereum.on('accountsChanged', function (accounts) {
-        setAccount(accounts[0]);
-    });
+    // window.ethereum.on('accountsChanged', function (accounts) {
+    //     setAccount(accounts[0]);
+    // });
 
     useEffect(() => {
         web3Handler();
     }, [account]);
+
+    // #endregion Blockchain
+    //=====================================================================================//
+
+    //============================================Xử lý contract===========================//
+    //#region Contract
+
+    // #endregion Contract
+    //=====================================================================================//
+
+    //============================================Xử lý upload ảnh===========================//
+    // #region UploadImage
+
+    const checkInput = () => {
+        if (!email || !name || !dateOfBirth || !identifyCard || !phone) {
+            window.alert('Bạn phải điền đầy đủ các trường');
+            return false;
+        } else {
+            return true;
+        }
+    };
+
+    // let navigate = useNavigate()
+
+    const UploadtoIPFS = async () => {
+        if (image1 && image2) {
+            try {
+                const metadataFile = jsonFile('metadata.json', {
+                    name: name,
+                    email: email,
+                    phone: phone,
+                    dateOfBirth: dateOfBirth,
+                    identifyCard: identifyCard,
+                });
+
+                const client = makeStorageClient();
+                const cid = await client.put([image1, image2, metadataFile], { name: 'User ' + identifyCard });
+
+                //const imageURI = `ipfs://${cid}/${image.name}`;
+                const metadataURI = `ipfs://${cid}/metadata.json`;
+                const metadataGatewayURL = makeGatewayURL(cid, 'metadata.json');
+                //const imageGatewayURL = makeGatewayURL(cid, image.name);
+                console.log(metadataGatewayURL)
+            } catch (error) {
+                console.log('Error sending File to IPFS: ');
+                console.log(error);
+            }
+        }
+    };
+    // #endregion storeImage
+    //==========================================================================================================//
 
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
@@ -42,15 +99,19 @@ function Author() {
 
     const handleClick = (e) => {
         e.preventDefault();
-        const newAuthor = {
-            email: email,
-            name: name,
-            dateOfBirth: dateOfBirth,
-            phone: phone,
-            identifyCard: identifyCard,
-        };
-        console.log(newAuthor);
+        if (checkInput()) {
+            // const newAuthor = {
+            //     email: email,
+            //     name: name,
+            //     dateOfBirth: dateOfBirth,
+            //     phone: phone,
+            //     identifyCard: identifyCard,
+            // };
+            // console.log(newAuthor);
+            UploadtoIPFS();
+        }
     };
+
     const handleFileInput1 = (e) => {
         // handle validations
         const file = e.target.files[0];
@@ -119,7 +180,7 @@ function Author() {
                                 <div className={cx('author-CCCD-inside')}>
                                     <IconButton onClick={(e) => fileInput1.current && fileInput1.current.click()}>
                                         {preview1 ? (
-                                            <img src={preview1} style={{ objectFit: 'cover' }} alt='' />
+                                            <img src={preview1} style={{ objectFit: 'cover' }} alt="" />
                                         ) : (
                                             <ImageIcon sx={{ position: 'absolute', height: '100px', width: '100px' }} />
                                         )}
@@ -148,7 +209,7 @@ function Author() {
                                 <div className={cx('author-CCCD-inside')}>
                                     <IconButton onClick={(e) => fileInput2.current && fileInput2.current.click()}>
                                         {preview2 ? (
-                                            <img src={preview2} style={{ objectFit: 'cover' }} alt='' />
+                                            <img src={preview2} style={{ objectFit: 'cover' }} alt="" />
                                         ) : (
                                             <ImageIcon sx={{ position: 'absolute', height: '100px', width: '100px' }} />
                                         )}

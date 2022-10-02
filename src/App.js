@@ -1,10 +1,8 @@
-import { Fragment } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
 import { DefaultLayout } from './components/Layout';
 
-import PrivateRoute from './routes/PrivateRoute';
 
 import Home from '../src/components/pages/Home';
 import Discovering from './components/pages/Discovering/Discovering';
@@ -25,20 +23,20 @@ function App() {
     //============================================Xử lý BLockchain==========================//
     // #region Blockchain
 
-    const [account, setAccount] = useState('');
+    //const [account, setAccount] = useState('');
     const [nft, setNFT] = useState({});
     const [marketplace, setMarketplace] = useState({});
     const [loading, setLoading] = useState(false);
     // MetaMask Login/Connect
     const web3Handler = async () => {
         // Get provider from Metamask
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:7545');
         // Set signer
         const signer = provider.getSigner();
 
-        window.ethereum.on('chainChanged', (chainId) => {
-            window.location.reload();
-        });
+        // window.ethereum.on('chainChanged', (chainId) => {
+        //     window.location.reload();
+        // });
 
        
         loadContracts(signer);
@@ -58,7 +56,7 @@ function App() {
 
     useEffect(() => {
         web3Handler();
-    }, [account]);
+    }, []);
 
     // #endregion Blockchain
     //=====================================================================================//

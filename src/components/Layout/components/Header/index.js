@@ -22,7 +22,7 @@ function Header() {
                             <a className={cx('navbar-item-link')} href="/discovering">Khám phá</a>
                         </li>
                         <li className={cx('navbar-item')}>
-                            <a className={cx('navbar-item-link')} href="/feature">Tính năng</a>
+                            <a className={cx('navbar-item-link')} href="/evaluate">Tính năng</a>
                         </li>
                         <li className={cx('navbar-item')}>
                             <a className={cx('navbar-item-link')} href="/account">Tài khoản</a>
@@ -35,7 +35,7 @@ function Header() {
 
                 <div>
                         <button className={cx('signup-button', 'navbar-button')}>
-                            <a className={cx('navbar-item-link')} href="/account">Đăng ký</a>
+                            <a className={cx('navbar-item-link')} href="/author">Đăng ký</a>
                         </button>
                         <button className={cx('signin-button', 'navbar-button')}>
                             <a className={cx('navbar-item-link')} href="/create">Đăng nhập</a>

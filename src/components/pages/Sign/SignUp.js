@@ -12,7 +12,7 @@ import classNames from 'classnames/bind';
 import { ethers } from 'ethers';
 
 import makeStorageClient from '../../getWeb3Token';
-import { jsonFile, makeGatewayURL } from '../../web3Storage_helper';
+import { jsonFile } from '../../web3Storage_helper';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -139,9 +139,9 @@ function SignUp({ nft, marketplace }) {
                 const cid = await client.put([image, metadataFile], { name: image.name });
 
                 const imageURI = `ipfs://${cid}/${image.name}`;
-                const metadataURI = `ipfs://${cid}/metadata.json`;
-                const metadataGatewayURL = makeGatewayURL(cid, 'metadata.json');
-                const imageGatewayURL = makeGatewayURL(cid, image.name);
+                //const metadataURI = `ipfs://${cid}/metadata.json`;
+                //const metadataGatewayURL = makeGatewayURL(cid, 'metadata.json');
+                //const imageGatewayURL = makeGatewayURL(cid, image.name);
 
                 //sau khi đã upload xong thì mint
                 //kiểm tra xem có set giá ko ??
