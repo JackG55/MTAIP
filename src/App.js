@@ -11,6 +11,7 @@ import SignUp from './components/pages/Sign/SignUp';
 import Detail from './components/pages/Detail/Detail';
 import Evaluate from '../src/components/pages/Evaluate';
 import Author from '../src/components/pages/Author';
+import ListEvaluate from '../src/components/pages/ListEvaluate';
 
 import { ethers } from 'ethers';
 import MarketplaceAddress from '../src/abis/Marketplace-address.json';
@@ -38,7 +39,7 @@ function App() {
         //     window.location.reload();
         // });
 
-       
+
         loadContracts(signer);
         setLoading(true);
     };
@@ -121,7 +122,7 @@ function App() {
                             }
                         />
                         <Route
-                            path="/evaluate"
+                            path="/evaluate/:id"
                             element={
                                 <DefaultLayout>
                                     <Evaluate />
@@ -133,6 +134,14 @@ function App() {
                             element={
                                 <DefaultLayout>
                                     <Author />
+                                </DefaultLayout>
+                            }
+                        />
+                        <Route
+                            path="/list"
+                            element={
+                                <DefaultLayout>
+                                    <ListEvaluate />
                                 </DefaultLayout>
                             }
                         />

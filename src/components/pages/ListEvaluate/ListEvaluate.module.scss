@@ -1,0 +1,30 @@
+.list-evaluate {
+    text-align: center;
+    .list-artwork {
+        margin-left: 60px;
+        margin-bottom: 30px;
+        display: flex;
+        flex-direction: column;
+        h2 {
+            text-align: left;
+            margin-bottom: 20px;
+            margin-top: 20px;
+        }
+        .list-artwork-evaluated {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 100px;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+        }
+        .list-artwork-not-evaluate {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 100px;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+        }
+    }
+}

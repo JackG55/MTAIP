@@ -11,7 +11,7 @@ import classNames from 'classnames/bind';
 const cx = classNames.bind(styles);
 
 function Evaluate() {
-    const [formData, setFormData] = React.useState();
+    const [formData, setFormData] = React.useState('notEvaluate');
 
     const handleClick = (e) => {
         e.preventDefault();
