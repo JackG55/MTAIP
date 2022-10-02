@@ -18,6 +18,8 @@ import MarketplaceAddress from '../src/abis/Marketplace-address.json';
 import MarketplaceAbi from '../src/abis/Marketplace.json';
 import MTAIPAddress from '../src/abis/MTAIP-address.json';
 import MTAIPAbi from '../src/abis/MTAIP.json';
+import UserRegisterAddress from '../src/abis/UserRegister-address.json';
+import UserRegisterAbi from '../src/abis/UserRegister.json'; 
 
 
 function App() {
@@ -27,6 +29,7 @@ function App() {
     //const [account, setAccount] = useState('');
     const [nft, setNFT] = useState({});
     const [marketplace, setMarketplace] = useState({});
+    const [user, setUser] = useState({})
     const [loading, setLoading] = useState(false);
     // MetaMask Login/Connect
     const web3Handler = async () => {
@@ -49,6 +52,8 @@ function App() {
         setMarketplace(marketplace);
         const nft = new ethers.Contract(MTAIPAddress.address, MTAIPAbi.abi, signer);
         setNFT(nft);
+        const user = new ethers.Contract(UserRegisterAddress.address, UserRegisterAbi.abi, signer);
+        setUser(user);
     };
 
     // window.ethereum.on('accountsChanged', function (accounts) {
@@ -117,7 +122,7 @@ function App() {
                             path="/signup"
                             element={
                                 <DefaultLayout>
-                                    <SignUp nft={nft} marketplace={marketplace} />
+                                    <SignUp nft={nft} marketplace={marketplace} user={user}/>
                                 </DefaultLayout>
                             }
                         />

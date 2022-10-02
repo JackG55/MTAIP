@@ -18,7 +18,7 @@ import { useNavigate } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
-function SignUp({ nft, marketplace }) {
+function SignUp({ nft, marketplace, user }) {
     const [values, setValues] = useState({
         loaihinh: '',
         tentacpham: '',
@@ -67,10 +67,13 @@ function SignUp({ nft, marketplace }) {
     // #region Blockchain
 
     const [account, setAccount] = useState('');
+    const [username, setUsername] = useState('')
     // MetaMask Login/Connect
     const web3Handler = async () => {
         const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
         setAccount(accounts[0]);
+
+        GetUserName(account);
     };
 
     window.ethereum.on('accountsChanged', function (accounts) {
@@ -87,6 +90,8 @@ function SignUp({ nft, marketplace }) {
     //============================================Xử lý contract===========================//
     //#region Contract
     const [tokenId, setTokenId] = useState()
+    
+
     const mint = async (uri) => {
         await (await nft.mint(uri)).wait();
         const id = await nft.tokenCount();
@@ -105,6 +110,11 @@ function SignUp({ nft, marketplace }) {
         const listingPrice = ethers.utils.parseEther(values.price.toString());
         await (await marketplace.makeItem(nft.address, id, listingPrice)).wait();
     };
+
+     const GetUserName = async(_userId) => {
+        const userA = await user.users(_userId)
+         setUsername(userA.name)
+     }
     // #endregion Contract
     //=====================================================================================//
 
@@ -245,7 +255,7 @@ function SignUp({ nft, marketplace }) {
                     </div>
                 </div>
                 <div className={cx('author-content')}>
-                    <BasicTextFields disabled label="Tác giả" defaultValue="Nguyễn Văn A" />
+                    <BasicTextFields disabled label="Tác giả" value={username} />
                     <BasicTextFields disabled label="Địa chỉ tài khoản" value={account} />
                 </div>
             </div>

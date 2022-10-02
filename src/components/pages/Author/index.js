@@ -11,6 +11,11 @@ import classNames from 'classnames/bind';
 import { jsonFile, makeGatewayURL } from '../../web3Storage_helper';
 import makeStorageClient from '../../getWeb3Token';
 
+import { ethers } from 'ethers';
+import UserRegisterAddress from '../../../../src/abis/UserRegister-address.json';
+import UserRegister from '../../../../src/abis/UserRegister.json';
+
+
 const cx = classNames.bind(styles);
 
 function Author() {
@@ -18,10 +23,26 @@ function Author() {
     // #region Blockchain
 
     const [account, setAccount] = useState('');
+    const [user, setUser] = useState('');
+    const [loading, setLoading] = useState(false)
     // MetaMask Login/Connect
     const web3Handler = async () => {
         const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
         setAccount(accounts[0]);
+
+         // Get provider from Metamask
+         const provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:7545');
+         // Set signer
+         const signer = provider.getSigner();
+
+        loadContracts(signer);
+        setLoading(true);
+    };
+
+    const loadContracts = async (signer) => {
+        // Get deployed copies of contracts
+        const user = new ethers.Contract(UserRegisterAddress.address, UserRegister.abi, signer);
+        setUser(user);
     };
 
     // window.ethereum.on('accountsChanged', function (accounts) {
@@ -37,6 +58,17 @@ function Author() {
 
     //============================================Xử lý contract===========================//
     //#region Contract
+    const createUser = async (_userId, _isExpert, _UserURI, _name) => {
+        await (await user.creatUser(_userId, _isExpert, _UserURI, _name)).wait();
+
+       user.on('Signed', (_userId, _UserURI ,_name, _isExpert, true))
+        
+    }
+
+    // const showName = async(_userId) => {
+    //    const userA = await user.users(_userId)
+    //    window.alert('showname ' + userA)
+    // }
 
     // #endregion Contract
     //=====================================================================================//
@@ -74,6 +106,12 @@ function Author() {
                 const metadataGatewayURL = makeGatewayURL(cid, 'metadata.json');
                 //const imageGatewayURL = makeGatewayURL(cid, image.name);
                 console.log(metadataGatewayURL)
+
+
+                //upload xong thì đăng ký
+                createUser(account, true, metadataURI, name)
+
+
             } catch (error) {
                 console.log('Error sending File to IPFS: ');
                 console.log(error);
