@@ -72,8 +72,10 @@ function SignUp({ nft, marketplace, user }) {
     const web3Handler = async () => {
         const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
         setAccount(accounts[0]);
+        
+        const userA = await user.users(accounts[0])
+        setUsername(userA.name)
 
-        GetUserName(account);
     };
 
     window.ethereum.on('accountsChanged', function (accounts) {
@@ -96,25 +98,28 @@ function SignUp({ nft, marketplace, user }) {
         await (await nft.mint(uri)).wait();
         const id = await nft.tokenCount();
        setTokenId(id)
+       navigate(`/detail/${tokenId}`)
     };
 
     const mintThenList = async (uri) => {
         await (await nft.mint(uri)).wait();
+        console.log('mint xong')
         // get tokenId of new nft
         const id = await nft.tokenCount();
+        console.log(id)
         setTokenId(id);
         //console.log(id);
         // approve marketplace to spend nft
         await (await nft.setApprovalForAll(marketplace.address, true)).wait();
+        console.log('set approve xong')
         // add nft to marketplace
         const listingPrice = ethers.utils.parseEther(values.price.toString());
         await (await marketplace.makeItem(nft.address, id, listingPrice)).wait();
+        console.log('listing')
+        navigate(`/detail/${tokenId}`)
     };
 
-     const GetUserName = async(_userId) => {
-        const userA = await user.users(_userId)
-         setUsername(userA.name)
-     }
+     
     // #endregion Contract
     //=====================================================================================//
 
@@ -155,14 +160,13 @@ function SignUp({ nft, marketplace, user }) {
 
                 //sau khi đã upload xong thì mint
                 //kiểm tra xem có set giá ko ??
-
                 if (!values.price || values.price === 0) {
                     mint(imageURI);
                 } else {
                     mintThenList(imageURI);
                 }
                 //khi nào mint xong thì chuyển qua trang detai của sản phẩm đó
-                navigate(`/detail/${tokenId}`)
+                //navigate(`/detail/${tokenId}`)
             } catch (error) {
                 console.log('Error sending File to IPFS: ');
                 console.log(error);
@@ -185,8 +189,8 @@ function SignUp({ nft, marketplace, user }) {
         //đầu tiên là upload lên IPFS và mint NFT
         //UploadtoIPFS();
         if (checkInput) {
-            const uploadinfo = UploadtoIPFS();
-            console.log(uploadinfo.imageURI);
+            UploadtoIPFS();
+            //console.log(uploadinfo.imageURI);
         }
     };
 

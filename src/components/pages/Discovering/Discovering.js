@@ -34,7 +34,7 @@ function Discovering({nft, marketplace}) {
            //console.log(metadataURL)
            const response = await fetch(metadataURL)
            const responseJson = await response.json();
-           //console.log(responseJson)
+           console.log(responseJson)
           
           //Add item to items array
           items.push({

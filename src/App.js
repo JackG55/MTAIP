@@ -29,7 +29,7 @@ function App() {
     //const [account, setAccount] = useState('');
     const [nft, setNFT] = useState({});
     const [marketplace, setMarketplace] = useState({});
-    const [user, setUser] = useState({})
+    const [user, setUser] = useState({});
     const [loading, setLoading] = useState(false);
     // MetaMask Login/Connect
     const web3Handler = async () => {
@@ -68,17 +68,17 @@ function App() {
     //=====================================================================================//
 
 
-    window.onbeforeunload = function () {
-        sessionStorage.removeItem('account');
-        console.log('unload')
-    };
+    // window.onbeforeunload = function () {
+    //     sessionStorage.removeItem('account');
+    //     console.log('unload')
+    // };
 
-    window.onload = function () {
-        if (sessionStorage.getItem('account') === null) {
-            sessionStorage.setItem('account', '');
-            console.log('load')
-        }
-    }
+    // window.onload = function () {
+    //     if (sessionStorage.getItem('account') === null) {
+    //         sessionStorage.setItem('account', '');
+    //         console.log('load')
+    //     }
+    // }
 
     return (
         <Router>
