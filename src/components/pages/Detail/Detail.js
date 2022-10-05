@@ -13,6 +13,7 @@ import { useState, useEffect } from 'react'
 import { makeGatewayURL } from '../../web3Storage_helper';
 
 import MTAIPAddress from '../../../abis/MTAIP-address.json'
+import MarketPlaceAddress from '../../../abis/Marketplace-address.json'
 
 import styles from './Detail.module.scss';
 import classNames from 'classnames/bind';
@@ -34,7 +35,7 @@ const rows = [
     createData('List', 99, 'NFT_Rabbithole', ' ', '18:06:14'),
 ];
 
-function Detail( {nft, marketplace} ) {
+function Detail( {nft, marketplace, user} ) {
     //lấy ra id đã nà
     const {id} = useParams()
     console.log(id)
@@ -42,6 +43,7 @@ function Detail( {nft, marketplace} ) {
         //===========================================Xử lý Contract==========================//
     //#region Contract
     const [loading, setLoading] = useState(true)
+    const [ownerName, setOwnerName] = useState('')
     const [item, setItem] = useState({
         path: "",
         image: null,
@@ -54,8 +56,22 @@ function Detail( {nft, marketplace} ) {
     })
 
     const loadMarketplaceItems = async () => {
-          // get uri url from nft contract
+        const ownerName = await nft.ownerOf(id);
+              //console.log(ownerName)
+              if(ownerName === MarketPlaceAddress.address)
+              {
+                setOwnerName('MTAIP')
+              }
+              else{
+                const userA = await user.users(ownerName)
+                setOwnerName(userA[2])
+              }
+              
+        
+        // get uri url from nft contract
           const uri = await nft.tokenURI(id)
+
+
            const cid = await uri.split("ipfs://").join("").split("/")[0]
            const imageName = await uri.split("/")[3]
           
@@ -101,7 +117,7 @@ function Detail( {nft, marketplace} ) {
                 <div className={cx('common-info')}>
                     <h1>{item.tentacpham}</h1>
                     <div className={cx('own-info')}>
-                        <p>Sở hữu bởi NguyenA</p>
+                        <p>Sở hữu bởi {ownerName}</p>
                         <span>
                             <VisibilityIcon />
                             10k Lượt xem

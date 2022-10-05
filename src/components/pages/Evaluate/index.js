@@ -5,17 +5,89 @@ import ImgExample from '../../../assets/images/details/image-details.png';
 import ReactImageMagnify from 'react-image-magnify';
 import RadioButtonGroup from '../../UIcomponents/RadioButtonGroup';
 
+import { useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react'
+
+import { makeGatewayURL } from '../../web3Storage_helper';
+import MarketPlaceAddress from '../../../abis/Marketplace-address.json';
+
 import styles from './Evaluate.module.scss';
 import classNames from 'classnames/bind';
 
 const cx = classNames.bind(styles);
 
-function Evaluate() {
+function Evaluate( {nft, marketplace, user} ) {
+        //lấy ra id đã nà
+        const {id} = useParams()
+       // console.log(id)
+        
+            //===========================================Xử lý Contract==========================//
+        //#region Contract
+        const [loading, setLoading] = useState(true)
+        const [ownerName, setOwnerName] = useState('')
+        const [item, setItem] = useState({
+            image: null,
+            tentacpham: "",
+        })
+    
+        const loadMarketplaceItems = async () => {
+
+              // get uri url from nft contract
+              const uri = await nft.tokenURI(id)
+              const ownerName = await nft.ownerOf(id);
+              //console.log(ownerName)
+              if(ownerName === MarketPlaceAddress.address)
+              {
+                setOwnerName('MTAIP')
+              }
+              else{
+                const userA = await user.users(ownerName)
+                setOwnerName(userA[2])
+              }
+              
+
+               const cid = await uri.split("ipfs://").join("").split("/")[0]
+               const imageName = await uri.split("/")[3]
+              
+               const imageGatewayURL = makeGatewayURL(cid, imageName);
+               const metadataURL = makeGatewayURL(cid, 'metadata.json')
+              
+              // console.log(metadataURL)
+               const response = await fetch(metadataURL)
+               const responseJson = await response.json();
+               //console.log(responseJson)
+    
+               setItem({
+                ...item, 
+                image: imageGatewayURL, 
+                tentacpham: responseJson.tentacpham, 
+               })
+            
+               //console.log(item)
+              
+              //Add item to items array
+              setLoading(false)
+              }
+    
+        useEffect(() => {
+          loadMarketplaceItems()
+          }, [])
+        //#endregion Contract
+        //===================================================================================//
+
+
     const [formData, setFormData] = React.useState('notEvaluate');
 
-    const handleClick = (e) => {
+    const handleClick =async (e) => {
         e.preventDefault();
         console.log(formData);
+        if(formData === 'accept'){
+            await marketplace.Checked(id);
+            console.log('Đã kiểm duyệt')
+        }else
+        {
+            console.log('Không được kiểm duyệt')
+        }
     };
 
     return (
@@ -28,20 +100,20 @@ function Evaluate() {
                             smallImage: {
                                 alt: '',
                                 isFluidWidth: true,
-                                src: ImgExample300,
+                                src: (item.image || ImgExample),
                             },
                             largeImage: {
-                                src: ImgExample,
-                                width: 1000,
-                                height: 1174,
+                                src: (item.image || ImgExample300),
+                                width: 300,
+                                height: 300,
                             },
                         }}
                     />
                 </div>
                 <div className={cx('evaluate-common-info')}>
-                    <h2>IMMORTAL BABBLE</h2>
+                    <h2>{item.tentacpham}</h2>
                     <div className={cx('evaluate-own-info')}>
-                        <p>Sở hữu bởi NguyenA</p>
+                        <p>Sở hữu bởi {ownerName}</p>
                     </div>
                     <div className={cx('evaluate-checkbox')}>
                         <RadioButtonGroup

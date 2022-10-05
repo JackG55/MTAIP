@@ -6,6 +6,7 @@ import "../../node_modules/@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import "../../node_modules/@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
 
+
 contract Marketplace is ReentrancyGuard {
 
     // Variables
@@ -20,6 +21,7 @@ contract Marketplace is ReentrancyGuard {
         uint price;
         address payable seller;
         bool sold;
+        bool check;
     }
 
     // itemId -> Item
@@ -48,11 +50,24 @@ contract Marketplace is ReentrancyGuard {
 
     // Make item to offer on the marketplace
     function makeItem(IERC721 _nft, uint _tokenId, uint _price) external nonReentrant {
-        require(_price > 0, "Price must be greater than zero");
+        if (_price > 0)
+        {
+            // transfer nft to marketplace
+            _nft.transferFrom(msg.sender, address(this), _tokenId);
+
+             // emit Offered event
+            emit Offered(
+                itemCount,
+                address(_nft),
+                _tokenId,
+                _price,
+                msg.sender
+            );
+        }
+        //require(_price > 0, "Price must be greater than zero");
         // increment itemCount
         itemCount ++;
-        // transfer nft
-        _nft.transferFrom(msg.sender, address(this), _tokenId);
+        
         // add new item to items mapping
         items[itemCount] = Item (
             itemCount,
@@ -60,16 +75,10 @@ contract Marketplace is ReentrancyGuard {
             _tokenId,
             _price,
             payable(msg.sender),
+            false, 
             false
         );
-        // emit Offered event
-        emit Offered(
-            itemCount,
-            address(_nft),
-            _tokenId,
-            _price,
-            msg.sender
-        );
+       
     }
 
     function purchaseItem(uint _itemId) external payable nonReentrant {
@@ -101,5 +110,12 @@ contract Marketplace is ReentrancyGuard {
 
     function getItemCount() view public returns(uint){
         return itemCount;
+    }
+
+    function Checked(uint _itemId) external {
+        //kiểm tra xem đã tồn tại chưa
+
+        //thay đổi thành đã được xác nhận
+        items[_itemId].check = true;
     }
 }

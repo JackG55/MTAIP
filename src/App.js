@@ -54,6 +54,8 @@ function App() {
         setNFT(nft);
         const user = new ethers.Contract(UserRegisterAddress.address, UserRegisterAbi.abi, signer);
         setUser(user);
+
+        console.log(nft)
     };
 
     // window.ethereum.on('accountsChanged', function (accounts) {
@@ -114,7 +116,7 @@ function App() {
                             path="/detail/:id"
                             element={
                                 <DefaultLayout>
-                                    <Detail Discovering nft={nft} marketplace={marketplace} />
+                                    <Detail Discovering nft={nft} marketplace={marketplace} user={user}/>
                                 </DefaultLayout>
                             }
                         />
@@ -130,7 +132,15 @@ function App() {
                             path="/evaluate/:id"
                             element={
                                 <DefaultLayout>
-                                    <Evaluate />
+                                    <Evaluate nft={nft} marketplace={marketplace} user={user}/>
+                                </DefaultLayout>
+                            }
+                        />
+                        <Route
+                            path="/evaluate"
+                            element={
+                                <DefaultLayout>
+                                    <ListEvaluate nft={nft} marketplace={marketplace} user={user} />
                                 </DefaultLayout>
                             }
                         />

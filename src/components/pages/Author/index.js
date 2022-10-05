@@ -60,8 +60,11 @@ function Author() {
     //#region Contract
     const createUser = async (_userId, _isExpert, _UserURI, _name) => {
         await (await user.creatUser(_userId, _isExpert, _UserURI, _name)).wait();
-
-       user.on('Signed', (_userId, _UserURI ,_name, _isExpert, true))
+        await user.ExpertSign(_userId);
+        const userA = await user.users(_userId);
+        console.log(userA)
+        console.log('done')
+      // user.on('Signed', (_userId, _UserURI ,_name, _isExpert, true))
         
     }
 

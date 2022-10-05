@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-contract UserRegister {
+import "./Marketplace.sol";
+
+contract UserRegister is Marketplace{
     //biến đếm userid
     uint256 public userCount;
 
@@ -47,5 +49,10 @@ contract UserRegister {
 
         //thay đổi thành chuyên gia
         users[_userId].isExpert = true;
+    }
+
+    function getName(uint _tokenId) view external returns (string memory){
+        address _seller = items[_tokenId].seller;
+        return (users[_seller].name);
     }
 }

@@ -98,7 +98,10 @@ function SignUp({ nft, marketplace, user }) {
         await (await nft.mint(uri)).wait();
         const id = await nft.tokenCount();
        setTokenId(id)
-       navigate(`/detail/${tokenId}`)
+
+       await (await marketplace.makeItem(nft.address, id, 0)).wait();
+        console.log('listing')
+       navigate(`/detail/${id}`)
     };
 
     const mintThenList = async (uri) => {
@@ -110,13 +113,14 @@ function SignUp({ nft, marketplace, user }) {
         setTokenId(id);
         //console.log(id);
         // approve marketplace to spend nft
+        //uỷ quyền cho marketplace
         await (await nft.setApprovalForAll(marketplace.address, true)).wait();
         console.log('set approve xong')
         // add nft to marketplace
         const listingPrice = ethers.utils.parseEther(values.price.toString());
         await (await marketplace.makeItem(nft.address, id, listingPrice)).wait();
         console.log('listing')
-        navigate(`/detail/${tokenId}`)
+        navigate(`/detail/${id}`)
     };
 
      

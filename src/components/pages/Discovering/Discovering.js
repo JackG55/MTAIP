@@ -22,7 +22,7 @@ function Discovering({nft, marketplace}) {
 
       for (let i = 1; i <= itemCount; i++) {
         const item = await marketplace.items(i)
-        if (!item.sold) {
+        if (!item.sold && item.check===true) {
           // get uri url from nft contract
           const uri = await nft.tokenURI(item.tokenId)
            const cid = await uri.split("ipfs://").join("").split("/")[0]
