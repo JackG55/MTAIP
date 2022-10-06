@@ -25,7 +25,7 @@ function Header() {
                             <a className={cx('navbar-item-link')} href="/evaluate">Tính năng</a>
                         </li>
                         <li className={cx('navbar-item')}>
-                            <a className={cx('navbar-item-link')} href="/account">Tài khoản</a>
+                            <a className={cx('navbar-item-link')} href="/myaccount">Tài khoản</a>
                         </li>
                         <li className={cx('navbar-item')}>
                             <a className={cx('navbar-item-link')} href="/contact">Liên hệ</a>

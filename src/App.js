@@ -12,6 +12,7 @@ import Detail from './components/pages/Detail/Detail';
 import Evaluate from '../src/components/pages/Evaluate';
 import Author from '../src/components/pages/Author';
 import ListEvaluate from '../src/components/pages/ListEvaluate';
+import MyAccount from './components/pages/MyAccount';
 
 import { ethers } from 'ethers';
 import MarketplaceAddress from '../src/abis/Marketplace-address.json';
@@ -164,7 +165,7 @@ function App() {
                             path="/myaccount"
                             element={
                                 <DefaultLayout>
-                                    <ListEvaluate />
+                                    <MyAccount />
                                 </DefaultLayout>
                             }
                         />

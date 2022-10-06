@@ -1,6 +1,8 @@
+import MyItem from "./MyItem";
+
 function MyAccount() {
     return ( 
-        <div>Hello</div>
+        <MyItem />
      );
 }
 
