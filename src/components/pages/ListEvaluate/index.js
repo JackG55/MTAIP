@@ -16,6 +16,7 @@ function ListEvaluate({ nft, marketplace, user }) {
     const [loading, setLoading] = useState(true);
     const [checkedItems, setCheckedItems] = useState([]);
     const [uncheckedItems, setUncheckedItems] = useState([]);
+    const [ownerName, setOwnerName] = useState('');
     const loadMarketplaceItems = async () => {
         // Load all unsold items
         const itemCount = await marketplace.itemCount();
@@ -24,6 +25,12 @@ function ListEvaluate({ nft, marketplace, user }) {
         for (let i = 1; i <= itemCount; i++) {
             const item = await marketplace.items(i);
             if (!item.check) {
+
+                //get Name
+                const userA = await user.users(item.seller)
+                console.log(item.seller)
+                //setOwnerName(userA[2])  
+
                 // get uri url from nft contract
                 const uri = await nft.tokenURI(item.tokenId);
                 const cid = await uri.split('ipfs://').join('').split('/')[0];
@@ -44,6 +51,7 @@ function ListEvaluate({ nft, marketplace, user }) {
                     seller: item.seller,
                     name: responseJson.tentacpham,
                     image: imageGatewayURL,
+                    ownerName: userA[2]
                 });
             }
         }
@@ -69,6 +77,7 @@ function ListEvaluate({ nft, marketplace, user }) {
                             backgroundImg={item.image}
                             Imgname={item.name}
                             tokenId={item.tokenId}
+                            ownerName={item.ownerName}
                         />
                     ))}
                     {/* <CardUI evaluated='1' total='10' />

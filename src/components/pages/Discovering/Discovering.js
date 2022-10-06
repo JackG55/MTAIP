@@ -5,16 +5,19 @@ import styles from './Discovering.module.scss';
 import classNames from 'classnames/bind';
 import { makeGatewayURL } from '../../web3Storage_helper';
 
+import MarketPlaceAddress from '../../../abis/Marketplace-address.json'
+
 
 const cx = classNames.bind(styles);
 
-function Discovering({nft, marketplace}) {
+function Discovering({nft, marketplace, user}) {
 
 
     //===========================================Xử lý Contract==========================//
     //#region Contract
     const [loading, setLoading] = useState(true)
     const [items, setItems] = useState([])
+    const [ownerName, setOwnerName] = useState('')
     const loadMarketplaceItems = async () => {
       // Load all unsold items
       const itemCount = await marketplace.itemCount();
@@ -23,6 +26,9 @@ function Discovering({nft, marketplace}) {
       for (let i = 1; i <= itemCount; i++) {
         const item = await marketplace.items(i)
         if (!item.sold && item.check===true) {
+          const ownerAddress = await nft.ownerOf(i);
+          const userA = await user.users(item.seller)
+
           // get uri url from nft contract
           const uri = await nft.tokenURI(item.tokenId)
            const cid = await uri.split("ipfs://").join("").split("/")[0]
@@ -42,7 +48,8 @@ function Discovering({nft, marketplace}) {
             itemId: item.itemId,
             seller: item.seller,
             name: responseJson.tentacpham,
-            image: imageGatewayURL
+            image: imageGatewayURL, 
+            ownerName: userA[2]
           })
         }
       }
@@ -67,7 +74,7 @@ function Discovering({nft, marketplace}) {
             </h1>
             <div className={cx('discover-content')}>
             {items.map((item) => (
-              <CardUI key={item.itemId} backgroundImg={item.image} Imgname={item.name} tokenId={item.tokenId}/>
+              <CardUI key={item.itemId} backgroundImg={item.image} Imgname={item.name} tokenId={item.tokenId} ownerName={item.ownerName}/>
             ))}
                  
             </div>

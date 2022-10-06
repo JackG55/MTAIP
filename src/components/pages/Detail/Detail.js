@@ -56,16 +56,19 @@ function Detail( {nft, marketplace, user} ) {
     })
 
     const loadMarketplaceItems = async () => {
-        const ownerName = await nft.ownerOf(id);
-              //console.log(ownerName)
-              if(ownerName === MarketPlaceAddress.address)
-              {
-                setOwnerName('MTAIP')
-              }
-              else{
-                const userA = await user.users(ownerName)
-                setOwnerName(userA[2])
-              }
+        // const ownerName = await nft.ownerOf(id);
+        //       //console.log(ownerName)
+        //       if(ownerName === MarketPlaceAddress.address)
+        //       {
+        //         setOwnerName('MTAIP')
+        //       }
+        //       else{
+        //         const userA = await user.users(ownerName)
+        //         setOwnerName(userA[2])
+        //       }
+        const item = await marketplace.items(id);
+        const userA = await user.users(item.seller)
+        setOwnerName(userA[2])
               
         
         // get uri url from nft contract

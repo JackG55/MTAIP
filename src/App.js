@@ -108,7 +108,7 @@ function App() {
                             path="/discovering"
                             element={
                                 <DefaultLayout>
-                                    <Discovering nft={nft} marketplace={marketplace} />
+                                    <Discovering nft={nft} marketplace={marketplace} user={user} />
                                 </DefaultLayout>
                             }
                         />
@@ -154,6 +154,14 @@ function App() {
                         />
                         <Route
                             path="/list"
+                            element={
+                                <DefaultLayout>
+                                    <ListEvaluate />
+                                </DefaultLayout>
+                            }
+                        />
+                        <Route
+                            path="/myaccount"
                             element={
                                 <DefaultLayout>
                                     <ListEvaluate />

@@ -15,7 +15,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
-export default function CardUI({ backgroundImg, Imgname, tokenId }) {
+export default function CardUI({ backgroundImg, Imgname, tokenId, ownerName }) {
 
     let navigate = useNavigate()
 
@@ -37,7 +37,7 @@ export default function CardUI({ backgroundImg, Imgname, tokenId }) {
                         </Typography>
                         <CardActionArea>
                             <Typography variant="h6" color="rgb(32, 129, 226)">
-                                Adamtoksoz
+                                {ownerName}
                             </Typography>
                         </CardActionArea>
                     </div>

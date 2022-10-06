@@ -18,6 +18,9 @@
 .env.test.local
 .env.production.local
 
+#abi
+/src/abis
+
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
