@@ -21,6 +21,9 @@
 #abi
 /src/abis
 
+#web3Token
+/src/components/getWeb3Token.js
+
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
