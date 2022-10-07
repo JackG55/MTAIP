@@ -56,7 +56,7 @@ function App() {
         const user = new ethers.Contract(UserRegisterAddress.address, UserRegisterAbi.abi, signer);
         setUser(user);
 
-        console.log(nft)
+        console.log(marketplace)
     };
 
     // window.ethereum.on('accountsChanged', function (accounts) {

@@ -9179,16 +9179,16 @@
         2353
       ],
       "IERC165": [
-        2918
+        2978
       ],
       "IERC721": [
-        2960
+        3020
       ],
       "IERC721Enumerable": [
-        2984
+        3044
       ],
       "IERC721Metadata": [
-        2997
+        3057
       ]
     },
     "id": 2121,
@@ -9266,13 +9266,13 @@
         "linearizedBaseContracts": [
           2120,
           2293,
-          2984,
+          3044,
           2099,
-          2960,
+          3020,
           2353,
           1826,
-          2918,
-          2997
+          2978,
+          3057
         ],
         "name": "ERC721Connector",
         "nameLocation": "137:15:13",
@@ -9419,7 +9419,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.7",
-  "updatedAt": "2022-10-06T01:52:20.743Z",
+  "updatedAt": "2022-10-07T01:12:46.218Z",
   "devdoc": {
     "kind": "dev",
     "methods": {

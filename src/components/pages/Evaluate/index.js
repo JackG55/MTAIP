@@ -34,16 +34,10 @@ function Evaluate( {nft, marketplace, user} ) {
 
               // get uri url from nft contract
               const uri = await nft.tokenURI(id)
-              const ownerName = await nft.ownerOf(id);
-              console.log(ownerName)
-              if(ownerName === MarketPlaceAddress.address)
-              {
-                setOwnerName('MTAIP')
-              }
-              else{
-                const userA = await user.users(ownerName)
-                setOwnerName(userA[2])
-              }
+              
+              const item = await marketplace.items(id);
+              const userA = await user.users(item.seller)
+              setOwnerName(userA[2])
 
             // const item = await marketplace.items(id);
             // const userA = await user.users(item.seller)

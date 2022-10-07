@@ -15,6 +15,8 @@ import makeStorageClient from '../../getWeb3Token';
 import { jsonFile } from '../../web3Storage_helper';
 import { useNavigate } from 'react-router-dom';
 
+import MarketPlaceAddress from '../../../abis/Marketplace-address.json';
+
 
 const cx = classNames.bind(styles);
 
@@ -75,6 +77,7 @@ function SignUp({ nft, marketplace, user }) {
         
         const userA = await user.users(accounts[0])
         setUsername(userA.name)
+        //console.log(userA)
 
     };
 
@@ -99,9 +102,14 @@ function SignUp({ nft, marketplace, user }) {
         const id = await nft.tokenCount();
        setTokenId(id)
 
-       await (await marketplace.makeItem(nft.address, id, 0)).wait();
-        console.log('listing')
-       navigate(`/detail/${id}`)
+       await (await marketplace.makeItem(nft.address, id, 0, account)).wait();
+       console.log('listing')
+       
+        //thêm vào lịch sử
+        await marketplace.addHistory(id, 'mint', 0, account, MarketPlaceAddress.address, 1111111);
+        console.log('đã thêm lịch sử')
+
+       //navigate(`/detail/${id}`)
     };
 
     const mintThenList = async (uri) => {
@@ -111,16 +119,27 @@ function SignUp({ nft, marketplace, user }) {
         const id = await nft.tokenCount();
         console.log(id)
         setTokenId(id);
+
+        const owner = await nft.ownerOf(id);
+        console.log('owner: ', owner)
+
+        const msqsender = await marketplace
         //console.log(id);
+        
         // approve marketplace to spend nft
         //uỷ quyền cho marketplace
         await (await nft.setApprovalForAll(marketplace.address, true)).wait();
         console.log('set approve xong')
         // add nft to marketplace
         const listingPrice = ethers.utils.parseEther(values.price.toString());
-        await (await marketplace.makeItem(nft.address, id, listingPrice)).wait();
+        console.log('listingprice', listingPrice)
+        await (await marketplace.makeItem(nft.address, id, listingPrice, account)).wait();
         console.log('listing')
-        navigate(`/detail/${id}`)
+
+        // const item = await marketplace.items(id)
+        // console.log('listing')
+        // console.log(item)
+        //navigate(`/detail/${id}`)
     };
 
      

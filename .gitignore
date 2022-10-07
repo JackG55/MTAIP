@@ -19,10 +19,10 @@
 .env.production.local
 
 #abi
-/src/abis
+src/abis
 
 #web3Token
-/src/components/getWeb3Token.js
+src/components/getWeb3Token.js
 
 npm-debug.log*
 yarn-debug.log*

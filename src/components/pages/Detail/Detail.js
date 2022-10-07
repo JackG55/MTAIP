@@ -8,12 +8,12 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
 import { useParams } from 'react-router-dom';
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react';
 
 import { makeGatewayURL } from '../../web3Storage_helper';
 
-import MTAIPAddress from '../../../abis/MTAIP-address.json'
-import MarketPlaceAddress from '../../../abis/Marketplace-address.json'
+import MTAIPAddress from '../../../abis/MTAIP-address.json';
+import MarketPlaceAddress from '../../../abis/Marketplace-address.json';
 
 import styles from './Detail.module.scss';
 import classNames from 'classnames/bind';
@@ -35,25 +35,49 @@ const rows = [
     createData('List', 99, 'NFT_Rabbithole', ' ', '18:06:14'),
 ];
 
-function Detail( {nft, marketplace, user} ) {
+function Detail({ nft, marketplace, user }) {
     //lấy ra id đã nà
-    const {id} = useParams()
-    console.log(id)
-    
-        //===========================================Xử lý Contract==========================//
+    const { id } = useParams();
+    //console.log(id);
+
+    //============================================Xử lý BLockchain==========================//
+    // #region Blockchain
+
+    const [account, setAccount] = useState('');
+
+    // MetaMask Login/Connect
+    const web3Handler = async () => {
+        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        setAccount(accounts[0]);
+    };
+
+    window.ethereum.on('accountsChanged', function (accounts) {
+        setAccount(accounts[0]);
+    });
+
+    useEffect(() => {
+        web3Handler();
+    }, [account]);
+
+    // #endregion Blockchain
+    //=====================================================================================//
+
+    //===========================================Xử lý Contract==========================//
     //#region Contract
-    const [loading, setLoading] = useState(true)
-    const [ownerName, setOwnerName] = useState('')
+    const [loading, setLoading] = useState(true);
+    const [ownerName, setOwnerName] = useState('');
+    const [totalPrice, setTotalPrice]= useState();
     const [item, setItem] = useState({
-        path: "",
+        path: '',
         image: null,
-        tentacpham: "",
-        loaihinh: "",
-        ngaycongbo: "",
-        ngayhoanthanh: "",
-        noidung: "",
-        giachuyennhuong: ""
-    })
+        tentacpham: '',
+        loaihinh: '',
+        ngaycongbo: '',
+        ngayhoanthanh: '',
+        noidung: '',
+        giachuyennhuong: '',
+        seller: '',
+    });
 
     const loadMarketplaceItems = async () => {
         // const ownerName = await nft.ownerOf(id);
@@ -66,52 +90,71 @@ function Detail( {nft, marketplace, user} ) {
         //         const userA = await user.users(ownerName)
         //         setOwnerName(userA[2])
         //       }
-        const item = await marketplace.items(id);
-        const userA = await user.users(item.seller)
-        setOwnerName(userA[2])
-              
-        
+        //load history
+        //debugger
+        //const history = await marketplace.itemTracks(id, 0);
+        //console.log(history);
+
+        const itemA = await marketplace.items(id);
+        //const owner = await nft.ownerOf(id);
+        //console.log('owner: ', owner);
+        //console.log('seller: ', itemA.seller);
+        const totalPrice = await marketplace.getTotalPrice(id);
+        setTotalPrice(totalPrice)
+
+        const feeaccount = await marketplace.feeAccount();
+        console.log('feeaccount: ', feeaccount)
+        //console.log('tổng giá: ', totalPrice);
+        //console.log('giá gốc', itemA.price);
+
+        const userA = await user.users(itemA.seller);
+        setOwnerName(userA[2]);
+
         // get uri url from nft contract
-          const uri = await nft.tokenURI(id)
+        const uri = await nft.tokenURI(id);
 
+        const cid = await uri.split('ipfs://').join('').split('/')[0];
+        const imageName = await uri.split('/')[3];
 
-           const cid = await uri.split("ipfs://").join("").split("/")[0]
-           const imageName = await uri.split("/")[3]
-          
-           const imageGatewayURL = makeGatewayURL(cid, imageName);
-           const metadataURL = makeGatewayURL(cid, 'metadata.json')
-          
-          // console.log(metadataURL)
-           const response = await fetch(metadataURL)
-           const responseJson = await response.json();
-           //console.log(responseJson)
+        const imageGatewayURL = makeGatewayURL(cid, imageName);
+        const metadataURL = makeGatewayURL(cid, 'metadata.json');
 
-           setItem({
-            ...item, 
-            image: imageGatewayURL, 
-            tentacpham: responseJson.tentacpham, 
+        // console.log(metadataURL)
+        const response = await fetch(metadataURL);
+        const responseJson = await response.json();
+        //console.log(responseJson)
+        //Add item to items array
+        setItem({
+            ...item,
+            image: imageGatewayURL,
+            tentacpham: responseJson.tentacpham,
             loaihinh: responseJson.loaihinh,
             ngaycongbo: responseJson.ngaycongbo,
             ngayhoanthanh: responseJson.ngayhoanthanh,
             noidung: responseJson.noidung,
-            giachuyennhuong: responseJson.giachuyennhuong
-           })
+            giachuyennhuong: responseJson.giachuyennhuong,
+            seller: itemA.seller,
+        });
+
+
         
-           //console.log(item)
-          
-          //Add item to items array
-          setLoading(false)
-          }
+        setLoading(false);
+    };
 
     useEffect(() => {
-      loadMarketplaceItems()
-      }, [])
+        loadMarketplaceItems();
+    }, []);
+
+
+    const buyMarketItem = async () => {
+        await (await marketplace.purchaseItem(id, account, { value: totalPrice })).wait()
+        console.log('mua thanh cong')
+        loadMarketplaceItems()
+      }
     //#endregion Contract
     //===================================================================================//
 
-
     return (
-
         <div className={cx('detail-artwork')}>
             <div className={cx('common-information')}>
                 <div className={cx('image-info')}>
@@ -131,9 +174,7 @@ function Detail( {nft, marketplace, user} ) {
                         </span>
                     </div>
                     <AccordionUI id="1" title="Mô tả" type="description">
-                        <p>
-                            {item.noidung}
-                        </p>
+                        <p>{item.noidung}</p>
                     </AccordionUI>
                     <AccordionUI id="2" title="Chi tiết" type="detail">
                         <div className={cx('detail-content')}>
@@ -158,13 +199,15 @@ function Detail( {nft, marketplace, user} ) {
                         <div className={cx('ethereum-price')}>
                             <img src={EthereumIcon} alt="" style={{ height: '30px', width: '30px' }} />
                             <div className={cx('ethereum-info')}>
-                                <span className={cx('etherum-price-detail')}>{item.giachuyennhuong} ETH </span> 
-                                <span className={cx('dollar-price-detail')}>${(item.giachuyennhuong*1.320)}</span>
+                                <span className={cx('etherum-price-detail')}>{item.giachuyennhuong} ETH </span>
+                                <span className={cx('dollar-price-detail')}>${item.giachuyennhuong * 1.32}</span>
                             </div>
                         </div>
                         <div className={cx('buy-offer-btn')}>
-                            <button className={cx('buy-btn')}>Mua luôn</button>
-                            <button className={cx('offer-btn')}>Đề nghị</button>
+                            {account === item.seller.toLowerCase() ? (
+                                <button className={cx('offer-btn')}>Đề nghị</button>
+                            ) : ((item.giachuyennhuong > 0) ? <button className={cx('buy-btn')} onClick={buyMarketItem}>Mua luôn</button> : <h1>Sản phẩm này là tài sản cá nhân</h1>
+                            )}
                         </div>
                     </div>
                 </div>

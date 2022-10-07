@@ -25,7 +25,7 @@ function ListEvaluate({ nft, marketplace, user }) {
         for (let i = 1; i <= itemCount; i++) {
             const item = await marketplace.items(i);
             if (!item.check) {
-
+            
                 //get Name
                 const userA = await user.users(item.seller)
                 console.log(item.seller)

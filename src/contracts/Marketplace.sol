@@ -7,6 +7,7 @@ import "../../node_modules/@openzeppelin/contracts/security/ReentrancyGuard.sol"
 
 
 
+
 contract Marketplace is ReentrancyGuard {
 
     // Variables
@@ -23,6 +24,17 @@ contract Marketplace is ReentrancyGuard {
         bool sold;
         bool check;
     }
+
+    struct ItemHistory{
+        uint itemId;
+        string eventName;
+        uint price;
+        address from;
+        address to;
+        uint time;
+    }
+
+    mapping(uint => ItemHistory[]) public itemTracks;
 
     // itemId -> Item
     mapping(uint => Item) public items;
@@ -49,7 +61,7 @@ contract Marketplace is ReentrancyGuard {
     }
 
     // Make item to offer on the marketplace
-    function makeItem(IERC721 _nft, uint _tokenId, uint _price) external nonReentrant {
+    function makeItem(IERC721 _nft, uint _tokenId, uint _price, address _seller) external nonReentrant {
         if (_price > 0)
         {
             // transfer nft to marketplace
@@ -61,7 +73,7 @@ contract Marketplace is ReentrancyGuard {
                 address(_nft),
                 _tokenId,
                 _price,
-                msg.sender
+                _seller
             );
         }
         //require(_price > 0, "Price must be greater than zero");
@@ -74,14 +86,14 @@ contract Marketplace is ReentrancyGuard {
             _nft,
             _tokenId,
             _price,
-            payable(msg.sender),
+            payable(_seller),
             false, 
             false
         );
        
     }
 
-    function purchaseItem(uint _itemId) external payable nonReentrant {
+    function purchaseItem(uint _itemId, address _buyer) external payable nonReentrant {
         uint _totalPrice = getTotalPrice(_itemId);
         Item storage item = items[_itemId];
         require(_itemId > 0 && _itemId <= itemCount, "item doesn't exist");
@@ -101,8 +113,11 @@ contract Marketplace is ReentrancyGuard {
             item.tokenId,
             item.price,
             item.seller,
-            msg.sender
+            _buyer
         );
+
+        //change seller to buyer
+        items[_itemId].seller = payable(_buyer);
     }
     function getTotalPrice(uint _itemId) view public returns(uint){
         return((items[_itemId].price*(100 + feePercent))/100);
@@ -117,5 +132,9 @@ contract Marketplace is ReentrancyGuard {
 
         //thay đổi thành đã được xác nhận
         items[_itemId].check = true;
+    }
+
+    function addHistory( uint _itemId, string memory _eventName, uint _price, address _from, address _to, uint _time) public {
+        itemTracks[_itemId].push(ItemHistory(_itemId, _eventName, _price, _from, _to, _time));
     }
 }
