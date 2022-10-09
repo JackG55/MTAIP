@@ -82,4 +82,30 @@
             margin-top: 10px;
         }
     }
+    .loading-signup {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        background-color: rgba(126, 58, 242, 0.3);
+        .loading {
+            position: absolute;
+            top: 42%;
+            left: 45%;
+        }
+    }
+    .alert-signup {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        background-color: rgba(126, 58, 242, 0);
+        .alert {
+            position: absolute;
+            top: 42%;
+            left: 45%;
+        }
+    }
 }

@@ -12,7 +12,7 @@ import Detail from './components/pages/Detail/Detail';
 import Evaluate from '../src/components/pages/Evaluate';
 import Author from '../src/components/pages/Author';
 import ListEvaluate from '../src/components/pages/ListEvaluate';
-import MyAccount from './components/pages/MyAccount';
+import MyAccount from './components/pages/MyAccount/MyAccount';
 
 import { ethers } from 'ethers';
 import MarketplaceAddress from '../src/abis/Marketplace-address.json';
@@ -20,7 +20,7 @@ import MarketplaceAbi from '../src/abis/Marketplace.json';
 import MTAIPAddress from '../src/abis/MTAIP-address.json';
 import MTAIPAbi from '../src/abis/MTAIP.json';
 import UserRegisterAddress from '../src/abis/UserRegister-address.json';
-import UserRegisterAbi from '../src/abis/UserRegister.json'; 
+import UserRegisterAbi from '../src/abis/UserRegister.json';
 
 
 function App() {
@@ -117,7 +117,7 @@ function App() {
                             path="/detail/:id"
                             element={
                                 <DefaultLayout>
-                                    <Detail Discovering nft={nft} marketplace={marketplace} user={user}/>
+                                    <Detail Discovering nft={nft} marketplace={marketplace} user={user} />
                                 </DefaultLayout>
                             }
                         />
@@ -125,7 +125,7 @@ function App() {
                             path="/signup"
                             element={
                                 <DefaultLayout>
-                                    <SignUp nft={nft} marketplace={marketplace} user={user}/>
+                                    <SignUp nft={nft} marketplace={marketplace} user={user} />
                                 </DefaultLayout>
                             }
                         />
@@ -133,7 +133,7 @@ function App() {
                             path="/evaluate/:id"
                             element={
                                 <DefaultLayout>
-                                    <Evaluate nft={nft} marketplace={marketplace} user={user}/>
+                                    <Evaluate nft={nft} marketplace={marketplace} user={user} />
                                 </DefaultLayout>
                             }
                         />
@@ -165,7 +165,7 @@ function App() {
                             path="/myaccount"
                             element={
                                 <DefaultLayout>
-                                    <MyAccount />
+                                    <MyAccount nft={nft} marketplace={marketplace} user={user} />
                                 </DefaultLayout>
                             }
                         />

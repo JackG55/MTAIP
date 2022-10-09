@@ -3,6 +3,8 @@ import SelectTextFields from '../../UIcomponents/Selection';
 import ImageIcon from '@mui/icons-material/Image';
 import IconButton from '@mui/material/IconButton';
 import ClearIcon from '@mui/icons-material/Clear';
+import CircularLoading from '../../UIcomponents/CircularLoading';
+import Alert from '../../UIcomponents/AlertSuccess';
 
 import { useState, useEffect, useRef } from 'react';
 
@@ -21,6 +23,10 @@ import MarketPlaceAddress from '../../../abis/Marketplace-address.json';
 const cx = classNames.bind(styles);
 
 function SignUp({ nft, marketplace, user }) {
+
+    const [loading, setLoading] = useState(false);
+    const [alert, setAlert] = useState(false);
+
     const [values, setValues] = useState({
         loaihinh: '',
         tentacpham: '',
@@ -74,7 +80,7 @@ function SignUp({ nft, marketplace, user }) {
     const web3Handler = async () => {
         const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
         setAccount(accounts[0]);
-        
+
         const userA = await user.users(accounts[0])
         setUsername(userA.name)
         //console.log(userA)
@@ -95,21 +101,21 @@ function SignUp({ nft, marketplace, user }) {
     //============================================Xử lý contract===========================//
     //#region Contract
     const [tokenId, setTokenId] = useState()
-    
+
 
     const mint = async (uri) => {
         await (await nft.mint(uri)).wait();
         const id = await nft.tokenCount();
-       setTokenId(id)
+        setTokenId(id)
 
-       await (await marketplace.makeItem(nft.address, id, 0, account)).wait();
-       console.log('listing')
-       
+        await (await marketplace.makeItem(nft.address, id, 0, account)).wait();
+        console.log('listing')
+
         //thêm vào lịch sử
         await marketplace.addHistory(id, 'mint', 0, account, MarketPlaceAddress.address, 1111111);
         console.log('đã thêm lịch sử')
 
-       //navigate(`/detail/${id}`)
+        //navigate(`/detail/${id}`)
     };
 
     const mintThenList = async (uri) => {
@@ -125,7 +131,7 @@ function SignUp({ nft, marketplace, user }) {
 
         const msqsender = await marketplace
         //console.log(id);
-        
+
         // approve marketplace to spend nft
         //uỷ quyền cho marketplace
         await (await nft.setApprovalForAll(marketplace.address, true)).wait();
@@ -142,7 +148,7 @@ function SignUp({ nft, marketplace, user }) {
         //navigate(`/detail/${id}`)
     };
 
-     
+
     // #endregion Contract
     //=====================================================================================//
 
@@ -158,8 +164,8 @@ function SignUp({ nft, marketplace, user }) {
         }
     };
 
-    let navigate = useNavigate() 
-    
+    let navigate = useNavigate()
+
     const UploadtoIPFS = async () => {
         if (image) {
             try {
@@ -188,6 +194,7 @@ function SignUp({ nft, marketplace, user }) {
                 } else {
                     mintThenList(imageURI);
                 }
+                setAlert(true);
                 //khi nào mint xong thì chuyển qua trang detai của sản phẩm đó
                 //navigate(`/detail/${tokenId}`)
             } catch (error) {
@@ -211,6 +218,7 @@ function SignUp({ nft, marketplace, user }) {
     const handleClick = async () => {
         //đầu tiên là upload lên IPFS và mint NFT
         //UploadtoIPFS();
+        setLoading(true);
         if (checkInput) {
             UploadtoIPFS();
             //console.log(uploadinfo.imageURI);
@@ -248,6 +256,13 @@ function SignUp({ nft, marketplace, user }) {
         e.preventDefault();
         setPreview(null);
     };
+
+    const backToDetaiPage = (e) => {
+        setLoading(false);
+        setAlert(false);
+        // tro ve trang Home
+        navigate('/');
+    }
 
     return (
         <div className={cx('sign-app')}>
@@ -297,6 +312,20 @@ function SignUp({ nft, marketplace, user }) {
                     </button>
                 </div>
             </div>
+            {loading === true && (
+                <div className={cx('loading-signup')}>
+                    <div className={cx('loading')}>
+                        <CircularLoading info='Đang thêm thông tin' />
+                    </div>
+                </div>
+            )}
+            {alert === true && (
+                <div className={cx('alert-signup')} onClick={backToDetaiPage}>
+                    <div className={cx('alert')}>
+                        <Alert alert='Đăng ký thành công' />
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

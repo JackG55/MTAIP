@@ -1,0 +1,22 @@
+.myAccount {
+    padding: 0 32px;
+
+    .myAccount-title {
+        margin-top: 62px;
+    }
+    h2 {
+        margin-top: 50px;
+    }
+
+    .myAccount-content {
+        margin-top: 60px;
+        margin-bottom: 60px;
+        padding: 0 50px;
+
+        display: flex;
+        flex-direction: row;
+        gap: 30px;
+        justify-content: space-around;
+        flex-wrap: wrap;
+    }
+}

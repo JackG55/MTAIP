@@ -1,9 +1,13 @@
 import { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import ImageIcon from '@mui/icons-material/Image';
 import IconButton from '@mui/material/IconButton';
 import BasicTextFields from '../../UIcomponents/TextField';
 import ClearIcon from '@mui/icons-material/Clear';
+
+import CircularLoading from '../../UIcomponents/CircularLoading';
+import Alert from '../../UIcomponents/AlertSuccess';
 
 import styles from './Author.module.scss';
 import classNames from 'classnames/bind';
@@ -14,6 +18,7 @@ import makeStorageClient from '../../getWeb3Token';
 import { ethers } from 'ethers';
 import UserRegisterAddress from '../../../../src/abis/UserRegister-address.json';
 import UserRegister from '../../../../src/abis/UserRegister.json';
+import { Button } from '@mui/material';
 
 
 const cx = classNames.bind(styles);
@@ -21,22 +26,24 @@ const cx = classNames.bind(styles);
 function Author() {
     //============================================Xử lý BLockchain==========================//
     // #region Blockchain
+    const navigate = useNavigate();
 
     const [account, setAccount] = useState('');
     const [user, setUser] = useState('');
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(false);
+    const [alert, setAlert] = useState(false);
     // MetaMask Login/Connect
     const web3Handler = async () => {
         const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
         setAccount(accounts[0]);
 
-         // Get provider from Metamask
-         const provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:7545');
-         // Set signer
-         const signer = provider.getSigner();
+        // Get provider from Metamask
+        const provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:7545');
+        // Set signer
+        const signer = provider.getSigner();
 
         loadContracts(signer);
-        setLoading(true);
+
     };
 
     const loadContracts = async (signer) => {
@@ -62,10 +69,12 @@ function Author() {
         await (await user.creatUser(_userId, _isExpert, _UserURI, _name)).wait();
         await user.ExpertSign(_userId);
         const userA = await user.users(_userId);
-        console.log(userA)
-        console.log('done')
-      // user.on('Signed', (_userId, _UserURI ,_name, _isExpert, true))
-        
+        console.log(userA);
+        console.log('done');
+        setAlert(true);
+
+        // user.on('Signed', (_userId, _UserURI ,_name, _isExpert, true))
+
     }
 
     // const showName = async(_userId) => {
@@ -149,6 +158,7 @@ function Author() {
             //     identifyCard: identifyCard,
             // };
             // console.log(newAuthor);
+            setLoading(true);
             UploadtoIPFS();
         }
     };
@@ -206,6 +216,14 @@ function Author() {
         e.preventDefault();
         setPreview2(null);
     };
+
+    const backToHomePage = (e) => {
+        setLoading(false);
+        setAlert(false);
+        // tro ve trang Home
+        navigate('/');
+
+    }
 
     return (
         <div className={cx('author-signup')}>
@@ -297,6 +315,20 @@ function Author() {
                     </button>
                 </div>
             </div>
+            {loading === true && (
+                <div className={cx('loading-signup')}>
+                    <div className={cx('loading')}>
+                        <CircularLoading info='Đang thêm thông tin' />
+                    </div>
+                </div>
+            )}
+            {alert === true && (
+                <div className={cx('alert-signup')} onClick={backToHomePage}>
+                    <div className={cx('alert')}>
+                        <Alert alert='Đăng ký thành công' />
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
