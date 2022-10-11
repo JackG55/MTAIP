@@ -3,11 +3,14 @@ import TableUI from '../../UIcomponents/TableUI';
 import ImgExample from '../../../assets/images/details/image-details.png';
 import EthereumIcon from '../../../assets/images/details/ethereum.png';
 import CardUI from '../../UIcomponents/Card';
+import CircularLoading from '../../UIcomponents/CircularLoading';
+import Alert from '../../UIcomponents/AlertSuccess';
 
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
 import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
 import { makeGatewayURL } from '../../web3Storage_helper';
@@ -39,7 +42,9 @@ function Detail({ nft, marketplace, user }) {
     //lấy ra id đã nà
     const { id } = useParams();
     //console.log(id);
-
+    const [loadingDA, setLoadingDA] = useState(false);
+    const [alert, setAlert] = useState(false);
+    let navigate = useNavigate()
     //============================================Xử lý BLockchain==========================//
     // #region Blockchain
 
@@ -66,7 +71,7 @@ function Detail({ nft, marketplace, user }) {
     //#region Contract
     const [loading, setLoading] = useState(true);
     const [ownerName, setOwnerName] = useState('');
-    const [totalPrice, setTotalPrice]= useState();
+    const [totalPrice, setTotalPrice] = useState();
     const [item, setItem] = useState({
         path: '',
         image: null,
@@ -137,7 +142,7 @@ function Detail({ nft, marketplace, user }) {
         });
 
 
-        
+
         setLoading(false);
     };
 
@@ -147,12 +152,21 @@ function Detail({ nft, marketplace, user }) {
 
 
     const buyMarketItem = async () => {
+        setLoadingDA(true)
         await (await marketplace.purchaseItem(id, account, { value: totalPrice })).wait()
         console.log('mua thanh cong')
         loadMarketplaceItems()
-      }
+        setAlert(true)
+    }
     //#endregion Contract
     //===================================================================================//
+
+    const backToAccountPage = (e) => {
+        setLoadingDA(false);
+        setAlert(false);
+        // tro ve trang Home
+        navigate('/myaccount');
+    }
 
     return (
         <div className={cx('detail-artwork')}>
@@ -247,6 +261,20 @@ function Detail({ nft, marketplace, user }) {
                     </div>
                 </AccordionUI>
             </div>
+            {loadingDA === true && (
+                <div className={cx('loading-signup')}>
+                    <div className={cx('loading')}>
+                        <CircularLoading info='Đang giao dịch' />
+                    </div>
+                </div>
+            )}
+            {alert === true && (
+                <div className={cx('alert-signup')} onClick={backToAccountPage}>
+                    <div className={cx('alert')}>
+                        <Alert alert='Mua thành công' />
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

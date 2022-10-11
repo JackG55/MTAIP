@@ -8,6 +8,7 @@ import ReactImageMagnify from 'react-image-magnify';
 import RadioButtonGroup from '../../UIcomponents/RadioButtonGroup';
 import CircularLoading from '../../UIcomponents/CircularLoading';
 import Alert from '../../UIcomponents/AlertSuccess';
+import SearchBar from "../../UIcomponents/SearchBar"
 
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react'
@@ -25,7 +26,7 @@ function Evaluate({ nft, marketplace, user }) {
     const { id } = useParams()
     // console.log(id)
 
-    //===========================================Xử lý Contract==========================//
+    //===========================================Xử lý Contract(Phần đánh giá)==========================//
     //#region Contract
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true)
@@ -105,41 +106,104 @@ function Evaluate({ nft, marketplace, user }) {
         navigate('/');
     }
 
+    //===========================================Xử lý Contract (Phần tìm kiếm)==========================//
+    //#region Contract
+    const [loadingSearch, setLoadingSearch] = useState(true)
+    const [itemsSearch, setItemsSearch] = useState([])
+    const [ownerNameSearch, setOwnerNameSearch] = useState('')
+    const loadMarketplaceItemsSearch = async () => {
+        // Load all unsold items
+        const itemCountSearch = await marketplace.itemCount();
+        let itemsSearch = []
+        // console.log(itemCount)
+
+        for (let i = 1; i <= itemCountSearch; i++) {
+            const itemSearch = await marketplace.items(i)
+            if (!itemSearch.sold && itemSearch.check === true) {
+                const ownerAddressSearch = await nft.ownerOf(i);
+
+                const userASearch = await user.users(itemSearch.seller)
+
+                // console.log(userA[[0]])
+
+                // get uri url from nft contract
+                const uriSearch = await nft.tokenURI(itemSearch.tokenId)
+                const cidSearch = await uriSearch.split("ipfs://").join("").split("/")[0]
+                const imageNameSearch = await uriSearch.split("/")[3]
+
+                const imageGatewayURLSearch = makeGatewayURL(cidSearch, imageNameSearch);
+                const metadataURLSearch = makeGatewayURL(cidSearch, 'metadata.json')
+
+                //console.log(metadataURL)
+                const responseSearch = await fetch(metadataURLSearch)
+                const responseJsonSearch = await responseSearch.json();
+                console.log(responseJsonSearch)
+
+                //Add item to items array
+                itemsSearch.push({
+                    tokenId: itemSearch.tokenId,
+                    itemId: itemSearch.itemId,
+                    seller: itemSearch.seller,
+                    name: responseJsonSearch.tentacpham,
+                    image: imageGatewayURLSearch,
+                    ownerName: userASearch[2]
+                })
+            }
+        }
+        setLoadingSearch(false)
+        setItemsSearch(itemsSearch)
+    }
+
+    useEffect(() => {
+        loadMarketplaceItemsSearch()
+    }, [])
+    //#endregion Contract
+    //===================================================================================//
+
+
+
     return (
         <div className={cx('evaluate-artwork')}>
-            <h1>Đánh giá tác phẩm</h1>
-            <div className={cx('evaluate-common-information')}>
-                <div className={cx('evaluate-image-img')}>
-                    <ReactImageMagnify
-                        {...{
-                            smallImage: {
-                                alt: '',
-                                isFluidWidth: true,
-                                src: (item.image || ImgExample),
-                            },
-                            largeImage: {
-                                src: (item.image || ImgExample300),
-                                width: 300,
-                                height: 300,
-                            },
-                        }}
-                    />
-                </div>
-                <div className={cx('evaluate-common-info')}>
-                    <h2>{item.tentacpham}</h2>
-                    <div className={cx('evaluate-own-info')}>
-                        <p>Sở hữu bởi {ownerName}</p>
+            <div className={cx('evaluate-content')}>
+                <h1>Đánh giá tác phẩm</h1>
+                <div className={cx('evaluate-common-information')}>
+                    <div className={cx('evaluate-image-img')}>
+                        <ReactImageMagnify
+                            {...{
+                                smallImage: {
+                                    alt: '',
+                                    isFluidWidth: true,
+                                    src: (item.image || ImgExample),
+                                },
+                                largeImage: {
+                                    src: (item.image || ImgExample300),
+                                    width: 300,
+                                    height: 300,
+                                },
+                            }}
+                        />
                     </div>
-                    <div className={cx('evaluate-checkbox')}>
-                        <RadioButtonGroup
-                            formData={formData}
-                            setFormData={setFormData}
-                        ></RadioButtonGroup>
+                    <div className={cx('evaluate-common-info')}>
+                        <h2>{item.tentacpham}</h2>
+                        <div className={cx('evaluate-own-info')}>
+                            <p>Sở hữu bởi {ownerName}</p>
+                        </div>
+                        <div className={cx('evaluate-checkbox')}>
+                            <RadioButtonGroup
+                                formData={formData}
+                                setFormData={setFormData}
+                            ></RadioButtonGroup>
+                        </div>
                     </div>
                 </div>
+                <div className={cx('evaluate-btn')}>
+                    <button className={cx('btn-evaluate')} onClick={handleClick}>Gửi</button>
+                </div>
+
             </div>
-            <div className={cx('evaluate-btn')}>
-                <button className={cx('btn-evaluate')} onClick={handleClick}>Gửi</button>
+            <div className={cx('search-content')}>
+                <h2>Danh sách các sản phẩm</h2>
+                <SearchBar placeholder='Nhập tên tác phẩm...' data={itemsSearch} />
             </div>
             {loadingDA === true && (
                 <div className={cx('loading-signup')}>

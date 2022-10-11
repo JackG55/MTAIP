@@ -63,4 +63,56 @@
     }
 }
 
-/*===================================================Table==================================================*/
+/*===================================================Table======================================================*/
+/*===================================================SearchBar==================================================*/
+.search {
+    .search-input {
+        display: flex;
+        flex-direction: row;
+        border: solid 1px rgb(138, 147, 155);
+        width: 350px;
+        height: 50px;
+        border-radius: 5px;
+        justify-content: center;
+        align-items: center;
+        input {
+            border: white;
+            width: 300px;
+            height: 40px;
+            outline: none;
+            font-size: 18px;
+        }
+    }
+    .search-icon {
+        display: flex;
+        align-items: center;
+    }
+    .data-result {
+        margin-top: 5px;
+        width: 350px;
+        height: auto;
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        overflow: hidden;
+        overflow-y: auto;
+        .data-item {
+            padding-left: 10px;
+            width: 100%;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            color: black;
+        }
+        .data-item:hover {
+            background-color: lightgrey;
+            cursor: pointer;
+        }
+        .data-img {
+            img {
+                width: 100%;
+                height: auto;
+            }
+        }
+    }
+}

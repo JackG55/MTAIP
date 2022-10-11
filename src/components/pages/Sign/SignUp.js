@@ -116,6 +116,7 @@ function SignUp({ nft, marketplace, user }) {
         console.log('đã thêm lịch sử')
 
         //navigate(`/detail/${id}`)
+        setAlert(true);
     };
 
     const mintThenList = async (uri) => {
@@ -146,6 +147,7 @@ function SignUp({ nft, marketplace, user }) {
         // console.log('listing')
         // console.log(item)
         //navigate(`/detail/${id}`)
+        setAlert(true);
     };
 
 
@@ -194,14 +196,16 @@ function SignUp({ nft, marketplace, user }) {
                 } else {
                     mintThenList(imageURI);
                 }
-                setAlert(true);
+
                 //khi nào mint xong thì chuyển qua trang detai của sản phẩm đó
                 //navigate(`/detail/${tokenId}`)
             } catch (error) {
                 console.log('Error sending File to IPFS: ');
                 console.log(error);
             }
+
         }
+
     };
     // #endregion storeImage
     //==========================================================================================================//
