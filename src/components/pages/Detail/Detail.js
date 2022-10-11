@@ -32,17 +32,6 @@ const rows = [
     createData('Mint', null, 'Null Address', 'NFT_Rabbithole', '18:00:56'),
 ];
 
-String.prototype.toHHMMSS = function () {
-    var sec_num = parseInt(this, 10); // don't forget the second param
-    var hours   = Math.floor(sec_num / 3600);
-    var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
-    var seconds = sec_num - (hours * 3600) - (minutes * 60);
-
-    if (hours   < 10) {hours   = "0"+hours;}
-    if (minutes < 10) {minutes = "0"+minutes;}
-    if (seconds < 10) {seconds = "0"+seconds;}
-    return hours+':'+minutes+':'+seconds;
-}
 
 function Detail({ nft, marketplace, user }) {
     //lấy ra id đã nà
@@ -77,12 +66,8 @@ function Detail({ nft, marketplace, user }) {
     //#region Contract
     const [loading, setLoading] = useState(true);
     const [ownerName, setOwnerName] = useState('');
-<<<<<<< HEAD
     const [totalPrice, setTotalPrice] = useState();
-=======
-    const [totalPrice, setTotalPrice]= useState();
     const [itemtrack, setItemtrack] = useState([])
->>>>>>> 8362726e32b277728f26d81023aae5d2b3f396a9
     const [item, setItem] = useState({
         path: '',
         image: null,
@@ -109,41 +94,40 @@ function Detail({ nft, marketplace, user }) {
         //load history
         //debugger
         //const currentTime = new Date();
-       // console.log('string', currentTime)
-       // const Timenumber = currentTime.getTime();
-       // console.log('number ', Timenumber)
+        // console.log('string', currentTime)
+        // const Timenumber = currentTime.getTime();
+        // console.log('number ', Timenumber)
         //const Time = new Date(Timenumber)
         //console.log('string ', Time.toLocaleString())
 
         const history = await marketplace.getHistories(id);
-         //console.log(history.length);
+        //console.log(history.length);
         let row = [];
-        for await (const item of history){
+        for await (const item of history) {
             const ethValue = ethers.utils.formatEther(item.price);
             const from = await user.users(item.from);
-            
+
             const to = await user.users(item.to);
             const Time = new Date(item.time.toNumber())
-            
-           
-           // console.log(typeof(ethValue))
-           if(item.to === MarketPlaceAddress.address)
-           {
-            const a = createData(item.eventName, ethValue, from[2], 'MTAIP', Time.toLocaleString())
-            row.push(a)
-           }
-           else if(item.from === MarketPlaceAddress.address){
-            const b = createData(item.eventName, ethValue, 'MTAIP', to[2], Time.toLocaleString())
-            row.push(b)
-           }
-           else{
-            const c = createData(item.eventName, ethValue, from[2], to[2], Time.toLocaleString())
-            row.push(c)
-           }
-           
+
+
+            // console.log(typeof(ethValue))
+            if (item.to === MarketPlaceAddress.address) {
+                const a = createData(item.eventName, ethValue, from[2], 'MTAIP', Time.toLocaleString())
+                row.push(a)
+            }
+            else if (item.from === MarketPlaceAddress.address) {
+                const b = createData(item.eventName, ethValue, 'MTAIP', to[2], Time.toLocaleString())
+                row.push(b)
+            }
+            else {
+                const c = createData(item.eventName, ethValue, from[2], to[2], Time.toLocaleString())
+                row.push(c)
+            }
+
             //console.log(a)
-           // row.push(a)
-            
+            // row.push(a)
+
         }
         //console.log(row)
         setItemtrack(row);
@@ -204,18 +188,18 @@ function Detail({ nft, marketplace, user }) {
         await (await marketplace.purchaseItem(id, account, { value: totalPrice })).wait()
         console.log('mua thanh cong')
 
-         //thêm vào lịch sử
-         const currentTime = new Date();
-         const Timenumber = currentTime.getTime();
-         await marketplace.addHistory(id, 'transfer', totalPrice,MarketPlaceAddress.address,account, Timenumber);
-         console.log('đã thêm lịch sử')
+        //thêm vào lịch sử
+        const currentTime = new Date();
+        const Timenumber = currentTime.getTime();
+        await marketplace.addHistory(id, 'transfer', totalPrice, MarketPlaceAddress.address, account, Timenumber);
+        console.log('đã thêm lịch sử')
 
         loadMarketplaceItems()
         setAlert(true)
     }
     //#endregion Contract
     //===================================================================================//
-    
+
 
 
     const backToAccountPage = (e) => {
