@@ -48,7 +48,7 @@ function MyAccount({ nft, marketplace, user }) {
             //     console.log('true')
             // else
             //     console.log(false)
-            if (!item.sold && item.check === true && item.seller.toLowerCase() === account) {
+            if (item.check === true && item.seller.toLowerCase() === account) {
                 const ownerAddress = await nft.ownerOf(i);
                 const userA = await user.users(item.seller)
                 // console.log(userA[[0]])
