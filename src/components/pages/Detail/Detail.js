@@ -209,6 +209,8 @@ function Detail({ nft, marketplace, user }) {
         navigate('/myaccount');
     }
 
+    
+
     return (
         <div className={cx('detail-artwork')}>
             <div className={cx('common-information')}>

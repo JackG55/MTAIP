@@ -34,6 +34,10 @@ contract Marketplace is ReentrancyGuard {
         uint time;
     }
 
+    //itemId -> address[]
+    mapping(uint => address[]) public downloaders;
+
+    //itemId -> ItemHistory[]
     mapping(uint => ItemHistory[]) public itemTracks;
 
     // itemId -> Item
@@ -119,6 +123,40 @@ contract Marketplace is ReentrancyGuard {
         //change seller to buyer
         items[_itemId].seller = payable(_buyer);
     }
+
+    function purchaseDownloadItem(uint _itemId, address _buyer) external payable nonReentrant {
+        uint _totalPrice = getTotalPrice(_itemId);
+        Item storage item = items[_itemId];
+        require(_itemId > 0 && _itemId <= itemCount, "item doesn't exist");
+        require(msg.value >= _totalPrice, "not enough ether to cover item price and market fee");
+        require(!item.sold, "item already sold");
+
+        // pay seller and feeAccount
+        item.seller.transfer(item.price/2);
+        feeAccount.transfer(_totalPrice/2 - item.price);
+        
+       //add buyer to downloader
+       downloaders[_itemId].push(_buyer);
+       
+    }
+
+    function OfferItem(IERC721 _nft, uint _tokenId, uint _itemId, uint _price) external {
+        
+        require(_price>0, "Price must be higher than 0");
+        Item storage item = items[_itemId];
+        //transfer to marketplace
+         
+        _nft.transferFrom(msg.sender, address(this), _tokenId);
+
+         //change sold from true to false
+        item.sold = false;
+
+        //set price
+        item.price = _price;
+    }
+
+
+
     function getTotalPrice(uint _itemId) view public returns(uint){
         return((items[_itemId].price*(100 + feePercent))/100);
     }
