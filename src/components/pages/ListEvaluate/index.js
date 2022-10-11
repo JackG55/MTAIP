@@ -40,16 +40,16 @@ function ListEvaluate({ nft, marketplace, user }) {
                 const metadataURL = makeGatewayURL(cid, 'metadata.json');
 
                 //console.log(metadataURL)
-                const response = await fetch(metadataURL);
-                const responseJson = await response.json();
-                console.log(responseJson);
+                //const response = await fetch(metadataURL);
+                //const responseJson = await response.json();
+               // console.log(responseJson);
 
                 //Add item to items array
                 items.push({
                     tokenId: item.tokenId,
                     itemId: item.itemId,
                     seller: item.seller,
-                    name: responseJson.tentacpham,
+                    name: '',
                     image: imageGatewayURL,
                     ownerName: userA[2]
                 });

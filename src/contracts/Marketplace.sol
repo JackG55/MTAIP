@@ -137,4 +137,12 @@ contract Marketplace is ReentrancyGuard {
     function addHistory( uint _itemId, string memory _eventName, uint _price, address _from, address _to, uint _time) public {
         itemTracks[_itemId].push(ItemHistory(_itemId, _eventName, _price, _from, _to, _time));
     }
+
+    function getHistories(uint _itemId) public view returns (ItemHistory[] memory){
+        return itemTracks[_itemId];
+    }
+
+    function getHistory(uint _itemId, uint _historyId) public view returns (ItemHistory memory){
+        return itemTracks[_itemId][_historyId];
+    }
 }

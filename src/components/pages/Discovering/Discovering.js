@@ -27,7 +27,6 @@ function Discovering({ nft, marketplace, user }) {
     for (let i = 1; i <= itemCount; i++) {
       const item = await marketplace.items(i)
       if (!item.sold && item.check === true) {
-        const ownerAddress = await nft.ownerOf(i);
 
         const userA = await user.users(item.seller)
 
