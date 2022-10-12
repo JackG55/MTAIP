@@ -133,7 +133,7 @@ contract Marketplace is ReentrancyGuard {
 
         // pay seller and feeAccount
         item.seller.transfer(item.price/2);
-        feeAccount.transfer(_totalPrice/2 - item.price);
+        feeAccount.transfer(_totalPrice/2 - item.price/2);
         
        //add buyer to downloader
        downloaders[_itemId].push(_buyer);
@@ -183,4 +183,8 @@ contract Marketplace is ReentrancyGuard {
     function getHistory(uint _itemId, uint _historyId) public view returns (ItemHistory memory){
         return itemTracks[_itemId][_historyId];
     }
+    function getDownloaders(uint _itemId) public view returns (address[] memory){
+        return downloaders[_itemId];
+    }
+
 }

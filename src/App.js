@@ -35,7 +35,8 @@ function App() {
     // MetaMask Login/Connect
     const web3Handler = async () => {
         // Get provider from Metamask
-        const provider = new ethers.providers.Web3Provider(window.ethereum)
+        // const provider = new ethers.providers.Web3Provider(window.ethereum)
+        const provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:7545')
         // Set signer
         const signer = provider.getSigner();
 

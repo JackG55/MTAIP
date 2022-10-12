@@ -36,7 +36,7 @@ const rows = [
 function Detail({ nft, marketplace, user }) {
     //lấy ra id đã nà
     const { id } = useParams();
-    //console.log(id);
+    // console.log(id);
     const [loadingDA, setLoadingDA] = useState(false);
     const [alert, setAlert] = useState(false);
     let navigate = useNavigate()
@@ -67,7 +67,8 @@ function Detail({ nft, marketplace, user }) {
     const [loading, setLoading] = useState(true);
     const [ownerName, setOwnerName] = useState('');
     const [totalPrice, setTotalPrice] = useState();
-    const [itemtrack, setItemtrack] = useState([])
+    const [itemtrack, setItemtrack] = useState([]);
+    const [downloadAccount, setDownloadAccount] = useState(false);
     const [item, setItem] = useState({
         path: '',
         image: null,
@@ -173,14 +174,22 @@ function Detail({ nft, marketplace, user }) {
             seller: itemA.seller,
         });
 
-
+        const downloaders = await marketplace.getDownloaders(id);
+        let count = 0;
+        for await (const downloader of downloaders) {
+            if (account === downloader.toLowerCase())
+                count++
+        }
+        if (count !== 0)
+            setDownloadAccount(true)
 
         setLoading(false);
     };
 
     useEffect(() => {
         loadMarketplaceItems();
-    }, []);
+    }, [account]);
+
 
 
     const buyMarketItem = async () => {
@@ -197,25 +206,38 @@ function Detail({ nft, marketplace, user }) {
         loadMarketplaceItems()
         setAlert(true)
     }
+
+    const buyDownloadMarketItem = async () => {
+        setLoadingDA(true)
+        await (await marketplace.purchaseDownloadItem(id, account, { value: totalPrice })).wait()
+        console.log('mua thanh cong')
+
+        loadMarketplaceItems()
+
+        setAlert(true)
+    }
     //#endregion Contract
     //===================================================================================//
+    console.log(1111)
+    console.log(downloadAccount)
 
-
-
-    const backToAccountPage = (e) => {
+    const backToHomePage = (e) => {
         setLoadingDA(false);
         setAlert(false);
         // tro ve trang Home
-        navigate('/myaccount');
+        navigate(`/detail/${id}`);
     }
-
-    
 
     return (
         <div className={cx('detail-artwork')}>
             <div className={cx('common-information')}>
                 <div className={cx('image-info')}>
-                    <img src={item.image} alt="" />
+                    {downloadAccount === true ? (
+                        <img src={item.image} alt="" />)
+                        : (
+                            <img src={item.image} alt="" style={{ pointerEvents: 'none' }} />
+                        )
+                    }
                 </div>
                 <div className={cx('common-info')}>
                     <h1>{item.tentacpham}</h1>
@@ -263,8 +285,21 @@ function Detail({ nft, marketplace, user }) {
                         <div className={cx('buy-offer-btn')}>
                             {account === item.seller.toLowerCase() ? (
                                 <button className={cx('offer-btn')}>Đề nghị</button>
-                            ) : ((item.giachuyennhuong > 0) ? <button className={cx('buy-btn')} onClick={buyMarketItem}>Mua luôn</button> : <h1>Sản phẩm này là tài sản cá nhân</h1>
+                            ) : ((item.giachuyennhuong > 0) ? (
+                                (downloadAccount === true ? (
+                                    <div className={cx('buy-content')} >
+                                        <button className={cx('buy-btn')} onClick={buyMarketItem}>Mua luôn</button>
+                                    </div>
+                                ) : (<div className={cx('buy-content')} >
+                                    <button className={cx('buy-btn')} onClick={buyMarketItem}>Mua luôn</button>
+                                    <button className={cx('buyDownload-btn')} onClick={buyDownloadMarketItem} title='Mua quyền sử dụng'>Mua ({item.giachuyennhuong / 2} ETH)</button>
+                                </div>
+                                ))
+                            ) : <h1>Sản phẩm này là tài sản cá nhân</h1>
                             )}
+                        </div>
+                        <div className={cx('buyDownload-offer-btn')} >
+
                         </div>
                     </div>
                 </div>
@@ -312,7 +347,7 @@ function Detail({ nft, marketplace, user }) {
                 </div>
             )}
             {alert === true && (
-                <div className={cx('alert-signup')} onClick={backToAccountPage}>
+                <div className={cx('alert-signup')} onClick={backToHomePage}>
                     <div className={cx('alert')}>
                         <Alert alert='Mua thành công' />
                     </div>

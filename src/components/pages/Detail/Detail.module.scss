@@ -6,13 +6,14 @@
         margin-bottom: 20px;
         .image-info {
             width: 45%;
+            height: 650px;
             display: flex;
             justify-content: center;
             align-items: center;
+            box-shadow: 2px 2px 0px #e9e9e9;
             img {
-                
-                height: 650px;
                 width: 550px;
+                height: auto;
             }
         }
         .common-info {
@@ -78,7 +79,7 @@
                 margin-top: 20px;
                 button {
                     height: 58px;
-                    width: 116px;
+                    width: 145px;
                     font-size: 20px;
                     border: 2px solid #0000005e;
                     border-radius: 10px;
@@ -86,8 +87,13 @@
                     cursor: pointer;
                     color: #3c4550;
                 }
-                .buy-btn {
-                    margin-left: 20px;
+                .buy-content {
+                    .buy-btn {
+                        margin-left: 20px;
+                    }
+                    .buyDownload-btn {
+                        margin-left: 20px;
+                    }
                 }
                 .offer-btn {
                     margin-left: 20px;

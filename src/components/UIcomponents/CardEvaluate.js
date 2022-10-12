@@ -28,7 +28,7 @@ export default function CardUI({ backgroundImg, Imgname, tokenId, evaluated, tot
     return (
         <Card sx={{ width: 350 }}>
             <CardActionArea onClick={handleClick}>
-                <CardMedia component="img" height="230" image={backgroundImg} alt="Paella dish" />
+                <CardMedia component="img" height="230" image={backgroundImg} alt="Paella dish" sx={{ pointerEvents: 'none' }} />
             </CardActionArea>
             <CardContent>
                 <div className={cx('card-content')}>
