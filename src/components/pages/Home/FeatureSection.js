@@ -6,8 +6,8 @@ import exodus from '../../../assets/images/wallet/Exodus_Logo-094c6a5bbda24cb29c
 import horizontal from '../../../assets/images/wallet/horizontal_blue.png';
 import walletconnect from '../../../assets/images/wallet/WalletConnect-logo 1.png';
 
-import feature1 from '../../../assets/images/background/image 1.png';
-import feature2 from '../../../assets/images/background/feature-2 1.png';
+import feature1 from '../../../assets/images/background/blockchain.png';
+import feature2 from '../../../assets/images/background/NFT.png';
 
 import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
 

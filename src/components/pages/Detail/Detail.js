@@ -5,6 +5,7 @@ import EthereumIcon from '../../../assets/images/details/ethereum.png';
 import CardUI from '../../UIcomponents/Card';
 import CircularLoading from '../../UIcomponents/CircularLoading';
 import Alert from '../../UIcomponents/AlertSuccess';
+import Offer from '../../UIcomponents/ShowDialog'
 
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -37,8 +38,10 @@ function Detail({ nft, marketplace, user }) {
     //lấy ra id đã nà
     const { id } = useParams();
     // console.log(id);
-    const [loadingDA, setLoadingDA] = useState(false);
-    const [alert, setAlert] = useState(false);
+    const [loadingBuy, setLoadingBuy] = useState(false);
+    const [alertBuy, setAlertBuy] = useState(false);
+    const [loadingOffer, setLoadingOffer] = useState(false);
+    const [alertOffer, setAlertOffer] = useState(false);
     let navigate = useNavigate()
     //============================================Xử lý BLockchain==========================//
     // #region Blockchain
@@ -68,7 +71,9 @@ function Detail({ nft, marketplace, user }) {
     const [ownerName, setOwnerName] = useState('');
     const [totalPrice, setTotalPrice] = useState();
     const [itemtrack, setItemtrack] = useState([]);
+    const [downloaderList, setDownloaderList] = useState([]);
     const [downloadAccount, setDownloadAccount] = useState(false);
+    const [tokenId, setTokenId] = useState()
     const [item, setItem] = useState({
         path: '',
         image: null,
@@ -80,6 +85,7 @@ function Detail({ nft, marketplace, user }) {
         giachuyennhuong: '',
         seller: '',
     });
+
 
     const loadMarketplaceItems = async () => {
         // const ownerName = await nft.ownerOf(id);
@@ -100,17 +106,18 @@ function Detail({ nft, marketplace, user }) {
         // console.log('number ', Timenumber)
         //const Time = new Date(Timenumber)
         //console.log('string ', Time.toLocaleString())
-
+        const owner = await nft.ownerOf(id)
+        console.log('owner: ', owner)
         const history = await marketplace.getHistories(id);
         //console.log(history.length);
         let row = [];
         for await (const item of history) {
+
             const ethValue = ethers.utils.formatEther(item.price);
             const from = await user.users(item.from);
 
             const to = await user.users(item.to);
             const Time = new Date(item.time.toNumber())
-
 
             // console.log(typeof(ethValue))
             if (item.to === MarketPlaceAddress.address) {
@@ -120,6 +127,10 @@ function Detail({ nft, marketplace, user }) {
             else if (item.from === MarketPlaceAddress.address) {
                 const b = createData(item.eventName, ethValue, 'MTAIP', to[2], Time.toLocaleString())
                 row.push(b)
+            }
+            else if (item.to === item.from) {
+                const d = createData(item.eventName, ethValue, 'NullAddress', to[2], Time.toLocaleString())
+                row.push(d)
             }
             else {
                 const c = createData(item.eventName, ethValue, from[2], to[2], Time.toLocaleString())
@@ -139,6 +150,7 @@ function Detail({ nft, marketplace, user }) {
         //console.log('seller: ', itemA.seller);
         const totalPrice = await marketplace.getTotalPrice(id);
         setTotalPrice(totalPrice)
+
 
         //const feeaccount = await marketplace.feeAccount();
         //console.log('feeaccount: ', feeaccount)
@@ -162,6 +174,7 @@ function Detail({ nft, marketplace, user }) {
         const responseJson = await response.json();
         //console.log(responseJson)
         //Add item to items array
+
         setItem({
             ...item,
             image: imageGatewayURL,
@@ -170,19 +183,24 @@ function Detail({ nft, marketplace, user }) {
             ngaycongbo: responseJson.ngaycongbo,
             ngayhoanthanh: responseJson.ngayhoanthanh,
             noidung: responseJson.noidung,
-            giachuyennhuong: responseJson.giachuyennhuong,
+            giachuyennhuong: itemA.price.toNumber(),
             seller: itemA.seller,
         });
 
         const downloaders = await marketplace.getDownloaders(id);
         let count = 0;
+        let userDown1;
+        let down = [];
         for await (const downloader of downloaders) {
+            userDown1 = await user.users(downloader.toLowerCase());
+            down.push(userDown1.name)
             if (account === downloader.toLowerCase())
                 count++
         }
         if (count !== 0)
             setDownloadAccount(true)
 
+        setDownloaderList(down)
         setLoading(false);
     };
 
@@ -190,10 +208,32 @@ function Detail({ nft, marketplace, user }) {
         loadMarketplaceItems();
     }, [account]);
 
+    const offerMarketItem = async (price) => {
+        setLoadingOffer(true)
+        // approve marketplace to spend nft
+        //uỷ quyền cho marketplace
+        await (await nft.setApprovalForAll(marketplace.address, true)).wait();
+        console.log('set approve xong')
+        // add nft to marketplace
 
+        await (await marketplace.OfferItem(id, price, account)).wait()
+        console.log('de nghi thanh cong')
+        console.log(99)
+
+        //thêm vào lịch sử
+        const currentTime = new Date();
+        const Timenumber = currentTime.getTime();
+        const listingPrice = ethers.utils.parseEther(price.toString())
+        await marketplace.addHistory(id, 'offer', listingPrice, account, MarketPlaceAddress.address, Timenumber);
+        console.log('đã thêm lịch sử')
+
+        loadMarketplaceItems()
+        setAlertOffer(true)
+
+    }
 
     const buyMarketItem = async () => {
-        setLoadingDA(true)
+        setLoadingBuy(true)
         await (await marketplace.purchaseItem(id, account, { value: totalPrice })).wait()
         console.log('mua thanh cong')
 
@@ -204,29 +244,34 @@ function Detail({ nft, marketplace, user }) {
         console.log('đã thêm lịch sử')
 
         loadMarketplaceItems()
-        setAlert(true)
+        setAlertBuy(true)
     }
 
     const buyDownloadMarketItem = async () => {
-        setLoadingDA(true)
+        setLoadingBuy(true)
         await (await marketplace.purchaseDownloadItem(id, account, { value: totalPrice })).wait()
         console.log('mua thanh cong')
 
         loadMarketplaceItems()
-
-        setAlert(true)
+        setAlertBuy(true)
     }
     //#endregion Contract
     //===================================================================================//
-    console.log(1111)
-    console.log(downloadAccount)
 
-    const backToHomePage = (e) => {
-        setLoadingDA(false);
-        setAlert(false);
+    const backToDetailPageAfterBuy = (e) => {
+        setLoadingBuy(false);
+        setAlertBuy(false);
         // tro ve trang Home
         navigate(`/detail/${id}`);
     }
+
+    const backToDetailPageAfterOffer = (e) => {
+        setLoadingOffer(false);
+        setAlertOffer(false);
+        // tro ve trang Home
+        navigate(`/detail/${id}`);
+    }
+
 
     return (
         <div className={cx('detail-artwork')}>
@@ -279,12 +324,15 @@ function Detail({ nft, marketplace, user }) {
                             <img src={EthereumIcon} alt="" style={{ height: '30px', width: '30px' }} />
                             <div className={cx('ethereum-info')}>
                                 <span className={cx('etherum-price-detail')}>{item.giachuyennhuong} ETH </span>
-                                <span className={cx('dollar-price-detail')}>${item.giachuyennhuong * 1.32}</span>
+                                <span className={cx('dollar-price-detail')}>$ {(item.giachuyennhuong * 1.32).toFixed(2)}</span>
                             </div>
                         </div>
                         <div className={cx('buy-offer-btn')}>
                             {account === item.seller.toLowerCase() ? (
-                                <button className={cx('offer-btn')}>Đề nghị</button>
+                                // <button className={cx('offer-btn')} onClick={offerMarketItem} >Đề nghị</button>
+                                <div className={cx('offer-btn')}>
+                                    <Offer offerMarketItem={offerMarketItem} />
+                                </div>
                             ) : ((item.giachuyennhuong > 0) ? (
                                 (downloadAccount === true ? (
                                     <div className={cx('buy-content')} >
@@ -298,9 +346,6 @@ function Detail({ nft, marketplace, user }) {
                             ) : <h1>Sản phẩm này là tài sản cá nhân</h1>
                             )}
                         </div>
-                        <div className={cx('buyDownload-offer-btn')} >
-
-                        </div>
                     </div>
                 </div>
             </div>
@@ -309,8 +354,15 @@ function Detail({ nft, marketplace, user }) {
                     <TableUI rows={itemtrack} />
                 </AccordionUI>
             </div>
+            <div className={cx('list-downloader')}>
+                <AccordionUI id="4" title="Danh sách những người có quyền sử dụng" type="list">
+                    {downloaderList.map((downloader) => {
+                        return <div>{downloader}</div>
+                    })}
+                </AccordionUI>
+            </div>
             <div className={cx('another-artwork')}>
-                <AccordionUI id="4" title="Những tác phẩm khác" type="timeline">
+                <AccordionUI id="5" title="Những tác phẩm khác" type="timeline">
                     <div className={cx('artwork-info')}>
                         <div className={cx('artwork')}>
                             <CardUI />
@@ -339,21 +391,43 @@ function Detail({ nft, marketplace, user }) {
                     </div>
                 </AccordionUI>
             </div>
-            {loadingDA === true && (
-                <div className={cx('loading-signup')}>
-                    <div className={cx('loading')}>
-                        <CircularLoading info='Đang giao dịch' />
+            {
+                loadingBuy === true && (
+                    <div className={cx('loading-signup')}>
+                        <div className={cx('loading')}>
+                            <CircularLoading info='Đang giao dịch' />
+                        </div>
                     </div>
-                </div>
-            )}
-            {alert === true && (
-                <div className={cx('alert-signup')} onClick={backToHomePage}>
-                    <div className={cx('alert')}>
-                        <Alert alert='Mua thành công' />
+                )
+            }
+            {
+                alertBuy === true && (
+                    <div className={cx('alert-signup')} onClick={backToDetailPageAfterBuy}>
+                        <div className={cx('alert')}>
+                            <Alert alert='Mua thành công' />
+                        </div>
                     </div>
-                </div>
-            )}
-        </div>
+                )
+            }
+            {
+                loadingOffer === true && (
+                    <div className={cx('loading-signup')}>
+                        <div className={cx('loading')}>
+                            <CircularLoading info='Đang đề nghị' />
+                        </div>
+                    </div>
+                )
+            }
+            {
+                alertOffer === true && (
+                    <div className={cx('alert-signup')} onClick={backToDetailPageAfterOffer}>
+                        <div className={cx('alert')}>
+                            <Alert alert='Thành công' />
+                        </div>
+                    </div>
+                )
+            }
+        </div >
     );
 }
 

@@ -77,6 +77,7 @@
             }
             .buy-offer-btn {
                 margin-top: 20px;
+                margin-left: 20px;
                 button {
                     height: 58px;
                     width: 145px;
@@ -89,14 +90,14 @@
                 }
                 .buy-content {
                     .buy-btn {
-                        margin-left: 20px;
                     }
                     .buyDownload-btn {
                         margin-left: 20px;
                     }
                 }
                 .offer-btn {
-                    margin-left: 20px;
+                    height: 58px;
+                    width: 145px;
                 }
                 button:hover {
                     background-color: #7e3af2;
@@ -107,7 +108,12 @@
         }
     }
     .history-transaction {
-        margin-bottom: 20px;
+        margin-bottom: 5px;
+    }
+    .list-downloader {
+        margin-bottom: 5px;
+        .list-name {
+        }
     }
     .another-artwork {
         .artwork-info {

@@ -10,6 +10,7 @@ import TimelineIcon from '@mui/icons-material/Timeline';
 import HistoryIcon from '@mui/icons-material/History';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import ArticleIcon from '@mui/icons-material/Article';
+import PersonIcon from '@mui/icons-material/Person';
 
 import styles from './UI.module.scss';
 import classNames from 'classnames/bind';
@@ -18,6 +19,8 @@ const cx = classNames.bind(styles);
 
 function ChooseIcon(type) {
     switch (type) {
+        case 'list':
+            return <PersonIcon sx={{ width: '32px', height: '32px' }} />;
         case 'description':
             return <DescriptionIcon sx={{ width: '32px', height: '32px' }} />;
         case 'timeline':

@@ -140,13 +140,14 @@ contract Marketplace is ReentrancyGuard {
        
     }
 
-    function OfferItem(IERC721 _nft, uint _tokenId, uint _itemId, uint _price) external {
+    function OfferItem(uint _itemId, uint _price, address payable _seller) external {
         
         require(_price>0, "Price must be higher than 0");
         Item storage item = items[_itemId];
         //transfer to marketplace
          
-        _nft.transferFrom(msg.sender, address(this), _tokenId);
+        //_nft.transferFrom(msg.sender, address(this), item.tokenId);
+        item.seller = _seller;
 
          //change sold from true to false
         item.sold = false;

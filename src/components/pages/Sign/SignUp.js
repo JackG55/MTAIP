@@ -114,7 +114,7 @@ function SignUp({ nft, marketplace, user }) {
         //thêm vào lịch sử
         const currentTime = new Date();
         const Timenumber = currentTime.getTime();
-        await marketplace.addHistory(id, 'mint', 0, account, MarketPlaceAddress.address, Timenumber);
+        await marketplace.addHistory(id, 'mint', 0, account, account, Timenumber);
         console.log('đã thêm lịch sử')
 
         //navigate(`/detail/${id}`)
