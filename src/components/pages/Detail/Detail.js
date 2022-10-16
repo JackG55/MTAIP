@@ -155,7 +155,8 @@ function Detail({ nft, marketplace, user }) {
         //const feeaccount = await marketplace.feeAccount();
         //console.log('feeaccount: ', feeaccount)
         //console.log('tổng giá: ', totalPrice);
-        //console.log('giá gốc', itemA.price);
+        //const priceAAA = ethers.utils.formatEther(itemA.price);
+        //console.log('giá gốc', priceAAA);
 
         const userA = await user.users(itemA.seller);
         setOwnerName(userA[2]);
@@ -183,7 +184,7 @@ function Detail({ nft, marketplace, user }) {
             ngaycongbo: responseJson.ngaycongbo,
             ngayhoanthanh: responseJson.ngayhoanthanh,
             noidung: responseJson.noidung,
-            giachuyennhuong: itemA.price.toNumber(),
+            giachuyennhuong: ethers.utils.formatEther(itemA.price),
             seller: itemA.seller,
         });
 
@@ -223,8 +224,8 @@ function Detail({ nft, marketplace, user }) {
         //thêm vào lịch sử
         const currentTime = new Date();
         const Timenumber = currentTime.getTime();
-        const listingPrice = ethers.utils.parseEther(price.toString())
-        await marketplace.addHistory(id, 'offer', listingPrice, account, MarketPlaceAddress.address, Timenumber);
+        //const listingPrice = ethers.utils.parseEther(price.toString())
+        await marketplace.addHistory(id, 'offer', price, account, MarketPlaceAddress.address, Timenumber);
         console.log('đã thêm lịch sử')
 
         loadMarketplaceItems()

@@ -134,6 +134,7 @@ function SignUp({ nft, marketplace, user }) {
         await (await nft.setApprovalForAll(marketplace.address, true)).wait();
         console.log('set approve xong')
         // add nft to marketplace
+        console.log('valuePrice', values.price);
         const listingPrice = ethers.utils.parseEther(values.price.toString());
         console.log('listingprice', listingPrice)
         await (await marketplace.makeItem(nft.address, id, listingPrice, account)).wait();

@@ -7,6 +7,8 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
+import { ethers } from 'ethers';
+
 export default function FormDialog(props) {
     const [open, setOpen] = React.useState(false);
     const [price, setPrice] = React.useState(0);
@@ -23,7 +25,9 @@ export default function FormDialog(props) {
         setPrice(e.target.value);
     }
     const OfferItem = (e) => {
-        offerMarketItem(price);
+        console.log('offerprice', price);
+        const listingPrice = ethers.utils.parseEther(price.toString());
+        offerMarketItem(listingPrice);
         setOpen(false);
     }
 

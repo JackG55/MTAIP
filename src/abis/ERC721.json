@@ -5403,10 +5403,10 @@
         2099
       ],
       "IERC165": [
-        3009
+        3149
       ],
       "IERC721": [
-        3051
+        3191
       ]
     },
     "id": 2100,
@@ -5431,7 +5431,7 @@
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
         "scope": 2100,
-        "sourceUnit": 3010,
+        "sourceUnit": 3150,
         "src": "60:34:12",
         "symbolAliases": [],
         "unitAlias": ""
@@ -5455,7 +5455,7 @@
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
         "scope": 2100,
-        "sourceUnit": 3052,
+        "sourceUnit": 3192,
         "src": "120:34:12",
         "symbolAliases": [],
         "unitAlias": ""
@@ -5480,7 +5480,7 @@
               "id": 1835,
               "name": "IERC721",
               "nodeType": "IdentifierPath",
-              "referencedDeclaration": 3051,
+              "referencedDeclaration": 3191,
               "src": "492:7:12"
             },
             "id": 1836,
@@ -5501,9 +5501,9 @@
         "id": 2099,
         "linearizedBaseContracts": [
           2099,
-          3051,
+          3191,
           1826,
-          3009
+          3149
         ],
         "name": "ERC721",
         "nameLocation": "474:6:12",
@@ -5961,7 +5961,7 @@
           },
           {
             "baseFunctions": [
-              3034
+              3174
             ],
             "body": {
               "id": 1892,
@@ -6264,7 +6264,7 @@
           },
           {
             "baseFunctions": [
-              3041
+              3181
             ],
             "body": {
               "id": 1920,
@@ -7394,7 +7394,7 @@
                       "name": "Transfer",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 3019,
+                      "referencedDeclaration": 3159,
                       "src": "3040:8:12",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_event_nonpayable$_t_address_$_t_address_$_t_uint256_$returns$__$",
@@ -8046,7 +8046,7 @@
                       "name": "Transfer",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 3019,
+                      "referencedDeclaration": 3159,
                       "src": "4108:8:12",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_event_nonpayable$_t_address_$_t_address_$_t_uint256_$returns$__$",
@@ -8191,7 +8191,7 @@
           },
           {
             "baseFunctions": [
-              3050
+              3190
             ],
             "body": {
               "id": 2056,
@@ -8846,7 +8846,7 @@
                       "name": "Approval",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 3027,
+                      "referencedDeclaration": 3167,
                       "src": "4849:8:12",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_event_nonpayable$_t_address_$_t_address_$_t_uint256_$returns$__$",
@@ -8970,7 +8970,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.7",
-  "updatedAt": "2022-10-10T16:55:52.252Z",
+  "updatedAt": "2022-10-14T01:30:27.113Z",
   "devdoc": {
     "kind": "dev",
     "methods": {
