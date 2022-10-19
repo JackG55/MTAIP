@@ -5,7 +5,8 @@ import EthereumIcon from '../../../assets/images/details/ethereum.png';
 import CardUI from '../../UIcomponents/Card';
 import CircularLoading from '../../UIcomponents/CircularLoading';
 import Alert from '../../UIcomponents/AlertSuccess';
-import Offer from '../../UIcomponents/ShowDialog'
+import Offer from '../../UIcomponents/ShowDialog';
+import Transfer from '../../UIcomponents/ShowDialogTransfer';
 
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -233,6 +234,15 @@ function Detail({ nft, marketplace, user }) {
 
     }
 
+
+
+    const transferMarketItem = async (account) => {
+
+    }
+
+
+
+
     const buyMarketItem = async () => {
         setLoadingBuy(true)
         await (await marketplace.purchaseItem(id, account, { value: totalPrice })).wait()
@@ -331,8 +341,14 @@ function Detail({ nft, marketplace, user }) {
                         <div className={cx('buy-offer-btn')}>
                             {account === item.seller.toLowerCase() ? (
                                 // <button className={cx('offer-btn')} onClick={offerMarketItem} >Đề nghị</button>
-                                <div className={cx('offer-btn')}>
-                                    <Offer offerMarketItem={offerMarketItem} />
+                                <div className={cx('owner-btn')}>
+                                    <div className={cx('offer-btn')}>
+                                        <Offer offerMarketItem={offerMarketItem} />
+                                    </div>
+                                    <div className={cx('transfer-btn')}>
+                                        <Transfer />
+                                    </div>
+
                                 </div>
                             ) : ((item.giachuyennhuong > 0) ? (
                                 (downloadAccount === true ? (

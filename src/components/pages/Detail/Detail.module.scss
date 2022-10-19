@@ -78,6 +78,18 @@
             .buy-offer-btn {
                 margin-top: 20px;
                 margin-left: 20px;
+                .owner-btn {
+                    display: flex;
+                    .offer-btn {
+                        height: 58px;
+                        width: 145px;
+                    }
+                    .transfer-btn {
+                        height: 58px;
+                        width: 145px;
+                        margin-left: 20px;
+                    }
+                }
                 button {
                     height: 58px;
                     width: 145px;
@@ -94,10 +106,6 @@
                     .buyDownload-btn {
                         margin-left: 20px;
                     }
-                }
-                .offer-btn {
-                    height: 58px;
-                    width: 145px;
                 }
                 button:hover {
                     background-color: #7e3af2;
