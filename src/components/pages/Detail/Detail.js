@@ -43,6 +43,8 @@ function Detail({ nft, marketplace, user }) {
     const [alertBuy, setAlertBuy] = useState(false);
     const [loadingOffer, setLoadingOffer] = useState(false);
     const [alertOffer, setAlertOffer] = useState(false);
+    const [loadingTransfer, setLoadingTransfer] = useState(false);
+    const [alertTransfer, setAlertTransfer] = useState(false);
     let navigate = useNavigate()
     //============================================Xử lý BLockchain==========================//
     // #region Blockchain
@@ -237,7 +239,13 @@ function Detail({ nft, marketplace, user }) {
 
 
     const transferMarketItem = async (account) => {
+        setLoadingTransfer(true)
 
+        // viết tiếp vào đây thôi
+
+
+        loadMarketplaceItems()
+        setAlertTransfer(true)
     }
 
 
@@ -279,6 +287,8 @@ function Detail({ nft, marketplace, user }) {
     const backToDetailPageAfterOffer = (e) => {
         setLoadingOffer(false);
         setAlertOffer(false);
+        setLoadingTransfer(false);
+        setAlertTransfer(false);
         // tro ve trang Home
         navigate(`/detail/${id}`);
     }
@@ -437,6 +447,24 @@ function Detail({ nft, marketplace, user }) {
             }
             {
                 alertOffer === true && (
+                    <div className={cx('alert-signup')} onClick={backToDetailPageAfterOffer}>
+                        <div className={cx('alert')}>
+                            <Alert alert='Thành công' />
+                        </div>
+                    </div>
+                )
+            }
+            {
+                loadingTransfer === true && (
+                    <div className={cx('loading-signup')}>
+                        <div className={cx('loading')}>
+                            <CircularLoading info='Đang chuyển' />
+                        </div>
+                    </div>
+                )
+            }
+            {
+                alertTransfer === true && (
                     <div className={cx('alert-signup')} onClick={backToDetailPageAfterOffer}>
                         <div className={cx('alert')}>
                             <Alert alert='Thành công' />
