@@ -36,10 +36,10 @@ export default function FormDialog(props) {
     return (
         <div>
             <Button sx={{ textTransform: 'inherit', fontWeight: '400' }} variant="outlined" onClick={handleClickOpen}>
-                Tặng
+                Chuyển
             </Button>
             <Dialog open={open} onClose={handleClose}>
-                <DialogTitle sx={{ fontSize: '20px' }}>Tặng tác phẩm</DialogTitle>
+                <DialogTitle sx={{ fontSize: '20px' }}>Chuyển nhượng tác phẩm</DialogTitle>
                 <DialogContent>
                     <DialogContentText sx={{ fontSize: '20px' }}>
                         Nhập số tài khoản

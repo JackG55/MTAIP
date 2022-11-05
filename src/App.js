@@ -94,7 +94,7 @@ function App() {
                             path="/"
                             element={
                                 <DefaultLayout>
-                                    <Home />
+                                    <Home nft={nft} marketplace={marketplace} user={user}/>
                                 </DefaultLayout>
                             }
                         />

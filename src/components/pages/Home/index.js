@@ -12,7 +12,7 @@ import { useEffect } from 'react';
 
 //const cx = classNames.bind(styles);
 
-function Home() {
+function Home({ nft, marketplace, user }) {
     useEffect(() => {
         window.scroll(0, 0);
     },)
@@ -21,7 +21,7 @@ function Home() {
         <div>
             <HeroSection />
             <FeatureSection />
-            <PricingSection />
+            <PricingSection nft={nft} marketplace={marketplace} user={user}/>
             <InstructionSection />
             <MyTeamSection />
         </div>
