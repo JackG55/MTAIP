@@ -13,18 +13,18 @@ function HeroSection() {
                     <div className={cx('hero-section-content')}>
                         <h1 className={cx('hero-section-title')}>Công nghệ Blockchain trong sở hữu trí tuệ</h1>
                         <p className={cx('hero-section-paragraph')}>
-                            Đăng ký, xác lập và bảo hộ quyền sở hữu trí tuệ dựa trên công nghệ Blockchain. 
+                            Đăng ký, xác lập và bảo hộ quyền sở hữu trí tuệ dựa trên công nghệ Blockchain.
                             Xác lập quyền tác giả, khai thác, thực hiện quyền tác giả, bảo vệ chống lại các hành vi xâm phạm tác phẩm
                         </p>
                         <div className={cx('hero-section-list')}>
                             <button className={cx('discover-button', 'hero-section-button')}>
                                 <a href='/discovering'>
-                                KHÁM PHÁ
+                                    KHÁM PHÁ
                                 </a>
                             </button>
                             <button className={cx('create-button', 'hero-section-button')}>
                                 <a href='/create'>
-                                Đăng ký hồ sơ mới
+                                    ĐĂNG KÝ HỒ SƠ MỚI
                                 </a>
                             </button>
                         </div>

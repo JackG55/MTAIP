@@ -93,7 +93,7 @@ function App() {
                         <Route
                             path="/"
                             element={
-                                <DefaultLayout>
+                                <DefaultLayout nft={nft} marketplace={marketplace} user={user}>
                                     <Home />
                                 </DefaultLayout>
                             }
@@ -101,7 +101,7 @@ function App() {
                         <Route
                             path="/create"
                             element={
-                                <DefaultLayout>
+                                <DefaultLayout nft={nft} marketplace={marketplace} user={user}>
                                     <Create />
                                 </DefaultLayout>
                             }
@@ -109,7 +109,7 @@ function App() {
                         <Route
                             path="/discovering"
                             element={
-                                <DefaultLayout>
+                                <DefaultLayout nft={nft} marketplace={marketplace} user={user}>
                                     <Discovering nft={nft} marketplace={marketplace} user={user} />
                                 </DefaultLayout>
                             }
@@ -117,7 +117,7 @@ function App() {
                         <Route
                             path="/detail/:id"
                             element={
-                                <DefaultLayout>
+                                <DefaultLayout nft={nft} marketplace={marketplace} user={user}>
                                     <Detail Discovering nft={nft} marketplace={marketplace} user={user} />
                                 </DefaultLayout>
                             }
@@ -125,7 +125,7 @@ function App() {
                         <Route
                             path="/signup"
                             element={
-                                <DefaultLayout>
+                                <DefaultLayout nft={nft} marketplace={marketplace} user={user}>
                                     <SignUp nft={nft} marketplace={marketplace} user={user} />
                                 </DefaultLayout>
                             }
@@ -133,7 +133,7 @@ function App() {
                         <Route
                             path="/evaluate/:id"
                             element={
-                                <DefaultLayout>
+                                <DefaultLayout nft={nft} marketplace={marketplace} user={user}>
                                     <Evaluate nft={nft} marketplace={marketplace} user={user} />
                                 </DefaultLayout>
                             }
@@ -141,7 +141,7 @@ function App() {
                         <Route
                             path="/evaluate"
                             element={
-                                <DefaultLayout>
+                                <DefaultLayout nft={nft} marketplace={marketplace} user={user}>
                                     <ListEvaluate nft={nft} marketplace={marketplace} user={user} />
                                 </DefaultLayout>
                             }
@@ -149,7 +149,7 @@ function App() {
                         <Route
                             path="/author"
                             element={
-                                <DefaultLayout>
+                                <DefaultLayout nft={nft} marketplace={marketplace} user={user}>
                                     <Author />
                                 </DefaultLayout>
                             }
@@ -157,7 +157,7 @@ function App() {
                         <Route
                             path="/list"
                             element={
-                                <DefaultLayout>
+                                <DefaultLayout nft={nft} marketplace={marketplace} user={user}>
                                     <ListEvaluate />
                                 </DefaultLayout>
                             }
@@ -165,7 +165,7 @@ function App() {
                         <Route
                             path="/myaccount"
                             element={
-                                <DefaultLayout>
+                                <DefaultLayout nft={nft} marketplace={marketplace} user={user}>
                                     <MyAccount nft={nft} marketplace={marketplace} user={user} />
                                 </DefaultLayout>
                             }

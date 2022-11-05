@@ -5,41 +5,23 @@ import MenuItem from '@mui/material/MenuItem';
 
 const loaiHinh = [
     {
-        value: 'Hình ảnh'
+        value: 'Tác phẩm tạo hình, mỹ thuật ứng dụng'
     },
     {
-        value: 'Âm nhạc',
+        value: 'Tác phẩm nhiếp ảnh',
     },
     {
-        value: 'Bài giảng, bài phát biểu',
+        value: 'Tác phẩm kiến trúc',
     },
     {
-        value: 'Báo chí',
+        value: 'Bản hoạ đồ, sơ đồ, bản đồ, bản vẽ',
     },
     {
-        value: 'Văn học',
-    },
-    {
-        value: 'Sân khấu',
-    },
-    {
-        value: 'Điện ảnh',
-    },
-    {
-        value: 'Kiến trúc',
-    },
-    {
-        value: 'Nghệ thuật dân gian',
-    },
-    {
-        value: 'Chương trình máy tính, sưu tập dữ liệu',
-    },
-    {
-        value: 'Tác phẩm phái sinh',
+        value: 'Nhãn hiệu',
     },
 ];
 
-export default function SelectTextFields({childToParent}) {
+export default function SelectTextFields({ childToParent }) {
     const [category, setCategory] = React.useState('');
 
     const handleChange = (event) => {
