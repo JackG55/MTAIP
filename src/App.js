@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 
 import { DefaultLayout } from './components/Layout';
 
-
 import Home from '../src/components/pages/Home';
 import Discovering from './components/pages/Discovering/Discovering';
 import Create from '../src/components/pages/Create';
@@ -22,7 +21,6 @@ import MTAIPAbi from '../src/abis/MTAIP.json';
 import UserRegisterAddress from '../src/abis/UserRegister-address.json';
 import UserRegisterAbi from '../src/abis/UserRegister.json';
 
-
 function App() {
     //============================================Xử lý BLockchain==========================//
     // #region Blockchain
@@ -36,14 +34,13 @@ function App() {
     const web3Handler = async () => {
         // Get provider from Metamask
         // const provider = new ethers.providers.Web3Provider(window.ethereum)
-        const provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:7545')
+        const provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:7545');
         // Set signer
         const signer = provider.getSigner();
 
         // window.ethereum.on('chainChanged', (chainId) => {
         //     window.location.reload();
         // });
-
 
         loadContracts(signer);
         setLoading(true);
@@ -57,7 +54,7 @@ function App() {
         const user = new ethers.Contract(UserRegisterAddress.address, UserRegisterAbi.abi, signer);
         setUser(user);
 
-        console.log(marketplace)
+        console.log(marketplace);
     };
 
     // window.ethereum.on('accountsChanged', function (accounts) {
@@ -70,7 +67,6 @@ function App() {
 
     // #endregion Blockchain
     //=====================================================================================//
-
 
     // window.onbeforeunload = function () {
     //     sessionStorage.removeItem('account');
@@ -86,15 +82,14 @@ function App() {
 
     return (
         <Router>
-            {
-                loading &&
+            {loading && (
                 <div className="App">
                     <Routes>
                         <Route
                             path="/"
                             element={
                                 <DefaultLayout nft={nft} marketplace={marketplace} user={user}>
-                                    <Home />
+                                    <Home nft={nft} marketplace={marketplace} user={user} />
                                 </DefaultLayout>
                             }
                         />
@@ -172,8 +167,7 @@ function App() {
                         />
                     </Routes>
                 </div>
-            }
-
+            )}
         </Router>
     );
 }
