@@ -102,6 +102,14 @@ function App() {
                             }
                         />
                         <Route
+                            path="/discovering/:category"
+                            element={
+                                <DefaultLayout nft={nft} marketplace={marketplace} user={user}>
+                                    <Discovering nft={nft} marketplace={marketplace} user={user} />
+                                </DefaultLayout>
+                            }
+                        />
+                        <Route
                             path="/discovering"
                             element={
                                 <DefaultLayout nft={nft} marketplace={marketplace} user={user}>

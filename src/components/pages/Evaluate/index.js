@@ -34,6 +34,7 @@ function Evaluate({ nft, marketplace, user }) {
     const [item, setItem] = useState({
         image: null,
         tentacpham: "",
+        loaihinh: "",
     })
 
 
@@ -69,6 +70,7 @@ function Evaluate({ nft, marketplace, user }) {
             ...item,
             image: imageGatewayURL,
             tentacpham: responseJson.tentacpham,
+            loaihinh: responseJson.loaihinh
         })
 
         //console.log(item)
@@ -140,14 +142,16 @@ function Evaluate({ nft, marketplace, user }) {
                 console.log(responseJsonSearch)
 
                 //Add item to items array
-                itemsSearch.push({
-                    tokenId: itemSearch.tokenId,
-                    itemId: itemSearch.itemId,
-                    seller: itemSearch.seller,
-                    name: responseJsonSearch.tentacpham,
-                    image: imageGatewayURLSearch,
-                    ownerName: userASearch[2]
-                })
+                if (item.loaihinh === responseJsonSearch.loaihinh) {
+                    itemsSearch.push({
+                        tokenId: itemSearch.tokenId,
+                        itemId: itemSearch.itemId,
+                        seller: itemSearch.seller,
+                        name: responseJsonSearch.tentacpham,
+                        image: imageGatewayURLSearch,
+                        ownerName: userASearch[2]
+                    })
+                }
             }
         }
         setLoadingSearch(false)
@@ -202,7 +206,7 @@ function Evaluate({ nft, marketplace, user }) {
 
             </div>
             <div className={cx('search-content')}>
-                <h2>Danh sách các sản phẩm</h2>
+                <h2>Danh sách {item.loaihinh.toLowerCase()}</h2>
                 <SearchBar placeholder='Nhập tên tác phẩm...' data={itemsSearch} />
             </div>
             {loadingDA === true && (

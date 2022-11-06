@@ -12,7 +12,7 @@ const cx = classNames.bind(styles);
 
 function PricingSection({ nft, marketplace, user }) {
 
-      //===========================================Xử lý Contract==========================//
+  //===========================================Xử lý Contract==========================//
   //#region Contract
   const [loading, setLoading] = useState(true)
   const [items, setItems] = useState([])
@@ -66,34 +66,34 @@ function PricingSection({ nft, marketplace, user }) {
   //#endregion Contract
   //===================================================================================//
 
-    return (
-        <div className={cx('pricing-section')}>
-            <h1>Khám phá các NFT</h1>
-            <div className={cx('pricing-section-filter')}>
-                <div className={cx('pricing-section-menu')}>
-                    <Button variant="contained" className={cx('pricing-section-menu-button')}>Tất cả thể loại</Button>
-                    <Button variant="contained" className={cx('pricing-section-menu-button')}>Tranh vẽ</Button>
-                    <Button variant="contained" className={cx('pricing-section-menu-button')}>Ảnh</Button>
-                    <Button variant="contained" className={cx('pricing-section-menu-button')}>Video</Button>
-                    <Button variant="contained" className={cx('pricing-section-menu-button')}>Âm nhạc</Button>
-                    <Button variant="contained" className={cx('pricing-section-menu-button')}>Bản thiết kế</Button>
-                </div>
-                <div className={cx('pricing-section-btn-filter')}>
-                    <Button variant="contained" startIcon={<FilterListRoundedIcon />} className={cx('pricing-section-btn-filter-detail')}>
-                        Bộ lọc
-                    </Button>
-                </div>
-            </div>
-            <div className={cx('pricing-section-listing')}>
-            {items.map((item) => (
+  return (
+    <div className={cx('pricing-section')}>
+      <h1>Khám phá các NFT</h1>
+      <div className={cx('pricing-section-filter')}>
+        <div className={cx('pricing-section-menu')}>
+          <Button variant="contained" className={cx('pricing-section-menu-button')}>Tất cả thể loại</Button>
+          <Button variant="contained" className={cx('pricing-section-menu-button')}>Tranh vẽ</Button>
+          <Button variant="contained" className={cx('pricing-section-menu-button')}>Ảnh</Button>
+          <Button variant="contained" className={cx('pricing-section-menu-button')}>Video</Button>
+          <Button variant="contained" className={cx('pricing-section-menu-button')}>Âm nhạc</Button>
+          <Button variant="contained" className={cx('pricing-section-menu-button')}>Bản thiết kế</Button>
+        </div>
+        <div className={cx('pricing-section-btn-filter')}>
+          <Button variant="contained" startIcon={<FilterListRoundedIcon />} className={cx('pricing-section-btn-filter-detail')}>
+            Bộ lọc
+          </Button>
+        </div>
+      </div>
+      <div className={cx('pricing-section-listing')}>
+        {items.map((item) => (
           <CardUI key={item.itemId} backgroundImg={item.image} Imgname={item.name} tokenId={item.tokenId} ownerName={item.ownerName} />
         ))}
-            </div>
-            <div className={cx('pricing-section-btn-seemore')}>
-                <button>Xem thêm</button>
-            </div>
-        </div>
-    );
+      </div>
+      <div className={cx('pricing-section-btn-seemore')}>
+        <button>Xem thêm</button>
+      </div>
+    </div>
+  );
 }
 
 export default PricingSection;

@@ -38,7 +38,8 @@ const rows = [
 function Detail({ nft, marketplace, user }) {
     //lấy ra id đã nà
     const { id } = useParams();
-    // console.log(id);
+    console.log('id: ', id);
+
     const [loadingBuy, setLoadingBuy] = useState(false);
     const [alertBuy, setAlertBuy] = useState(false);
     const [loadingOffer, setLoadingOffer] = useState(false);

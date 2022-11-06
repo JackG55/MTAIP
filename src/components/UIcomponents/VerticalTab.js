@@ -56,13 +56,14 @@ export default function VerticalTabs(props) {
     console.log('value', value)
     return (
         <Box
-            sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', height: 'auto' }}
+            sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', height: 'auto', color: 'black' }}
         >
             <Tabs
                 orientation="vertical"
                 variant="scrollable"
                 value={value}
                 onChange={handleChange}
+                textColor='inherit'
                 aria-label="Vertical tabs example"
                 sx={{ borderRight: 1, borderColor: 'divider' }}
             >

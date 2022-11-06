@@ -54,7 +54,17 @@ function Header(nft, marketplace, user) {
                             <a className={cx('navbar-item-link')} href="/">Trang chủ</a>
                         </li>
                         <li className={cx('navbar-item')}>
-                            <a className={cx('navbar-item-link')} href="/discovering">Khám phá</a>
+                            <div className={cx('dropdown-discovering')}>
+                                <a className={cx('navbar-item-link')} href="/discovering">Khám phá</a>
+                                <div className={cx('dropdown-content')}>
+                                    <a href="/discovering/assets">Tất cả</a>
+                                    <a href="/discovering/art">Tác phẩm tạo hình, mỹ thuật ứng dụng</a>
+                                    <a href="/discovering/photo">Tác phẩm nhiếp ảnh</a>
+                                    <a href="/discovering/architecture">Tác phẩm kiến trúc</a>
+                                    <a href="/discovering/diagram">Bản hoạ đồ, sơ đồ, bản đồ, bản vẽ</a>
+                                    <a href="/discovering/brand">Nhãn hiệu</a>
+                                </div>
+                            </div>
                         </li>
                         <li className={cx('navbar-item')}>
                             <a className={cx('navbar-item-link')} href="/evaluate">Tính năng</a>
