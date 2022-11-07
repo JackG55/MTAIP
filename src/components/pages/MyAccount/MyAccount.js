@@ -41,17 +41,15 @@ function MyAccount({ nft, marketplace, user }) {
     const [itemsLoading, setItemsLoading] = useState([])
     const [ownerName, setOwnerName] = useState('')
 
-    // Sản phẩm của tôi
-    const loadMarketplaceAllItems = async () => {
+    const loadMarketplaceItems = async () => {
         // Load all unsold items
         const itemCount = await marketplace.itemCount();
         let itemsAll = []
+        let itemsLoading = []
         for (let i = 1; i <= itemCount; i++) {
             const item = await marketplace.items(i)
-            // if (item.seller.toLowerCase() === account)
-            //     console.log('true')
-            // else
-            //     console.log(false)
+
+            // Sản phẩm của tôi
             if (item.check === true && item.seller.toLowerCase() === account) {
                 const ownerAddress = await nft.ownerOf(i);
                 const userA = await user.users(item.seller)
@@ -68,7 +66,6 @@ function MyAccount({ nft, marketplace, user }) {
                 //console.log(metadataURL)
                 const response = await fetch(metadataURL)
                 const responseJson = await response.json();
-                console.log(responseJson)
 
                 //Add item to items array
                 itemsAll.push({
@@ -80,28 +77,7 @@ function MyAccount({ nft, marketplace, user }) {
                     ownerName: userA[2]
                 })
             }
-        }
-        setLoading(false)
-        setItemsAll(itemsAll)
-    }
-
-    useEffect(() => {
-        loadMarketplaceAllItems()
-    }, [account])
-    //#endregion Contract
-    //===================================================================================//
-
-    // Đang chờ phê duyệt
-    const loadMarketplaceLoadingItems = async () => {
-        // Load all unsold items
-        const itemCount = await marketplace.itemCount();
-        let itemsLoading = []
-        for (let i = 1; i <= itemCount; i++) {
-            const item = await marketplace.items(i)
-            // if (item.seller.toLowerCase() === account)
-            //     console.log('true')
-            // else
-            //     console.log(false)
+            // Đang chờ phê duyệt
             if (item.check === false && item.seller.toLowerCase() === account) {
                 const ownerAddress = await nft.ownerOf(i);
                 const userA = await user.users(item.seller)
@@ -118,7 +94,6 @@ function MyAccount({ nft, marketplace, user }) {
                 //console.log(metadataURL)
                 const response = await fetch(metadataURL)
                 const responseJson = await response.json();
-                console.log(responseJson)
 
                 //Add item to items array
                 itemsLoading.push({
@@ -130,26 +105,24 @@ function MyAccount({ nft, marketplace, user }) {
                     ownerName: userA[2]
                 })
             }
+
         }
         setLoading(false)
+        setItemsAll(itemsAll)
         setItemsLoading(itemsLoading)
     }
 
     useEffect(() => {
-        loadMarketplaceLoadingItems()
+        loadMarketplaceItems()
     }, [account])
+    //#endregion Contract
+    //===================================================================================//
 
     return (
         <div className={cx('myAccount')}>
             <h1 className={cx('myAccount-title')}>
                 SẢN PHẨM CỦA TÔI
             </h1>
-            {/* {items.length === 0 && (<h2>Bạn chưa có sản phẩm (Sản phẩm của bạn đang được đánh giá)</h2>)}
-            <div className={cx('myAccount-content')}>
-                {items.map((item) => (
-                    <CardUI key={item.itemId} backgroundImg={item.image} Imgname={item.name} tokenId={item.tokenId} ownerName={item.ownerName} />
-                ))}
-            </div> */}
             <div className={cx('myAccount-content')}>
                 <VerticalTabs itemsAll={itemsAll} itemsLoading={itemsLoading} />
             </div>

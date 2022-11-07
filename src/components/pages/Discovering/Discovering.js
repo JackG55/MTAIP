@@ -14,18 +14,28 @@ const cx = classNames.bind(styles);
 
 function Discovering({ nft, marketplace, user }) {
 
-
   //===========================================Xử lý Contract==========================//
   //#region Contract
   const url = window.location.href.slice(34);
   console.log('url: ', url);
+
   const [loading, setLoading] = useState(true)
   const [items, setItems] = useState([])
-  const [ownerName, setOwnerName] = useState('')
+  const [itemsCategory1, setItemsCategory1] = useState([])
+  const [itemsCategory2, setItemsCategory2] = useState([])
+  const [itemsCategory3, setItemsCategory3] = useState([])
+  const [itemsCategory4, setItemsCategory4] = useState([])
+  const [itemsCategory5, setItemsCategory5] = useState([])
+
   const loadMarketplaceItems = async () => {
-    // Load all unsold items
+
     const itemCount = await marketplace.itemCount();
     let items = []
+    let items1 = []
+    let items2 = []
+    let items3 = []
+    let items4 = []
+    let items5 = []
     for (let i = 1; i <= itemCount; i++) {
       const item = await marketplace.items(i)
       if (!item.sold && item.check === true) {
@@ -54,286 +64,70 @@ function Discovering({ nft, marketplace, user }) {
           image: imageGatewayURL,
           ownerName: userA[2]
         })
+        if (responseJson.loaihinh === 'Tác phẩm tạo hình, mỹ thuật ứng dụng') {
+          items1.push({
+            tokenId: item.tokenId,
+            itemId: item.itemId,
+            seller: item.seller,
+            name: responseJson.tentacpham,
+            image: imageGatewayURL,
+            ownerName: userA[2]
+          })
+        }
+        if (responseJson.loaihinh === 'Tác phẩm nhiếp ảnh') {
+          items2.push({
+            tokenId: item.tokenId,
+            itemId: item.itemId,
+            seller: item.seller,
+            name: responseJson.tentacpham,
+            image: imageGatewayURL,
+            ownerName: userA[2]
+          })
+        }
+        if (responseJson.loaihinh === 'Tác phẩm kiến trúc') {
+          items3.push({
+            tokenId: item.tokenId,
+            itemId: item.itemId,
+            seller: item.seller,
+            name: responseJson.tentacpham,
+            image: imageGatewayURL,
+            ownerName: userA[2]
+          })
+        }
+        if (responseJson.loaihinh === 'Bản hoạ đồ, sơ đồ, bản đồ, bản vẽ') {
+          items4.push({
+            tokenId: item.tokenId,
+            itemId: item.itemId,
+            seller: item.seller,
+            name: responseJson.tentacpham,
+            image: imageGatewayURL,
+            ownerName: userA[2]
+          })
+        }
+        if (responseJson.loaihinh === 'Nhãn hiệu') {
+          items5.push({
+            tokenId: item.tokenId,
+            itemId: item.itemId,
+            seller: item.seller,
+            name: responseJson.tentacpham,
+            image: imageGatewayURL,
+            ownerName: userA[2]
+          })
+        }
+
       }
     }
     setLoading(false)
     setItems(items);
+    setItemsCategory1(items1)
+    setItemsCategory2(items2)
+    setItemsCategory3(items3)
+    setItemsCategory4(items4)
+    setItemsCategory5(items5)
   }
-
 
   useEffect(() => {
     loadMarketplaceItems()
-  }, [])
-  //#endregion Contract
-  //===================================================================================//
-
-
-  //===========================================Xử lý Contract(art)==========================//
-  //#region Contract
-  const [loading1, setLoading1] = useState(true)
-  const [itemsCategory1, setItemsCategory1] = useState([])
-  const loadMarketplaceItemsCategory1 = async () => {
-    // Load all unsold items
-    const itemCount = await marketplace.itemCount();
-    let items = []
-
-
-    for (let i = 1; i <= itemCount; i++) {
-      const item = await marketplace.items(i)
-      if (!item.sold && item.check === true) {
-
-        const userA = await user.users(item.seller)
-
-        // console.log(userA[[0]])
-
-        // get uri url from nft contract
-        const uri = await nft.tokenURI(item.tokenId)
-        const cid = await uri.split("ipfs://").join("").split("/")[0]
-        const imageName = await uri.split("/")[3]
-
-        const imageGatewayURL = makeGatewayURL(cid, imageName);
-        const metadataURL = makeGatewayURL(cid, 'metadata.json')
-
-        //console.log(metadataURL)
-        const response = await fetch(metadataURL)
-        const responseJson = await response.json();
-        console.log(responseJson)
-        //Add item to items array
-        if (responseJson.loaihinh === 'Tác phẩm tạo hình, mỹ thuật ứng dụng') {
-          items.push({
-            tokenId: item.tokenId,
-            itemId: item.itemId,
-            seller: item.seller,
-            name: responseJson.tentacpham,
-            image: imageGatewayURL,
-            ownerName: userA[2]
-          })
-        }
-      }
-    }
-    setLoading1(false)
-    setItemsCategory1(items)
-  }
-
-
-  useEffect(() => {
-    loadMarketplaceItemsCategory1()
-  }, [])
-  //#endregion Contract
-  //===================================================================================//
-
-  //===========================================Xử lý Contract(photo)==========================//
-  //#region Contract
-  const [loading2, setLoading2] = useState(true)
-  const [itemsCategory2, setItemsCategory2] = useState([])
-  const loadMarketplaceItemsCategory2 = async () => {
-    // Load all unsold items
-    const itemCount = await marketplace.itemCount();
-    let items = []
-
-
-    for (let i = 1; i <= itemCount; i++) {
-      const item = await marketplace.items(i)
-      if (!item.sold && item.check === true) {
-
-        const userA = await user.users(item.seller)
-
-        // console.log(userA[[0]])
-
-        // get uri url from nft contract
-        const uri = await nft.tokenURI(item.tokenId)
-        const cid = await uri.split("ipfs://").join("").split("/")[0]
-        const imageName = await uri.split("/")[3]
-
-        const imageGatewayURL = makeGatewayURL(cid, imageName);
-        const metadataURL = makeGatewayURL(cid, 'metadata.json')
-
-        //console.log(metadataURL)
-        const response = await fetch(metadataURL)
-        const responseJson = await response.json();
-        console.log(responseJson)
-        //Add item to items array
-        if (responseJson.loaihinh === 'Tác phẩm nhiếp ảnh') {
-          items.push({
-            tokenId: item.tokenId,
-            itemId: item.itemId,
-            seller: item.seller,
-            name: responseJson.tentacpham,
-            image: imageGatewayURL,
-            ownerName: userA[2]
-          })
-        }
-      }
-    }
-    setLoading2(false)
-    setItemsCategory2(items)
-  }
-
-
-  useEffect(() => {
-    loadMarketplaceItemsCategory2()
-  }, [])
-  //#endregion Contract
-  //===================================================================================//
-
-  //===========================================Xử lý Contract(architecture)==========================//
-  //#region Contract
-  const [loading3, setLoading3] = useState(true)
-  const [itemsCategory3, setItemsCategory3] = useState([])
-  const loadMarketplaceItemsCategory3 = async () => {
-    // Load all unsold items
-    const itemCount = await marketplace.itemCount();
-    let items = []
-
-
-    for (let i = 1; i <= itemCount; i++) {
-      const item = await marketplace.items(i)
-      if (!item.sold && item.check === true) {
-
-        const userA = await user.users(item.seller)
-
-        // console.log(userA[[0]])
-
-        // get uri url from nft contract
-        const uri = await nft.tokenURI(item.tokenId)
-        const cid = await uri.split("ipfs://").join("").split("/")[0]
-        const imageName = await uri.split("/")[3]
-
-        const imageGatewayURL = makeGatewayURL(cid, imageName);
-        const metadataURL = makeGatewayURL(cid, 'metadata.json')
-
-        //console.log(metadataURL)
-        const response = await fetch(metadataURL)
-        const responseJson = await response.json();
-        console.log(responseJson)
-        //Add item to items array
-        if (responseJson.loaihinh === 'Tác phẩm kiến trúc') {
-          items.push({
-            tokenId: item.tokenId,
-            itemId: item.itemId,
-            seller: item.seller,
-            name: responseJson.tentacpham,
-            image: imageGatewayURL,
-            ownerName: userA[2]
-          })
-        }
-      }
-    }
-    setLoading3(false)
-    setItemsCategory3(items)
-  }
-
-
-  useEffect(() => {
-    loadMarketplaceItemsCategory3()
-  }, [])
-  //#endregion Contract
-  //===================================================================================//
-
-  //===========================================Xử lý Contract(diagram)==========================//
-  //#region Contract
-  const [loading4, setLoading4] = useState(true)
-  const [itemsCategory4, setItemsCategory4] = useState([])
-  const loadMarketplaceItemsCategory4 = async () => {
-    // Load all unsold items
-    const itemCount = await marketplace.itemCount();
-    let items = []
-
-
-    for (let i = 1; i <= itemCount; i++) {
-      const item = await marketplace.items(i)
-      if (!item.sold && item.check === true) {
-
-        const userA = await user.users(item.seller)
-
-        // console.log(userA[[0]])
-
-        // get uri url from nft contract
-        const uri = await nft.tokenURI(item.tokenId)
-        const cid = await uri.split("ipfs://").join("").split("/")[0]
-        const imageName = await uri.split("/")[3]
-
-        const imageGatewayURL = makeGatewayURL(cid, imageName);
-        const metadataURL = makeGatewayURL(cid, 'metadata.json')
-
-        //console.log(metadataURL)
-        const response = await fetch(metadataURL)
-        const responseJson = await response.json();
-        console.log(responseJson)
-        //Add item to items array
-        if (responseJson.loaihinh === 'Bản hoạ đồ, sơ đồ, bản đồ, bản vẽ') {
-          items.push({
-            tokenId: item.tokenId,
-            itemId: item.itemId,
-            seller: item.seller,
-            name: responseJson.tentacpham,
-            image: imageGatewayURL,
-            ownerName: userA[2]
-          })
-        }
-      }
-    }
-    setLoading4(false)
-    setItemsCategory4(items)
-  }
-
-
-  useEffect(() => {
-    loadMarketplaceItemsCategory4()
-  }, [])
-  //#endregion Contract
-  //===================================================================================//
-
-  //===========================================Xử lý Contract(brand)==========================//
-  //#region Contract
-  const [loading5, setLoading5] = useState(true)
-  const [itemsCategory5, setItemsCategory5] = useState([])
-  const loadMarketplaceItemsCategory5 = async () => {
-    // Load all unsold items
-    const itemCount = await marketplace.itemCount();
-    let items = []
-
-
-    for (let i = 1; i <= itemCount; i++) {
-      const item = await marketplace.items(i)
-      if (!item.sold && item.check === true) {
-
-        const userA = await user.users(item.seller)
-
-        // console.log(userA[[0]])
-
-        // get uri url from nft contract
-        const uri = await nft.tokenURI(item.tokenId)
-        const cid = await uri.split("ipfs://").join("").split("/")[0]
-        const imageName = await uri.split("/")[3]
-
-        const imageGatewayURL = makeGatewayURL(cid, imageName);
-        const metadataURL = makeGatewayURL(cid, 'metadata.json')
-
-        //console.log(metadataURL)
-        const response = await fetch(metadataURL)
-        const responseJson = await response.json();
-        console.log(responseJson)
-        //Add item to items array
-        if (responseJson.loaihinh === 'Nhãn hiệu') {
-          items.push({
-            tokenId: item.tokenId,
-            itemId: item.itemId,
-            seller: item.seller,
-            name: responseJson.tentacpham,
-            image: imageGatewayURL,
-            ownerName: userA[2]
-          })
-        }
-      }
-    }
-    setLoading5(false)
-    setItemsCategory5(items)
-  }
-
-
-  useEffect(() => {
-    loadMarketplaceItemsCategory5()
   }, [])
   //#endregion Contract
   //===================================================================================//
@@ -345,11 +139,15 @@ function Discovering({ nft, marketplace, user }) {
           <h1 className={cx('discover-title')}>
             KHÁM PHÁ CÁC NFT
           </h1>
-          <BasicTab itemsCategory1={itemsCategory1}
-            itemsCategory2={itemsCategory2}
-            itemsCategory3={itemsCategory3}
-            itemsCategory4={itemsCategory4}
-            itemsCategory5={itemsCategory5} />
+          <div>
+            <BasicTab
+              items={items}
+              itemsCategory1={itemsCategory1}
+              itemsCategory2={itemsCategory2}
+              itemsCategory3={itemsCategory3}
+              itemsCategory4={itemsCategory4}
+              itemsCategory5={itemsCategory5} />
+          </div>
         </div>
       )}
       {url === 'assets' && (

@@ -19,9 +19,8 @@ function Header(nft, marketplace, user) {
         const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
         setAccount(accounts[0]);
 
-
         const userA = await nft.user.users(accounts[0])
-        console.log(userA.name)
+
         setUsername(userA.name)
 
         // const userA = await user.users(accounts[0])
@@ -79,15 +78,17 @@ function Header(nft, marketplace, user) {
                 </div>
 
                 <div>
-                    {username !== '' && account !== '' && <p>{account}</p>}
+                    {username !== '' && account !== '' && (
+                        <div>
+                            <p>{account}</p>
+                            <p style={{ textAlign: 'right' }}>{username}</p>
+                        </div>
+                    )}
                     {username === '' && (
                         <button className={cx('signup-button', 'navbar-button')}>
                             <a className={cx('navbar-item-link')} href="/author">Đăng ký</a>
                         </button>
                     )}
-
-
-
 
                     {/* <button className={cx('signin-button', 'navbar-button')}>
                             <a className={cx('navbar-item-link')} href="/create">Đăng nhập</a>

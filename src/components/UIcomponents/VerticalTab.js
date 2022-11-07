@@ -2,7 +2,7 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
+
 import Box from '@mui/material/Box';
 
 import CardUI from "../UIcomponents/Card";
@@ -24,7 +24,7 @@ function TabPanel(props) {
         >
             {value === index && (
                 <Box sx={{ width: 'auto', height: 'auto', marginLeft: '50px' }}>
-                    <Typography>{children}</Typography>
+                    <div>{children}</div>
                 </Box>
             )}
         </div>
@@ -53,7 +53,6 @@ export default function VerticalTabs(props) {
         setValue(newValue);
     };
 
-    console.log('value', value)
     return (
         <Box
             sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', height: 'auto', color: 'black' }}
@@ -87,10 +86,10 @@ export default function VerticalTabs(props) {
                 </div>
             </TabPanel>
             <TabPanel value={value} index={2}>
-                Đã bán
+
             </TabPanel>
             <TabPanel value={value} index={3}>
-                Đang bán
+
             </TabPanel>
         </Box>
     );
