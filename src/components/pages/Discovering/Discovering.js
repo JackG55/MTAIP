@@ -97,7 +97,7 @@ function Discovering({ nft, marketplace, user }) {
         //console.log(metadataURL)
         const response = await fetch(metadataURL)
         const responseJson = await response.json();
-        console.log(responseJson)
+        //console.log(responseJson)
         //Add item to items array
         if (responseJson.loaihinh === 'Tác phẩm tạo hình, mỹ thuật ứng dụng') {
           items.push({
