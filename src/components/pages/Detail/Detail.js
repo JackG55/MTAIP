@@ -211,7 +211,7 @@ function Detail({ nft, marketplace, user }) {
 
     useEffect(() => {
         loadMarketplaceItems();
-    }, [account]);
+    }, [account, id]);
 
     const offerMarketItem = async (price) => {
         setLoadingOffer(true)

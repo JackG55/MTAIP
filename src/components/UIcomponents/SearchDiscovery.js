@@ -3,16 +3,18 @@ import * as React from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import CloseIcon from '@mui/icons-material/Close';
 
+import { ethers } from 'ethers';
+
 import styles from './UI.module.scss';
 import classNames from 'classnames/bind';
+import { useNavigate } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
-function SearchBar({ placeholder, data }) {
-
+function SearchDiscovery({ placeholder, data }) {
     const [filteredData, setFilteredData] = React.useState([]);
     const [wordEntered, setWordEntered] = React.useState('');
-    const [selected, setSelected] = React.useState(false);
+    const [tokenID, setTokenID] = React.useState();
 
     const handleFilter = (e) => {
         const searchWord = e.target.value;
@@ -30,18 +32,20 @@ function SearchBar({ placeholder, data }) {
     const clearInput = () => {
         setFilteredData([])
         setWordEntered('')
-
     }
 
-    const displayItem = (id) => {
-        return () => {
-            setSelected(id)
-        }
+    let navigate = useNavigate()
 
+    const handleClick = (id) => {
+        return () => {
+            navigate(`/detail/${id}`)
+            clearInput()
+            console.log('chuyển trang đi')
+        }
     }
 
     return (
-        <div className={cx('search')}>
+        <div className={cx('searchDiscovery')}>
             <div className={cx('search-input')}>
                 <input type='text' placeholder={placeholder} value={wordEntered} onChange={handleFilter} />
                 <div className={cx('search-icon')}>
@@ -57,20 +61,17 @@ function SearchBar({ placeholder, data }) {
                 <div className={cx('data-result')}>
                     {filteredData.map((value, id) => {
                         return (
-                            <div key={id}>
-                                <div className={cx('data-item')} onClick={displayItem(value.itemId)} >{value.name}</div>
-                                {selected === value.itemId && (
-                                    <div className={cx('data-img')}>
-                                        <img src={value.image} alt='' />
-                                    </div>
-                                )}
+                            <div key={id} className={cx('data')} >
+                                <div className={cx('data-img')}><img src={value.image} alt='' /></div>
+                                <div className={cx('data-item')} onClick={handleClick(value.tokenId.toNumber())}>{value.name}</div>
                             </div>
                         );
                     })}
                 </div>
-            )}
-        </div>
+            )
+            }
+        </div >
     );
 }
 
-export default SearchBar;
+export default SearchDiscovery;

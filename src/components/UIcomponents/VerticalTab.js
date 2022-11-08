@@ -47,7 +47,7 @@ function a11yProps(index) {
 export default function VerticalTabs(props) {
     const [value, setValue] = React.useState(0);
 
-    const { itemsAll, itemsLoading } = props;
+    const { itemsAll, itemsLoading, itemsSolding, itemsNotSold } = props;
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -68,8 +68,8 @@ export default function VerticalTabs(props) {
             >
                 <Tab label="Sản phẩm của tôi " {...a11yProps(0)} sx={{ fontSize: '16px' }} />
                 <Tab label="Đang chờ phê duyệt" {...a11yProps(1)} sx={{ fontSize: '16px' }} />
-                <Tab label="Đã bán" {...a11yProps(2)} sx={{ fontSize: '16px' }} />
-                <Tab label="Đang bán" {...a11yProps(3)} sx={{ fontSize: '16px' }} />
+                <Tab label="Đang bán" {...a11yProps(2)} sx={{ fontSize: '16px' }} />
+                <Tab label="Không bán" {...a11yProps(3)} sx={{ fontSize: '16px' }} />
             </Tabs>
             <TabPanel value={value} index={0}>
                 <div className={cx('item-sold')}>
@@ -86,10 +86,18 @@ export default function VerticalTabs(props) {
                 </div>
             </TabPanel>
             <TabPanel value={value} index={2}>
-
+                <div className={cx('item-sold')}>
+                    {itemsSolding.map((item) => (
+                        <CardUI key={item.itemId} backgroundImg={item.image} Imgname={item.name} tokenId={item.tokenId} ownerName={item.ownerName} />
+                    ))}
+                </div>
             </TabPanel>
             <TabPanel value={value} index={3}>
-
+                <div className={cx('item-sold')}>
+                    {itemsNotSold.map((item) => (
+                        <CardUI key={item.itemId} backgroundImg={item.image} Imgname={item.name} tokenId={item.tokenId} ownerName={item.ownerName} />
+                    ))}
+                </div>
             </TabPanel>
         </Box>
     );
