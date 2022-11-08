@@ -30,6 +30,7 @@ function App() {
     const [marketplace, setMarketplace] = useState({});
     const [user, setUser] = useState({});
     const [loading, setLoading] = useState(false);
+
     // MetaMask Login/Connect
     const web3Handler = async () => {
         // Get provider from Metamask
@@ -41,7 +42,6 @@ function App() {
         // window.ethereum.on('chainChanged', (chainId) => {
         //     window.location.reload();
         // });
-
         loadContracts(signer);
         setLoading(true);
     };
@@ -54,7 +54,7 @@ function App() {
         const user = new ethers.Contract(UserRegisterAddress.address, UserRegisterAbi.abi, signer);
         setUser(user);
 
-        console.log(marketplace);
+       // console.log(marketplace);
     };
 
     // window.ethereum.on('accountsChanged', function (accounts) {
