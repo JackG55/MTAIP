@@ -4,6 +4,8 @@ import VerticalTabs from "../../UIcomponents/VerticalTab"
 import { useState, useEffect } from 'react';
 import { makeGatewayURL } from '../../web3Storage_helper';
 
+import { ethers } from 'ethers';
+
 import styles from './MyAccount.module.scss';
 import classNames from 'classnames/bind';
 
@@ -39,19 +41,19 @@ function MyAccount({ nft, marketplace, user }) {
     const [loading, setLoading] = useState(true)
     const [itemsAll, setItemsAll] = useState([])
     const [itemsLoading, setItemsLoading] = useState([])
+    const [itemsSolding, setItemsSolding] = useState([])
+    const [itemsNotSold, setItemsNotSold] = useState([])
     const [ownerName, setOwnerName] = useState('')
 
-    // Sản phẩm của tôi
-    const loadMarketplaceAllItems = async () => {
+    const loadMarketplaceItems = async () => {
         // Load all unsold items
         const itemCount = await marketplace.itemCount();
         let itemsAll = []
+        let itemsLoading = []
         for (let i = 1; i <= itemCount; i++) {
             const item = await marketplace.items(i)
-            // if (item.seller.toLowerCase() === account)
-            //     console.log('true')
-            // else
-            //     console.log(false)
+
+            // Sản phẩm của tôi
             if (item.check === true && item.seller.toLowerCase() === account) {
                 const ownerAddress = await nft.ownerOf(i);
                 const userA = await user.users(item.seller)
@@ -68,7 +70,6 @@ function MyAccount({ nft, marketplace, user }) {
                 //console.log(metadataURL)
                 const response = await fetch(metadataURL)
                 const responseJson = await response.json();
-                console.log(responseJson)
 
                 //Add item to items array
                 itemsAll.push({
@@ -80,28 +81,7 @@ function MyAccount({ nft, marketplace, user }) {
                     ownerName: userA[2]
                 })
             }
-        }
-        setLoading(false)
-        setItemsAll(itemsAll)
-    }
-
-    useEffect(() => {
-        loadMarketplaceAllItems()
-    }, [account])
-    //#endregion Contract
-    //===================================================================================//
-
-    // Đang chờ phê duyệt
-    const loadMarketplaceLoadingItems = async () => {
-        // Load all unsold items
-        const itemCount = await marketplace.itemCount();
-        let itemsLoading = []
-        for (let i = 1; i <= itemCount; i++) {
-            const item = await marketplace.items(i)
-            // if (item.seller.toLowerCase() === account)
-            //     console.log('true')
-            // else
-            //     console.log(false)
+            // Đang chờ phê duyệt
             if (item.check === false && item.seller.toLowerCase() === account) {
                 const ownerAddress = await nft.ownerOf(i);
                 const userA = await user.users(item.seller)
@@ -118,7 +98,6 @@ function MyAccount({ nft, marketplace, user }) {
                 //console.log(metadataURL)
                 const response = await fetch(metadataURL)
                 const responseJson = await response.json();
-                console.log(responseJson)
 
                 //Add item to items array
                 itemsLoading.push({
@@ -130,28 +109,85 @@ function MyAccount({ nft, marketplace, user }) {
                     ownerName: userA[2]
                 })
             }
+            // Đang bán
+            if (item.check === true && item.seller.toLowerCase() === account && parseInt(ethers.utils.formatEther(item.price), 10) > 0) {
+                const ownerAddress = await nft.ownerOf(i);
+                const userA = await user.users(item.seller)
+                // console.log(userA[[0]])
+
+                // get uri url from nft contract
+                const uri = await nft.tokenURI(item.tokenId)
+                const cid = await uri.split("ipfs://").join("").split("/")[0]
+                const imageName = await uri.split("/")[3]
+
+                const imageGatewayURL = makeGatewayURL(cid, imageName);
+                const metadataURL = makeGatewayURL(cid, 'metadata.json')
+
+                //console.log(metadataURL)
+                const response = await fetch(metadataURL)
+                const responseJson = await response.json();
+
+                //Add item to items array
+                itemsSolding.push({
+                    tokenId: item.tokenId,
+                    itemId: item.itemId,
+                    seller: item.seller,
+                    name: responseJson.tentacpham,
+                    image: imageGatewayURL,
+                    ownerName: userA[2]
+                })
+            }
+            // Không bán
+            if (item.check === true && item.seller.toLowerCase() === account && parseInt(ethers.utils.formatEther(item.price), 10) === 0) {
+                const ownerAddress = await nft.ownerOf(i);
+                const userA = await user.users(item.seller)
+                // console.log(userA[[0]])
+
+                // get uri url from nft contract
+                const uri = await nft.tokenURI(item.tokenId)
+                const cid = await uri.split("ipfs://").join("").split("/")[0]
+                const imageName = await uri.split("/")[3]
+
+                const imageGatewayURL = makeGatewayURL(cid, imageName);
+                const metadataURL = makeGatewayURL(cid, 'metadata.json')
+
+                //console.log(metadataURL)
+                const response = await fetch(metadataURL)
+                const responseJson = await response.json();
+
+                //Add item to items array
+                itemsNotSold.push({
+                    tokenId: item.tokenId,
+                    itemId: item.itemId,
+                    seller: item.seller,
+                    name: responseJson.tentacpham,
+                    image: imageGatewayURL,
+                    ownerName: userA[2]
+                })
+            }
         }
+
         setLoading(false)
+        setItemsAll(itemsAll)
         setItemsLoading(itemsLoading)
+        setItemsSolding(itemsSolding)
+        setItemsNotSold(itemsNotSold)
     }
 
     useEffect(() => {
-        loadMarketplaceLoadingItems()
+        loadMarketplaceItems()
     }, [account])
+    //#endregion Contract
+    //===================================================================================//
+    console.log('itemSolding: ', itemsSolding)
 
     return (
         <div className={cx('myAccount')}>
             <h1 className={cx('myAccount-title')}>
                 SẢN PHẨM CỦA TÔI
             </h1>
-            {/* {items.length === 0 && (<h2>Bạn chưa có sản phẩm (Sản phẩm của bạn đang được đánh giá)</h2>)}
             <div className={cx('myAccount-content')}>
-                {items.map((item) => (
-                    <CardUI key={item.itemId} backgroundImg={item.image} Imgname={item.name} tokenId={item.tokenId} ownerName={item.ownerName} />
-                ))}
-            </div> */}
-            <div className={cx('myAccount-content')}>
-                <VerticalTabs itemsAll={itemsAll} itemsLoading={itemsLoading} />
+                <VerticalTabs itemsAll={itemsAll} itemsLoading={itemsLoading} itemsSolding={itemsSolding} itemsNotSold={itemsNotSold} />
             </div>
 
         </div>

@@ -24,9 +24,9 @@ const cx = classNames.bind(styles);
 function Evaluate({ nft, marketplace, user }) {
     //lấy ra id đã nà
     const { id } = useParams()
-    // console.log(id)
+    //console.log('id: ', id)
 
-    //===========================================Xử lý Contract(Phần đánh giá)==========================//
+    //===========================================Xử lý Contract==========================//
     //#region Contract
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true)
@@ -37,12 +37,13 @@ function Evaluate({ nft, marketplace, user }) {
         loaihinh: "",
     })
 
-
     const [loadingDA, setLoadingDA] = useState(false)
     const [alert, setAlert] = useState(false)
 
-    const loadMarketplaceItems = async () => {
+    const [itemsSearch, setItemsSearch] = useState([])
 
+    const loadMarketplaceItems = async () => {
+        // Phần đánh giá
         // get uri url from nft contract
         const uri = await nft.tokenURI(id)
 
@@ -53,7 +54,6 @@ function Evaluate({ nft, marketplace, user }) {
         // const item = await marketplace.items(id);
         // const userA = await user.users(item.seller)
         // setOwnerName(userA[2])
-
 
         const cid = await uri.split("ipfs://").join("").split("/")[0]
         const imageName = await uri.split("/")[3]
@@ -73,18 +73,55 @@ function Evaluate({ nft, marketplace, user }) {
             loaihinh: responseJson.loaihinh
         })
 
-        //console.log(item)
-
-        //Add item to items array
         setLoading(false)
-    }
 
+        // Phần Tìm kiếm
+        // Load all unsold items
+        const itemCountSearch = await marketplace.itemCount();
+        let itemsSearch = []
+        // console.log(itemCount)
+        for (let i = 1; i <= itemCountSearch; i++) {
+            const itemSearch = await marketplace.items(i)
+            if (!itemSearch.sold && itemSearch.check === true) {
+                const ownerAddressSearch = await nft.ownerOf(i);
+
+                const userASearch = await user.users(itemSearch.seller)
+
+                // console.log(userA[[0]])
+
+                // get uri url from nft contract
+                const uriSearch = await nft.tokenURI(itemSearch.tokenId)
+                const cidSearch = await uriSearch.split("ipfs://").join("").split("/")[0]
+                const imageNameSearch = await uriSearch.split("/")[3]
+
+                const imageGatewayURLSearch = makeGatewayURL(cidSearch, imageNameSearch);
+                const metadataURLSearch = makeGatewayURL(cidSearch, 'metadata.json')
+
+                //console.log(metadataURL)
+                const responseSearch = await fetch(metadataURLSearch)
+                const responseJsonSearch = await responseSearch.json();
+                //Add item to items array
+                if (responseJson.loaihinh === responseJsonSearch.loaihinh) {
+                    itemsSearch.push({
+                        tokenId: itemSearch.tokenId,
+                        itemId: itemSearch.itemId,
+                        seller: itemSearch.seller,
+                        name: responseJsonSearch.tentacpham,
+                        image: imageGatewayURLSearch,
+                        ownerName: userASearch[2]
+                    })
+                }
+                console.log('itemsSearch: ', itemsSearch)
+            }
+        }
+
+        setItemsSearch(itemsSearch)
+    }
     useEffect(() => {
         loadMarketplaceItems()
     }, [])
     //#endregion Contract
     //===================================================================================//
-
 
     const [formData, setFormData] = React.useState('notEvaluate');
 
@@ -107,63 +144,6 @@ function Evaluate({ nft, marketplace, user }) {
         // tro ve trang Home
         navigate('/');
     }
-
-    //===========================================Xử lý Contract (Phần tìm kiếm)==========================//
-    //#region Contract
-    const [loadingSearch, setLoadingSearch] = useState(true)
-    const [itemsSearch, setItemsSearch] = useState([])
-    const [ownerNameSearch, setOwnerNameSearch] = useState('')
-    const loadMarketplaceItemsSearch = async () => {
-        // Load all unsold items
-        const itemCountSearch = await marketplace.itemCount();
-        let itemsSearch = []
-        // console.log(itemCount)
-
-        for (let i = 1; i <= itemCountSearch; i++) {
-            const itemSearch = await marketplace.items(i)
-            if (!itemSearch.sold && itemSearch.check === true) {
-                const ownerAddressSearch = await nft.ownerOf(i);
-
-                const userASearch = await user.users(itemSearch.seller)
-
-                // console.log(userA[[0]])
-
-                // get uri url from nft contract
-                const uriSearch = await nft.tokenURI(itemSearch.tokenId)
-                const cidSearch = await uriSearch.split("ipfs://").join("").split("/")[0]
-                const imageNameSearch = await uriSearch.split("/")[3]
-
-                const imageGatewayURLSearch = makeGatewayURL(cidSearch, imageNameSearch);
-                const metadataURLSearch = makeGatewayURL(cidSearch, 'metadata.json')
-
-                //console.log(metadataURL)
-                const responseSearch = await fetch(metadataURLSearch)
-                const responseJsonSearch = await responseSearch.json();
-                console.log(responseJsonSearch)
-
-                //Add item to items array
-                if (item.loaihinh === responseJsonSearch.loaihinh) {
-                    itemsSearch.push({
-                        tokenId: itemSearch.tokenId,
-                        itemId: itemSearch.itemId,
-                        seller: itemSearch.seller,
-                        name: responseJsonSearch.tentacpham,
-                        image: imageGatewayURLSearch,
-                        ownerName: userASearch[2]
-                    })
-                }
-            }
-        }
-        setLoadingSearch(false)
-        setItemsSearch(itemsSearch)
-    }
-
-    useEffect(() => {
-        loadMarketplaceItemsSearch()
-    }, [])
-    //#endregion Contract
-    //===================================================================================//
-
 
 
     return (
