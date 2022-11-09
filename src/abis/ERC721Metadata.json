@@ -4644,10 +4644,10 @@
         2353
       ],
       "IERC165": [
-        3149
+        3221
       ],
       "IERC721Metadata": [
-        3228
+        3300
       ]
     },
     "id": 2354,
@@ -4672,7 +4672,7 @@
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
         "scope": 2354,
-        "sourceUnit": 3229,
+        "sourceUnit": 3301,
         "src": "60:42:15",
         "symbolAliases": [],
         "unitAlias": ""
@@ -4697,7 +4697,7 @@
               "id": 2298,
               "name": "IERC721Metadata",
               "nodeType": "IdentifierPath",
-              "referencedDeclaration": 3228,
+              "referencedDeclaration": 3300,
               "src": "157:15:15"
             },
             "id": 2299,
@@ -4725,8 +4725,8 @@
         "linearizedBaseContracts": [
           2353,
           1826,
-          3149,
-          3228
+          3221,
+          3300
         ],
         "name": "ERC721Metadata",
         "nameLocation": "139:14:15",
@@ -5169,7 +5169,7 @@
           },
           {
             "baseFunctions": [
-              3222
+              3294
             ],
             "body": {
               "id": 2342,
@@ -5258,7 +5258,7 @@
           },
           {
             "baseFunctions": [
-              3227
+              3299
             ],
             "body": {
               "id": 2351,
@@ -5359,7 +5359,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.7",
-  "updatedAt": "2022-10-14T01:30:27.182Z",
+  "updatedAt": "2022-11-08T12:56:12.279Z",
   "devdoc": {
     "kind": "dev",
     "methods": {

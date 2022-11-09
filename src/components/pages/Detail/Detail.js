@@ -123,21 +123,31 @@ function Detail({ nft, marketplace, user }) {
             const to = await user.users(item.to);
             const Time = new Date(item.time.toNumber())
 
+            let eventName = "";
+            if(item.eventName === 'mint'){
+                eventName = 'Khởi tạo'
+            }else if(item.eventName === 'transfer'){
+                eventName = 'Chuyển nhượng'
+            }
+            else if(item.eventName === 'offer'){
+                eventName = 'Đề nghị'
+            }
+
             // console.log(typeof(ethValue))
             if (item.to === MarketPlaceAddress.address) {
-                const a = createData(item.eventName, ethValue, from[2], 'MTAIP', Time.toLocaleString())
+                const a = createData(eventName, ethValue, from[2], 'MTAIP', Time.toLocaleString())
                 row.push(a)
             }
             else if (item.from === MarketPlaceAddress.address) {
-                const b = createData(item.eventName, ethValue, 'MTAIP', to[2], Time.toLocaleString())
+                const b = createData(eventName, ethValue, 'MTAIP', to[2], Time.toLocaleString())
                 row.push(b)
             }
             else if (item.to === item.from) {
-                const d = createData(item.eventName, ethValue, 'NullAddress', to[2], Time.toLocaleString())
+                const d = createData(eventName, ethValue, 'NullAddress', to[2], Time.toLocaleString())
                 row.push(d)
             }
             else {
-                const c = createData(item.eventName, ethValue, from[2], to[2], Time.toLocaleString())
+                const c = createData(eventName, ethValue, from[2], to[2], Time.toLocaleString())
                 row.push(c)
             }
 
@@ -222,8 +232,8 @@ function Detail({ nft, marketplace, user }) {
         // add nft to marketplace
 
         await (await marketplace.OfferItem(id, price, account)).wait()
-        console.log('de nghi thanh cong')
-        console.log(99)
+        //console.log('de nghi thanh cong')
+        //console.log(99)
 
         //thêm vào lịch sử
         const currentTime = new Date();
@@ -346,7 +356,7 @@ function Detail({ nft, marketplace, user }) {
                             <img src={EthereumIcon} alt="" style={{ height: '30px', width: '30px' }} />
                             <div className={cx('ethereum-info')}>
                                 <span className={cx('etherum-price-detail')}>{item.giachuyennhuong} ETH </span>
-                                <span className={cx('dollar-price-detail')}>$ {(item.giachuyennhuong * 1.32).toFixed(2)}</span>
+                                <span className={cx('dollar-price-detail')}>{(item.giachuyennhuong * 3700000)} VND</span>
                             </div>
                         </div>
                         <div className={cx('buy-offer-btn')}>

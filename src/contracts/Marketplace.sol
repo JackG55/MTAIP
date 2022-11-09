@@ -124,6 +124,28 @@ contract Marketplace is ReentrancyGuard {
         items[_itemId].seller = payable(_buyer);
     }
 
+    function transferItem(uint _itemId, address _buyer) external payable nonReentrant {
+        Item storage item = items[_itemId];
+        require(_itemId > 0 && _itemId <= itemCount, "item doesn't exist");
+
+        // update item to sold
+        item.sold = true;
+        // transfer nft to buyer
+        item.nft.transferFrom(msg.sender, _buyer, item.tokenId);
+        // emit Bought event
+        emit Bought(
+            _itemId,
+            address(item.nft),
+            item.tokenId,
+            item.price,
+            item.seller,
+            _buyer
+        );
+
+        //change seller to buyer
+        items[_itemId].seller = payable(_buyer);
+    }
+
     function purchaseDownloadItem(uint _itemId, address _buyer) external payable nonReentrant {
         uint _totalPrice = getTotalPrice(_itemId);
         Item storage item = items[_itemId];

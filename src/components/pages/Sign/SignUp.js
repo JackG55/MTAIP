@@ -133,6 +133,7 @@ function SignUp({ nft, marketplace, user }) {
         //uỷ quyền cho marketplace
         await (await nft.setApprovalForAll(marketplace.address, true)).wait();
         console.log('set approve xong')
+        
         // add nft to marketplace
         console.log('valuePrice', values.price);
         const listingPrice = ethers.utils.parseEther(values.price.toString());
