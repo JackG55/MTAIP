@@ -6,7 +6,9 @@ import Sign from '../components/pages/Sign';
 import Detail from '../components/pages/Detail';
 import Evaluate from '../components/pages/Evaluate';
 import Author from '../components/pages/Author';
+import Contact from '../components/pages/Contact'
 import ListEvaluate from '../components/pages/ListEvaluate';
+import AuthorInfo from '../components/pages/AuthorInfor';
 
 //<==============================LAYOUT=================>
 import { CreateLayout } from '../components/Layout'
@@ -21,6 +23,8 @@ const publicRoutes = [
     { path: '/evaluate', component: Evaluate, layout: CreateLayout },
     { path: '/author', component: Author, layout: CreateLayout },
     { path: '/list', component: ListEvaluate, layout: CreateLayout },
+    { path: '/contact', component: Contact, layout: CreateLayout },
+    { path: '/authorInfo', component: AuthorInfo, layout: CreateLayout }
 ];
 
 //dành cho những trang phải đăng nhập mới vào được, nếu chưa đăng nhập sẽ lái sang trang login

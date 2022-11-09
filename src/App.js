@@ -12,6 +12,8 @@ import Evaluate from '../src/components/pages/Evaluate';
 import Author from '../src/components/pages/Author';
 import ListEvaluate from '../src/components/pages/ListEvaluate';
 import MyAccount from './components/pages/MyAccount/MyAccount';
+import Contact from './components/pages/Contact';
+import AuthorInfo from './components/pages/AuthorInfor';
 
 import { ethers } from 'ethers';
 import MarketplaceAddress from '../src/abis/Marketplace-address.json';
@@ -35,6 +37,7 @@ function App() {
         // Get provider from Metamask
         // const provider = new ethers.providers.Web3Provider(window.ethereum)
         const provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:7545');
+
         // Set signer
         const signer = provider.getSigner();
 
@@ -53,8 +56,6 @@ function App() {
         setNFT(nft);
         const user = new ethers.Contract(UserRegisterAddress.address, UserRegisterAbi.abi, signer);
         setUser(user);
-
-        console.log(marketplace);
     };
 
     // window.ethereum.on('accountsChanged', function (accounts) {
@@ -170,6 +171,22 @@ function App() {
                             element={
                                 <DefaultLayout nft={nft} marketplace={marketplace} user={user}>
                                     <MyAccount nft={nft} marketplace={marketplace} user={user} />
+                                </DefaultLayout>
+                            }
+                        />
+                        <Route
+                            path="/contact"
+                            element={
+                                <DefaultLayout nft={nft} marketplace={marketplace} user={user}>
+                                    <Contact />
+                                </DefaultLayout>
+                            }
+                        />
+                        <Route
+                            path="/authorInfo/:address"
+                            element={
+                                <DefaultLayout nft={nft} marketplace={marketplace} user={user}>
+                                    <AuthorInfo nft={nft} marketplace={marketplace} user={user} />
                                 </DefaultLayout>
                             }
                         />

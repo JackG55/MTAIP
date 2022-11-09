@@ -1,0 +1,23 @@
+.contact {
+    margin: 64px 80px 64px 80px;
+    display: flex;
+    flex-direction: row;
+    .map {
+        .mapouter {
+            position: relative;
+            text-align: right;
+            height: 500px;
+            width: 600px;
+        }
+        .gmap_canvas {
+            overflow: hidden;
+            background: none !important;
+            height: 500px;
+            width: 600px;
+        }
+    }
+    .contact-information {
+        margin-top: 80px;
+        margin-left: 80px;
+    }
+}
