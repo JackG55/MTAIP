@@ -12,7 +12,8 @@ function SearchBar({ placeholder, data }) {
 
     const [filteredData, setFilteredData] = React.useState([]);
     const [wordEntered, setWordEntered] = React.useState('');
-    const [selected, setSelected] = React.useState(false);
+    const [selected, setSelected] = React.useState(0);
+    const [items, setItems] = React.useState([]);
 
     const handleFilter = (e) => {
         const searchWord = e.target.value;
@@ -30,20 +31,22 @@ function SearchBar({ placeholder, data }) {
     const clearInput = () => {
         setFilteredData([])
         setWordEntered('')
+        setItems([])
+        setSelected(0)
 
     }
-
+    const handleClick = (e) => {
+        setItems(data);
+    }
     const displayItem = (id) => {
         return () => {
             setSelected(id)
         }
-
     }
-
     return (
         <div className={cx('search')}>
             <div className={cx('search-input')}>
-                <input type='text' placeholder={placeholder} value={wordEntered} onChange={handleFilter} />
+                <input type='text' placeholder={placeholder} value={wordEntered} onChange={handleFilter} onClick={handleClick} />
                 <div className={cx('search-icon')}>
                     {wordEntered.length === 0 ? (
                         <SearchIcon sx={{ height: '30px', width: '30px', color: 'rgb(138, 147, 155)' }} />
@@ -52,23 +55,57 @@ function SearchBar({ placeholder, data }) {
                     )}
                 </div>
             </div>
-
+            {items.length !== 0 && filteredData.length === 0 && wordEntered === '' && (
+                <div className={cx('data-result')}>
+                    {items.map((value, id) => {
+                        return (
+                            <div key={id} className={cx('data')}>
+                                <div className={cx('data-img')}><img src={value.image} alt='' /></div>
+                                <div className={cx('data-item')} onClick={displayItem(value.itemId)}>{value.name}</div>
+                            </div>
+                        );
+                    })}
+                    {selected !== 0 && (
+                        <div className={cx('display-result')}>
+                            {items.map((value, id) => {
+                                return (
+                                    <div key={id} className={cx('display-img')}>
+                                        {value.itemId === selected && (
+                                            <div><img src={value.image} alt='' /></div>
+                                        )}
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    )}
+                </div>
+            )}
             {filteredData.length !== 0 && (
                 <div className={cx('data-result')}>
                     {filteredData.map((value, id) => {
                         return (
-                            <div key={id}>
-                                <div className={cx('data-item')} onClick={displayItem(value.itemId)} >{value.name}</div>
-                                {selected === value.itemId && (
-                                    <div className={cx('data-img')}>
-                                        <img src={value.image} alt='' />
-                                    </div>
-                                )}
+                            <div key={id} className={cx('data')}>
+                                <div className={cx('data-img')}><img src={value.image} alt='' /></div>
+                                <div className={cx('data-item')} onClick={displayItem(value.itemId)}>{value.name}</div>
                             </div>
                         );
                     })}
+                    {selected !== 0 && (
+                        <div className={cx('display-result')}>
+                            {items.map((value, id) => {
+                                return (
+                                    <div key={id} className={cx('display-img')}>
+                                        {value.itemId === selected && (
+                                            <div><img src={value.image} alt='' /></div>
+                                        )}
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    )}
                 </div>
             )}
+
         </div>
     );
 }
