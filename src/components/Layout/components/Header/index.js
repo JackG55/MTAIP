@@ -31,7 +31,7 @@ function Header(nft) {
         //const userA = await user.users(accounts[0])
 
         // phần tìm kiếm
-       // console.log('marketplace: ', nft)
+        // console.log('marketplace: ', nft)
         const itemCount = await nft.marketplace.getItemCount();
         let items = []
         // console.log(itemCount)

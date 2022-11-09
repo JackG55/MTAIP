@@ -1,0 +1,18 @@
+.author-info {
+    margin-top: 60px;
+    margin-left: 40%;
+    margin-bottom: 150px;
+    .author-info-title {
+        margin-bottom: 10px;
+    }
+    .author {
+        display: flex;
+        flex-direction: row;
+        .author-detail {
+            margin-left: 15px;
+            h3 {
+                font-weight: 400;
+            }
+        }
+    }
+}

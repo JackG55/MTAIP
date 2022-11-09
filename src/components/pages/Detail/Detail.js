@@ -7,6 +7,7 @@ import CircularLoading from '../../UIcomponents/CircularLoading';
 import Alert from '../../UIcomponents/AlertSuccess';
 import Offer from '../../UIcomponents/ShowDialog';
 import Transfer from '../../UIcomponents/ShowDialogTransfer';
+import QRCode from '../../UIcomponents/AlertDialog'
 
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -14,6 +15,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+
 
 import { makeGatewayURL } from '../../web3Storage_helper';
 import { ethers } from 'ethers';
@@ -73,6 +75,7 @@ function Detail({ nft, marketplace, user }) {
     //#region Contract
     const [loading, setLoading] = useState(true);
     const [ownerName, setOwnerName] = useState('');
+    const [userId, setUserId] = useState('');
     const [totalPrice, setTotalPrice] = useState();
     const [itemtrack, setItemtrack] = useState([]);
     const [downloaderList, setDownloaderList] = useState([]);
@@ -174,6 +177,7 @@ function Detail({ nft, marketplace, user }) {
 
         const userA = await user.users(itemA.seller);
         setOwnerName(userA[2]);
+        setUserId(userA[0])
 
         // get uri url from nft contract
         const uri = await nft.tokenURI(id);
@@ -291,7 +295,7 @@ function Detail({ nft, marketplace, user }) {
     const backToDetailPageAfterBuy = (e) => {
         setLoadingBuy(false);
         setAlertBuy(false);
-        // tro ve trang Home
+        // tro ve
         navigate(`/detail/${id}`);
     }
 
@@ -300,7 +304,7 @@ function Detail({ nft, marketplace, user }) {
         setAlertOffer(false);
         setLoadingTransfer(false);
         setAlertTransfer(false);
-        // tro ve trang Home
+        // tro ve
         navigate(`/detail/${id}`);
     }
 
@@ -319,7 +323,7 @@ function Detail({ nft, marketplace, user }) {
                 <div className={cx('common-info')}>
                     <h1>{item.tentacpham}</h1>
                     <div className={cx('own-info')}>
-                        <p>Sở hữu bởi {ownerName}</p>
+                        <p>Sở hữu bởi <a href={`/authorInfo/${userId}`}>{ownerName}</a></p>
                         <span>
                             <VisibilityIcon />
                             10k Lượt xem
@@ -368,6 +372,9 @@ function Detail({ nft, marketplace, user }) {
                                     </div>
                                     <div className={cx('transfer-btn')}>
                                         <Transfer />
+                                    </div>
+                                    <div className={cx('qrcode-btn')}>
+                                        <QRCode id={id} />
                                     </div>
 
                                 </div>
