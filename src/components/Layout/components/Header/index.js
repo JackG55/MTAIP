@@ -6,7 +6,7 @@ import { makeGatewayURL } from '../../../web3Storage_helper';
 
 import { useState, useEffect } from 'react';
 
-import logo from '../../../../assets/images/MTA.png';
+import logo from '../../../../assets/images/VKU.png';
 import { Search } from '@mui/icons-material';
 
 import ExpertAddress from '../../../../abis/Expert-address.json'
@@ -87,7 +87,7 @@ function Header(nft) {
             <div className={cx('inner')}>
                 <div className={cx('logo')}>
                     <img src={logo} alt="MTA" />
-                    <div className={cx('logo-text')}>MTA</div>
+                    <div className={cx('logo-text')}>VKU</div>
                 </div>
                 <div className={cx('navbar')}>
                     <ul className={cx('navbar-list')}>

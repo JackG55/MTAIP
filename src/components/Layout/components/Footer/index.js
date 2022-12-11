@@ -1,7 +1,7 @@
 import classNames from 'classnames/bind';
 import styles from './Footer.module.scss';
 
-import logo from '../../../../assets/images/MTA.png';
+import logo from '../../../../assets/images/VKU.png';
 
 import IconButton from '@mui/material/IconButton';
 import GitHubIcon from '@mui/icons-material/GitHub';
@@ -16,20 +16,20 @@ function Footer() {
         <footer className={cx('footer-container')}>
             <div className={cx('footer-logo')}>
                 <img src={logo} alt="MTA" />
-                <div className={cx('footer-logo-text')}>MTA</div>
+                <div className={cx('footer-logo-text')}>VKU</div>
             </div>
-            <h3>© Viết bởi Đinh Viết Đức, Dương Đức Anh.</h3>
+            <h3>© Viết bởi Bùi Hữu Hảo, Nguyễn Hữu Dũng.</h3>
             <div className={cx('footer-icons')}>
-                <IconButton href="https://github.com/JackG55/marketplace">
+                <IconButton href="https://www.facebook.com/hao.huu.2205">
                     <GitHubIcon className={cx('footer-icon')}></GitHubIcon>
                 </IconButton>
-                <IconButton href="https://www.facebook.com/duc.dinhviet.35">
+                <IconButton href="https://www.facebook.com/hao.huu.2205">
                     <FacebookIcon className={cx('footer-icon')}></FacebookIcon>
                 </IconButton>
-                <IconButton href="https://github.com/JackG55/marketplace">
+                <IconButton href="https://www.facebook.com/hao.huu.2205">
                     <TwitterIcon className={cx('footer-icon')}></TwitterIcon>
                 </IconButton>
-                <IconButton href="https://github.com/JackG55/marketplace">
+                <IconButton href="https://www.facebook.com/hao.huu.2205">
                     <TelegramIcon className={cx('footer-icon')}></TelegramIcon>
                 </IconButton>
             </div>

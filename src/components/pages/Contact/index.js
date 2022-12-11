@@ -9,24 +9,24 @@ function Contact() {
             <div className={cx('map')}>
                 <div className={cx('mapouter')}>
                     <div className={cx('gmap_canvas')}>
-                        <iframe width="600" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=236%20Ho%C3%A0ng%20Qu%E1%BB%91c%20Vi%E1%BB%87t,%20C%E1%BB%95%20Nhu%E1%BA%BF,%20B%E1%BA%AFc%20T%E1%BB%AB%20Li%C3%AAm,%20H%C3%A0%20N%E1%BB%99i&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" />
+                        <iframe width="600" height="500" id="gmap_canvas" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3835.7471394245467!2d108.25009031468288!3d15.974575988939447!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31421088e365cc75%3A0x6648fdda14970b2c!2zNDcwIMSQxrDhu51uZyBUcuG6p24gxJDhuqFpIE5naMSpYSwgSG_DoCBI4bqjaSwgTmfFqSBIw6BuaCBTxqFuLCDEkMOgIE7hurVuZyA1NTAwMDAsIFZp4buHdCBOYW0!5e0!3m2!1svi!2s!4v1670744853680!5m2!1svi!2s" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" />
                         <a href="https://2piratebay.org" />
                         <br />
                     </div>
                 </div>
             </div>
             <div className={cx('contact-information')}>
-                <h2>Quản lý Sở Hữu Trí Tuệ - Trường Đại Học Lê Quý Đôn</h2>
+                <h2>Quản lý Sở Hữu Trí Tuệ - Trường Đại Học Đà Nẵng</h2>
                 <br />
-                <h4>Địa chỉ:</h4> <p>236 Hoàng Quốc Việt, Cổ Nhuế, Bắc Từ Liêm, Hà Nội</p>
+                <h4>Địa chỉ:</h4> <p>470 Trần Đại Nghĩa, Ngũ Hành Sơn, Đà Nẵng</p>
                 <br />
                 <h4>Email:</h4>
-                <p>jacksparrow551999@gmail.com</p>
-                <p>ducanh99tpvpnd@gmail.com</p>
+                <p>aaaaa@gmail.com</p>
+                <p>bbbbb@gmail.com</p>
                 <br />
                 <h4>Điện thoại: </h4>
-                <p>0965501930</p>
-                <p>0904752793</p>
+                <p>00000000</p>
+                <p>0000000</p>
             </div>
         </div>
     );
