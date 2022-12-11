@@ -97,6 +97,23 @@ contract Marketplace is ReentrancyGuard {
        
     }
 
+    function listingItem(IERC721 _nft, uint _tokenId, uint _price, address _seller) external nonReentrant {
+        if (_price > 0)
+        {
+            // transfer nft to marketplace
+            _nft.transferFrom(msg.sender, address(this), _tokenId);
+
+             // emit Offered event
+            emit Offered(
+                itemCount,
+                address(_nft),
+                _tokenId,
+                _price,
+                _seller
+            );
+        }
+    }
+
     function purchaseItem(uint _itemId, address _buyer) external payable nonReentrant {
         uint _totalPrice = getTotalPrice(_itemId);
         Item storage item = items[_itemId];

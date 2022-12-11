@@ -124,6 +124,8 @@ function Discovering({ nft, marketplace, user }) {
     setItemsCategory3(items3)
     setItemsCategory4(items4)
     setItemsCategory5(items5)
+   // console.log('items', items);
+   // console.log('itemKientruc', items3);
   }
 
   useEffect(() => {

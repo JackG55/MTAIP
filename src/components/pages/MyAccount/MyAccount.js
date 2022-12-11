@@ -50,12 +50,14 @@ function MyAccount({ nft, marketplace, user }) {
         const itemCount = await marketplace.itemCount();
         let itemsAll = []
         let itemsLoading = []
+        let itemsSold = []
+        let itemsNotSold = []
         for (let i = 1; i <= itemCount; i++) {
             const item = await marketplace.items(i)
 
             // Sản phẩm của tôi
             if (item.check === true && item.seller.toLowerCase() === account) {
-                const ownerAddress = await nft.ownerOf(i);
+                //const ownerAddress = await nft.ownerOf(i);
                 const userA = await user.users(item.seller)
                 // console.log(userA[[0]])
 
@@ -128,7 +130,7 @@ function MyAccount({ nft, marketplace, user }) {
                 const responseJson = await response.json();
 
                 //Add item to items array
-                itemsSolding.push({
+                itemsSold.push({
                     tokenId: item.tokenId,
                     itemId: item.itemId,
                     seller: item.seller,
@@ -139,7 +141,7 @@ function MyAccount({ nft, marketplace, user }) {
             }
             // Không bán
             if (item.check === true && item.seller.toLowerCase() === account && parseInt(ethers.utils.formatEther(item.price), 10) === 0) {
-                const ownerAddress = await nft.ownerOf(i);
+                //const ownerAddress = await nft.ownerOf(i);
                 const userA = await user.users(item.seller)
                 // console.log(userA[[0]])
 
@@ -170,7 +172,7 @@ function MyAccount({ nft, marketplace, user }) {
         setLoading(false)
         setItemsAll(itemsAll)
         setItemsLoading(itemsLoading)
-        setItemsSolding(itemsSolding)
+        setItemsSolding(itemsSold)
         setItemsNotSold(itemsNotSold)
     }
 
@@ -179,7 +181,8 @@ function MyAccount({ nft, marketplace, user }) {
     }, [account])
     //#endregion Contract
     //===================================================================================//
-    console.log('itemSolding: ', itemsSolding)
+   // console.log('itemAll: ', itemsAll);
+   // console.log('itemSolding: ', itemsSolding)
 
     return (
         <div className={cx('myAccount')}>

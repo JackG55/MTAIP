@@ -40,7 +40,7 @@ const rows = [
 function Detail({ nft, marketplace, user }) {
     //lấy ra id đã nà
     const { id } = useParams();
-    console.log('id: ', id);
+    //console.log('id: ', id);
 
     const [loadingBuy, setLoadingBuy] = useState(false);
     const [alertBuy, setAlertBuy] = useState(false);
@@ -235,6 +235,10 @@ function Detail({ nft, marketplace, user }) {
         console.log('set approve xong')
         // add nft to marketplace
 
+        // add nft to marketplace
+        await (await marketplace.listingItem(nft.address, id, price, account)).wait();
+        console.log('listing')
+
         await (await marketplace.OfferItem(id, price, account)).wait()
         //console.log('de nghi thanh cong')
         //console.log(99)
@@ -252,12 +256,20 @@ function Detail({ nft, marketplace, user }) {
     }
 
 
-
-    const transferMarketItem = async (account) => {
+    const transferMarketItem = async (buyer_account) => {
         setLoadingTransfer(true)
 
         // viết tiếp vào đây thôi
+        
+        //gọi hàm chuyển đi
+        await marketplace.transferItem(id, buyer_account)
 
+         //thêm vào lịch sử
+         const currentTime = new Date();
+         const Timenumber = currentTime.getTime();
+         await marketplace.addHistory(id, 'transfer', totalPrice, account, buyer_account, Timenumber);
+         console.log('đã thêm lịch sử')
+ 
 
         loadMarketplaceItems()
         setAlertTransfer(true)
@@ -371,7 +383,7 @@ function Detail({ nft, marketplace, user }) {
                                         <Offer offerMarketItem={offerMarketItem} />
                                     </div>
                                     <div className={cx('transfer-btn')}>
-                                        <Transfer />
+                                        <Transfer transferMarketItem={transferMarketItem}/>
                                     </div>
                                     <div className={cx('qrcode-btn')}>
                                         <QRCode id={id} />

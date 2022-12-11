@@ -5,6 +5,7 @@ import Avatar from '@mui/material/Avatar';
 
 import DucAnh from '../../../assets/images/avatar/duc_anh.jpg';
 import Duc from '../../../assets/images/avatar/viet_duc.jpg';
+import Thay_Trang from '../../../assets/images/avatar/Thay_Trang.PNG';
 
 const cx = classNames.bind(styles);
 
@@ -26,7 +27,7 @@ function MyTeamSection() {
                     <p>Hạnh phúc đạt được khi bạn ngừng chờ đợi điều đó xảy ra và thực hiện các bước để biến nó thành hiện thực </p>
                 </div>
                 <div className={cx('myteam-section-item')}>
-                <Avatar src='' alt='Hello' className={cx('myteam-section-avatar')}/>
+                <Avatar src={Thay_Trang} alt='Hello' className={cx('myteam-section-avatar')}/>
                     <h2>Đặng Lê Đình Trang</h2>
                     <h3>Tiến sĩ, giảng viên</h3>
                     <p>Khó mới cần học, dễ thì cần gì hỏi</p>

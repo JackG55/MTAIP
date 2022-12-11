@@ -9,6 +9,8 @@ import { useState, useEffect } from 'react';
 import logo from '../../../../assets/images/MTA.png';
 import { Search } from '@mui/icons-material';
 
+import ExpertAddress from '../../../../abis/Expert-address.json'
+
 const cx = classNames.bind(styles);
 
 function Header(nft) {
@@ -121,10 +123,16 @@ function Header(nft) {
                 </div>
 
                 <div>
-                    {username !== '' && account !== '' && (
+                    {username !== '' && account !== '' && account !== ExpertAddress.address.toLowerCase() && (
                         <div>
                             <p>{account}</p>
-                            <p style={{ textAlign: 'right' }}>{username}</p>
+                            <p style={{ textAlign: 'right' }}>Người dùng {username}</p>
+                        </div>
+                    )}
+                    {username !== '' && account !== '' && account === ExpertAddress.address.toLowerCase() && (
+                        <div>
+                            <p>{account}</p>
+                            <p style={{ textAlign: 'right' }}>Chuyên gia {username}</p>
                         </div>
                     )}
                     {username === '' && (
